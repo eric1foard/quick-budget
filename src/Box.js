@@ -27,10 +27,9 @@ class Box extends Component {
                 updateBox={this.updateBox}
               />
             )}
+            Total {this.props.boxData.title}: {this.props.total}
           </div>
-          <div>
-            Total {this.props.title}: {this.props.total}
-          </div>
+
         </div>
       </div>
 

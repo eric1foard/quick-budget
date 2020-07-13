@@ -26,21 +26,21 @@ class App extends Component {
   }
 
   updateTotals(name, num) {
-    console.log('name: ', name, 'num: ', num)
+    // console.log('name: ', name, 'num: ', num)
 
     this.setState({[name]: +num}, () => {
       let incomeTotal = 0;
       this.props.incomeData.fields.forEach(elem => {
         incomeTotal += this.state[elem]
       });
-      console.log('incomeTotal: ', incomeTotal);
+      // console.log('incomeTotal: ', incomeTotal);
       this.setState({incomeTotal: incomeTotal})
 
       let expensesTotal = 0;
       this.props.expensesData.fields.forEach(elem => {
         expensesTotal += this.state[elem]
       });
-      console.log('expensesTotal: ', expensesTotal);
+      // console.log('expensesTotal: ', expensesTotal);
       this.setState({expensesTotal: expensesTotal});
       
     });
