@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
 import Box from './Box.js';
+import Summary from './Summary.js';
 import './App.css';
 
 class App extends Component {
   static defaultProps = {
-    boxData: [
-      {title: 'income', fields: ['salary', 'savings', 'other']},
-      {title: 'expenses', fields: ['food', 'electricity', 'groceries']}
-    ]
+    incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
+    expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']}
   }
 
   constructor(props) {
@@ -17,11 +16,11 @@ class App extends Component {
       salary: 0,
       savings: 0,
       other: 0,
-      totalIncome: 0,
+      incomeTotal: 0,
       food: 0,
       electricity: 0,
       groceries: 0,
-      totalExpenses: 0,
+      expensesTotal: 0,
     }
     this.updateTotals = this.updateTotals.bind(this);
   }
@@ -31,18 +30,18 @@ class App extends Component {
 
     this.setState({[name]: +num}, () => {
       let incomeTotal = 0;
-      this.props.boxData[0].fields.forEach(elem => {
+      this.props.incomeData.fields.forEach(elem => {
         incomeTotal += this.state[elem]
       });
       console.log('incomeTotal: ', incomeTotal);
-      this.setState({totalIncome: incomeTotal})
+      this.setState({incomeTotal: incomeTotal})
 
       let expensesTotal = 0;
-      this.props.boxData[1].fields.forEach(elem => {
+      this.props.expensesData.fields.forEach(elem => {
         expensesTotal += this.state[elem]
       });
-      console.log('expenseTotal: ', expensesTotal);
-      this.setState({totalExpense: expensesTotal});
+      console.log('expensesTotal: ', expensesTotal);
+      this.setState({expensesTotal: expensesTotal});
       
     });
   }
@@ -53,8 +52,18 @@ class App extends Component {
         <div className="container">
           <h1>Budget App</h1>
           <Box 
-            boxData={this.props.boxData} 
+            boxData={this.props.incomeData} 
+            updateTotals={this.updateTotals}
+            total={this.state.incomeTotal}
+          />
+          <Box 
+            boxData={this.props.expensesData} 
             updateTotals={this.updateTotals} 
+            total={this.state.expensesTotal}
+          />
+          <Summary 
+            totalIncome={this.state.incomeTotal}
+            totalExpenses={this.state.expensesTotal}
           />
         </div>
       </div>

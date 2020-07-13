@@ -16,25 +16,22 @@ class Box extends Component {
   render() {
     return(
       <div>
-        {this.props.boxData.map(b =>
-          <div>
-            <div className="card">
-              <div className="card-header">
-                {b.title}
-              </div>
-              {b.fields.map(field =>
-                <Form 
-                  formLabel={field}
-                  updateBox={this.updateBox}
-                  boxName={b}
-                />
-              )}
+        <div>
+          <div className="card">
+            <div className="card-header">
+              {this.props.boxData.title}
             </div>
-            <div>
-              Total {b.title}: {this.state.total}
-            </div>
+            {this.props.boxData.fields.map(field =>
+              <Form 
+                formLabel={field}
+                updateBox={this.updateBox}
+              />
+            )}
           </div>
-        )}
+          <div>
+            Total {this.props.title}: {this.props.total}
+          </div>
+        </div>
       </div>
 
 
