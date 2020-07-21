@@ -16,10 +16,12 @@ class Box extends Component {
   render() {
     return(
       <div>
-        <div>
+        <div id="accordion">
           <div className="card">
-            <div className="card-header">
-              {this.props.boxData.title}
+            <div className="card-header" id="headingOne">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                {this.props.boxData.title}
+              </button>
             </div>
             {this.props.boxData.fields.map(field =>
               <Form 
