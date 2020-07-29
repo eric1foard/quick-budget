@@ -8,6 +8,7 @@ class Form extends Component {
       num: "0"
     }
     this.handleChange = this.handleChange.bind(this);
+    this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
   }
 
   handleChange(evt) {
@@ -16,13 +17,19 @@ class Form extends Component {
     this.props.updateBox(evt.target.name, evt.target.value);
   }
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   render() {
     return(
       <ul className="list-group list-group-flush">
         <li className="list-group-item">
           <form>
             <div className="form-group row">
-              <label htmlFor={this.props.formLabel} className="col-sm-2 col-form-label">{this.props.formLabel}</label>
+              <label htmlFor={this.props.formLabel} className="col-sm-2 col-form-label">
+                {this.capitalizeFirstLetter(this.props.formLabel)}
+              </label>
               <div className="col-sm-10">
                 <input 
                   type="number" 
