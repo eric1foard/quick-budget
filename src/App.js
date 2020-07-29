@@ -50,7 +50,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <h1>Budget App</h1>
+          <div className="App-title">
+            Quick Budget
+          </div>
+          <div className="App-subtitle">
+            A quick and easy reference tool to calculate your basic monthly budget.
+          </div>
           <Box 
             boxData={this.props.incomeData} 
             updateTotals={this.updateTotals}

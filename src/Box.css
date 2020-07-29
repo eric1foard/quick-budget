@@ -1,0 +1,14 @@
+.card{
+  /* margin-top: 30px; */
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 30px; /* Added */
+}
+
+.card-header{
+  background-color: rgba(43, 128, 226, 0.459);
+}
+
+.card-footer{
+  background-color: rgba(181, 241, 236, 0.253);
+}
