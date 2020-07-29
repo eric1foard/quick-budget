@@ -6,8 +6,27 @@ import './App.css';
 
 class App extends Component {
   static defaultProps = {
-    incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
-    expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']}
+    // incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
+    incomeData: {
+      title: 'income', 
+      fields: [
+        {fieldTitle: 'salary', fieldDescription: 'Salary description here'},
+        {fieldTitle: 'savings', fieldDescription: 'Savings description here'},
+        {fieldTitle: 'other', fieldDescription: 'Other description here'},
+      ]
+    },
+
+    // expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']},
+    expensesData: {               
+      title: 'expenses', 
+      fields: [
+        {fieldTitle: 'food', fieldDescription: 'Food description here'},
+        {fieldTitle: 'electricity', fieldDescription: 'Electricity description here'},
+        {fieldTitle: 'groceries', fieldDescription: 'Groceries description here'},
+      ]
+    },
+
+
   }
 
   constructor(props) {
@@ -26,21 +45,23 @@ class App extends Component {
   }
 
   updateTotals(name, num) {
+    // console.log("updateTotals triggered");
     // console.log('name: ', name, 'num: ', num)
 
     this.setState({[name]: +num}, () => {
+
       let incomeTotal = 0;
       this.props.incomeData.fields.forEach(elem => {
-        incomeTotal += this.state[elem]
+        incomeTotal += this.state[elem.fieldTitle];
       });
-      // console.log('incomeTotal: ', incomeTotal);
-      this.setState({incomeTotal: incomeTotal})
+      console.log('incomeTotal: ', incomeTotal);
+      this.setState({incomeTotal: incomeTotal});
 
       let expensesTotal = 0;
       this.props.expensesData.fields.forEach(elem => {
-        expensesTotal += this.state[elem]
+        expensesTotal += this.state[elem.fieldTitle];
       });
-      // console.log('expensesTotal: ', expensesTotal);
+      console.log('expensesTotal: ', expensesTotal);
       this.setState({expensesTotal: expensesTotal});
       
     });

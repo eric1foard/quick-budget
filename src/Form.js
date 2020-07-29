@@ -36,34 +36,14 @@ class Form extends Component {
                   {this.props.formLabel.toUpperCase()}
                 </label>
                 <div className="label-description">
-                  Description here
+                  {this.props.formDescription}
                 </div>
               </div>
-
-
-
-              {/* <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">$</span>
-                  <span class="input-group-text">0.00</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-              </div>
-
-              <div class="input-group">
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                <div class="input-group-append">
-                  <span class="input-group-text">$</span>
-                  <span class="input-group-text">0.00</span>
-                </div>
-              </div> */}
-
-
 
               <div className="col-sm-3">
                 <div className="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text" id="inputGroup-sizing-sm">$</div>
+                  <div className="input-group-prepend">
+                    <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
                   </div>
                   <input 
                     type="number" 

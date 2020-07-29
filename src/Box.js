@@ -12,6 +12,10 @@ class Box extends Component {
   }
 
   updateBox(name, num) {
+    // console.log("updateBox triggered");
+    // console.log("name: ", name);
+    // console.log("num: ", num);
+
     this.props.updateTotals(name, num);
   }
 
@@ -29,14 +33,15 @@ class Box extends Component {
         <div id="accordion">
           <div className="card w-75">
             <div className="card-header" id="headingOne">
-              <button class="btn btn-link" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
+              <button className="btn btn-link" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
                 {boxTitle}
               </button>
             </div>
-            <div id={this.props.boxData.title} class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div id={this.props.boxData.title} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
               {this.props.boxData.fields.map(field =>
                 <Form 
-                  formLabel={field}
+                  formLabel={field.fieldTitle}
+                  formDescription={field.fieldDescription}
                   updateBox={this.updateBox}
                 />
               )}
