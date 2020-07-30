@@ -5,8 +5,10 @@ import Summary from './Summary.js';
 import './App.css';
 
 class App extends Component {
+
+  // defaultProps contains the information for various fields used by other components, 
+  //  ...split into income and expenses.
   static defaultProps = {
-    // Old version: incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
     incomeData: {
       title: 'income', 
       fields: [
@@ -16,7 +18,6 @@ class App extends Component {
       ]
     },
 
-    // Old version: expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']},
     expensesData: {               
       title: 'expenses', 
       fields: [
@@ -27,6 +28,7 @@ class App extends Component {
     },
   }
 
+  // State is used to store the amounts the user enters, and to calculate inferences.
   constructor(props) {
     super(props);
     this.state = {
@@ -42,24 +44,23 @@ class App extends Component {
     this.updateTotals = this.updateTotals.bind(this);
   }
 
+  // updateTotals is triggered every time a field is changed.
+  //  ...It calculates the total income and expenses.
   updateTotals(name, num) {
-    // console.log("updateTotals triggered");
-    // console.log('name: ', name, 'num: ', num)
-
     this.setState({[name]: +num}, () => {
 
+      // Calculate total income
       let incomeTotal = 0;
       this.props.incomeData.fields.forEach(elem => {
         incomeTotal += this.state[elem.fieldTitle];
       });
-      // console.log('incomeTotal: ', incomeTotal);
       this.setState({incomeTotal: incomeTotal});
 
+      // Calculate total expenses
       let expensesTotal = 0;
       this.props.expensesData.fields.forEach(elem => {
         expensesTotal += this.state[elem.fieldTitle];
       });
-      // console.log('expensesTotal: ', expensesTotal);
       this.setState({expensesTotal: expensesTotal});
       
     });
@@ -75,20 +76,27 @@ class App extends Component {
           <div className="App-subtitle">
             A quick and easy reference tool to calculate your basic monthly budget.
           </div>
+
+          {/* Box with income information */}
           <Box 
             boxData={this.props.incomeData} 
             updateTotals={this.updateTotals}
             total={this.state.incomeTotal}
           />
+
+          {/* Box with expenses information */}
           <Box 
             boxData={this.props.expensesData} 
             updateTotals={this.updateTotals} 
             total={this.state.expensesTotal}
           />
+
+          {/* Summary displays the final total monthly amount */}
           <Summary 
             totalIncome={this.state.incomeTotal}
             totalExpenses={this.state.expensesTotal}
           />
+
         </div>
       </div>
     );

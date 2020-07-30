@@ -3,42 +3,37 @@ import React, { Component } from 'react';
 import './Form.css';
 
 class Form extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {
-      num: "0"
-    }
     this.handleChange = this.handleChange.bind(this);
-    this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
   }
 
+  // When a user types into the form, the name and number are sent to Box,
+  //  ...which then passes the info to App. The field's value is updated in state,
+  //  ...and the totals and summary are updated.
   handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value });
     this.props.updateBox(evt.target.name, evt.target.value);
   }
 
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   render() {
-    return(
+    return (
       <ul className="list-group list-group-flush">
         <li className="list-group-item">
           <form>
-
+            
             <div className="form-group row">
-
+              {/* Form's title, in upper case */}
               <div className="col-sm-9">
                 <label htmlFor={this.props.formLabel} className="col-form-label label-title">
                   {this.props.formLabel.toUpperCase()}
                 </label>
+                {/* Underneath the title, a description */}
                 <div className="label-description">
                   {this.props.formDescription}
                 </div>
               </div>
 
+              {/* On the right side, the input for users to put $ amounts */}
               <div className="col-sm-3">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -48,13 +43,12 @@ class Form extends Component {
                     type="number" 
                     name={this.props.formLabel}
                     id={this.props.formLabel}
-                    value={this.state.value}
                     onChange={this.handleChange}
                     className="form-control"
                   />
                 </div>
               </div>
-
+            
             </div>
           </form>
         </li>

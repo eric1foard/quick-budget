@@ -1,6 +1,9 @@
 # Roadmap
+
+## Done
+- Add comments to explain.
+
 ## To Do
-0) Add comments to explain.
 0.5) Improve variable naming.
 1) User can add fields
 2) Total changes (color as well?) depending on +/-
@@ -9,6 +12,8 @@
 ## Ideas
 - put forms into toggle-able subheadings (optional).  If so, each subheading shows subtotal.
 - Loan interest - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
+- When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
+- Login?  Store info in db?
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
