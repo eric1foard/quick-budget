@@ -6,70 +6,75 @@ import './App.css';
 
 class App extends Component {
 
-  // defaultProps contains the information for various fields used by other components, 
-  //  ...split into income and expenses.
-  static defaultProps = {
-    incomeData: {
-      title: 'income', 
-      fields: [
-        {fieldTitle: 'salary', fieldDescription: 'Salary description here'},
-        {fieldTitle: 'savings', fieldDescription: 'Savings description here'},
-        {fieldTitle: 'other', fieldDescription: 'Other description here'},
-      ]
-    },
-
-    expensesData: {               
-      title: 'expenses', 
-      fields: [
-        {fieldTitle: 'food', fieldDescription: 'Food description here'},
-        {fieldTitle: 'electricity', fieldDescription: 'Electricity description here'},
-        {fieldTitle: 'groceries', fieldDescription: 'Groceries description here'},
-      ]
-    },
-  }
-
-  // State is used to store the amounts the user enters, and to calculate inferences.
+  // State is used to store the relevant information regarding the user's income and expenses fields,
+  // ...and is used by other components to calculate inferences.
   constructor(props) {
     super(props);
     this.state = {
-      salary: 0,
-      savings: 0,
-      other: 0,
-      incomeTotal: 0,
-      food: 0,
-      electricity: 0,
-      groceries: 0,
-      expensesTotal: 0,
+      incomeData: {
+        title: 'income',
+        total: 0,
+        fields: [
+          {fieldTitle: 'salary', fieldDescription: 'Salary description here', value: 0},
+          {fieldTitle: 'savings', fieldDescription: 'Savings description here', value: 0},
+          {fieldTitle: 'other', fieldDescription: 'Other description here', value: 0},
+        ]
+      },
+      expensesData: {               
+        title: 'expenses', 
+        total: 0,
+        fields: [
+          {fieldTitle: 'food', fieldDescription: 'Food description here', value: 0},
+          {fieldTitle: 'electricity', fieldDescription: 'Electricity description here', value: 0},
+          {fieldTitle: 'groceries', fieldDescription: 'Groceries description here', value: 0},
+        ]
+      },
     }
-    this.updateTotals = this.updateTotals.bind(this);
+    this.updateIncomeHelper = this.updateIncomeHelper.bind(this);
+    this.updateExpensesHelper = this.updateExpensesHelper.bind(this);
   }
 
-  // updateTotals is triggered every time a field is changed.
-  //  ...It calculates the total income and expenses.
-  updateTotals(name, num) {
-    this.setState({[name]: +num}, () => {
+  updateTotal(name, num, type) {
+    // Makes new copy of state...
+    let dataCopy1 = this.state[type];
+    // ...in that copy, finds the field that needs to be updated...
+    const fieldToUpdate = dataCopy1.fields.find(elem => elem.fieldTitle === name);
+    // ...and sets that field's value to the variable "num".
+    fieldToUpdate.value = num;
 
-      // Calculate total income
-      let incomeTotal = 0;
-      this.props.incomeData.fields.forEach(elem => {
-        incomeTotal += this.state[elem.fieldTitle];
-      });
-      this.setState({incomeTotal: incomeTotal});
-
-      // Calculate total expenses
-      let expensesTotal = 0;
-      this.props.expensesData.fields.forEach(elem => {
-        expensesTotal += this.state[elem.fieldTitle];
-      });
-      this.setState({expensesTotal: expensesTotal});
-      
-    });
+    // Sets relevant state with updated numbers, starts callback to update totals
+    this.setState({[type]: dataCopy1}, () => {
+      // Makes new copy of state
+      let dataCopy2 = this.state[type];
+      // Reduces array of fields to find total of values
+      let newTotal = dataCopy2.fields.reduce(
+        (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+        , 0
+      );
+      // Sets this reduced number as the total
+      dataCopy2.total = newTotal;
+      // ...and sets state with that updated object.
+      this.setState({[type]: dataCopy2});
+    })
   }
+
+  // For changes to income fields, sends relevant info to updateTotal
+  updateIncomeHelper(name, num) {
+    this.updateTotal(name, num, "incomeData");
+  }
+
+  // For changes to expenses fields, sends relevant info to updateTotal
+  updateExpensesHelper(name, num) {
+    this.updateTotal(name, num, "expensesData");
+  }
+
 
   render() {
     return (
       <div className="App">
         <div className="container">
+
+          {/* Title and subtitle */}
           <div className="App-title">
             Quick Budget
           </div>
@@ -79,22 +84,22 @@ class App extends Component {
 
           {/* Box with income information */}
           <Box 
-            boxData={this.props.incomeData} 
-            updateTotals={this.updateTotals}
-            total={this.state.incomeTotal}
+            boxData={this.state.incomeData} 
+            handleUpdate={this.updateIncomeHelper}
+            total={this.state.incomeData.total}
           />
 
           {/* Box with expenses information */}
           <Box 
-            boxData={this.props.expensesData} 
-            updateTotals={this.updateTotals} 
-            total={this.state.expensesTotal}
+            boxData={this.state.expensesData} 
+            handleUpdate={this.updateExpensesHelper} 
+            total={this.state.expensesData.total}
           />
 
           {/* Summary displays the final total monthly amount */}
           <Summary 
-            totalIncome={this.state.incomeTotal}
-            totalExpenses={this.state.expensesTotal}
+            totalIncome={this.state.incomeData.total}
+            totalExpenses={this.state.expensesData.total}
           />
 
         </div>

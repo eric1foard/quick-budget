@@ -7,6 +7,7 @@ class Box extends Component {
   constructor(props) {
     super(props);
     this.updateBox = this.updateBox.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
   }
 
@@ -14,7 +15,12 @@ class Box extends Component {
   //  ...and sends the name of the field and the number to App.js,
   //  ...where updateTotals crunches the numbers.
   updateBox(name, num) {
-    this.props.updateTotals(name, num);
+    this.props.handleUpdate(name, num);
+  }
+
+  handleClick(evt) {
+    evt.preventDefault();
+    alert("Clicked oh yeah");
   }
 
   // Helper function to capitlize the first letter when needed.
@@ -54,6 +60,14 @@ class Box extends Component {
                   updateBox={this.updateBox}
                 />
               )}
+            </div>
+
+            <div>
+              NewFormHere
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-info" onClick={this.handleClick}>Add Item</button>
             </div>
 
             {/* Footer displays the total of the income/expenses fields */}
