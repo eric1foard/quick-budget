@@ -4,10 +4,33 @@
   margin-bottom: 30px; 
 }
 
-.card-header{
+/* .card-header{
   background-color: rgba(43, 128, 226, 0.459);
+} */
+
+.card-header-income{
+  background-color: rgba(62, 172, 62, 0.698);
 }
 
-.card-footer{
+.card-header-expenses{
+  background-color: rgba(149, 57, 57, 0.63);
+}
+
+/* .card-footer{
   background-color: rgba(181, 241, 236, 0.253);
+} */
+
+.card-footer-income{
+  background-color: rgba(0, 128, 0, 0.164);
+}
+
+.card-footer-expenses{
+  background-color: rgba(255, 0, 0, 0.171);
+}
+
+.btn-link{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  text-decoration: underline;
 }

@@ -12,10 +12,6 @@ class Box extends Component {
   }
 
   updateBox(name, num) {
-    // console.log("updateBox triggered");
-    // console.log("name: ", name);
-    // console.log("num: ", num);
-
     this.props.updateTotals(name, num);
   }
 
@@ -26,13 +22,16 @@ class Box extends Component {
 
   render() {
     const boxTitle = this.capitalizeFirstLetter(this.props.boxData.title);
-    const dataTarget = `#${this.props.boxData.title}`
+    const dataTarget = `#${this.props.boxData.title}`;
+    const boxType = this.props.boxData.title;
+    const cardHeaderClasses = `card-header card-header-${boxType}`
+    const cardFooterClasses = `card-footer card-footer-${boxType}`
 
     return(
       <div>
         <div id="accordion">
           <div className="card w-75">
-            <div className="card-header" id="headingOne">
+            <div className={cardHeaderClasses} id="headingOne">
               <button className="btn btn-link" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
                 {boxTitle}
               </button>
@@ -46,8 +45,8 @@ class Box extends Component {
                 />
               )}
             </div>
-            <div className="card-footer">
-              Total {boxTitle}: {this.props.total}
+            <div className={cardFooterClasses}>
+              Total Monthly {boxTitle}: ${this.props.total.toFixed(2)}
             </div>
           </div>
 

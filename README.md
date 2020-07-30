@@ -1,7 +1,14 @@
 # Roadmap
-- put forms into toggle-able subheadings.
-- each subheading shows subtotal
-- user can add items
+## To Do
+0) Add comments to explain.
+0.5) Improve variable naming.
+1) User can add fields
+2) Total changes (color as well?) depending on +/-
+3) Forecast - calculate accumulating savings over months, or diminishing from total.
+
+## Ideas
+- put forms into toggle-able subheadings (optional).  If so, each subheading shows subtotal.
+- Loan interest - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

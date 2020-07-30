@@ -6,7 +6,7 @@ import './App.css';
 
 class App extends Component {
   static defaultProps = {
-    // incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
+    // Old version: incomeData: {title: 'income', fields: ['salary', 'savings', 'other']},
     incomeData: {
       title: 'income', 
       fields: [
@@ -16,7 +16,7 @@ class App extends Component {
       ]
     },
 
-    // expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']},
+    // Old version: expensesData: {title: 'expenses', fields: ['food', 'electricity', 'groceries']},
     expensesData: {               
       title: 'expenses', 
       fields: [
@@ -25,8 +25,6 @@ class App extends Component {
         {fieldTitle: 'groceries', fieldDescription: 'Groceries description here'},
       ]
     },
-
-
   }
 
   constructor(props) {
@@ -54,14 +52,14 @@ class App extends Component {
       this.props.incomeData.fields.forEach(elem => {
         incomeTotal += this.state[elem.fieldTitle];
       });
-      console.log('incomeTotal: ', incomeTotal);
+      // console.log('incomeTotal: ', incomeTotal);
       this.setState({incomeTotal: incomeTotal});
 
       let expensesTotal = 0;
       this.props.expensesData.fields.forEach(elem => {
         expensesTotal += this.state[elem.fieldTitle];
       });
-      console.log('expensesTotal: ', expensesTotal);
+      // console.log('expensesTotal: ', expensesTotal);
       this.setState({expensesTotal: expensesTotal});
       
     });
