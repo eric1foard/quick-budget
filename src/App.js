@@ -30,6 +30,7 @@ class App extends Component {
         ]
       },
     }
+    this.updateValue = this.updateValue.bind(this);
     this.updateTotal = this.updateTotal.bind(this);
     this.updateIncomeHelper = this.updateIncomeHelper.bind(this);
     this.updateExpensesHelper = this.updateExpensesHelper.bind(this);
@@ -38,7 +39,7 @@ class App extends Component {
     this.saveNewField = this.saveNewField.bind(this);
   }
 
-  updateTotal(name, num, type) {
+  updateValue(name, num, type) {
     // Makes new copy of state...
     let dataCopy1 = this.state[type];
     // ...in that copy, finds the field that needs to be updated...
@@ -48,28 +49,35 @@ class App extends Component {
 
     // Sets relevant state with updated numbers, starts callback to update totals
     this.setState({[type]: dataCopy1}, () => {
-      // Makes new copy of state
-      let dataCopy2 = this.state[type];
-      // Reduces array of fields to find total of values
-      let newTotal = dataCopy2.fields.reduce(
-        (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
-        , 0
-      );
-      // Sets this reduced number as the total
-      dataCopy2.total = newTotal;
-      // ...and sets state with that updated object.
-      this.setState({[type]: dataCopy2});
+      console.log("1st ", type)
+      this.updateTotal(type);
     })
+  }
+
+
+  updateTotal(type) {
+    // Makes new copy of state
+    let dataCopy = this.state[type];
+
+    // Reduces array of fields to find total of values
+    let newTotal = dataCopy.fields.reduce(
+      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+      , 0
+    );
+    // Sets this reduced number as the total
+    dataCopy.total = newTotal;
+    // ...and sets state with that updated object.
+    this.setState({[type]: dataCopy});
   }
 
   // For changes to income fields, sends relevant info to updateTotal
   updateIncomeHelper(name, num) {
-    this.updateTotal(name, num, "incomeData");
+    this.updateValue(name, num, "incomeData");
   }
 
   // For changes to expenses fields, sends relevant info to updateTotal
   updateExpensesHelper(name, num) {
-    this.updateTotal(name, num, "expensesData");
+    this.updateValue(name, num, "expensesData");
   }
 
   // Appends the new field object to the end of the correct part of state
@@ -77,7 +85,7 @@ class App extends Component {
     let copyOfState = this.state[type]
     copyOfState.fields = [...copyOfState.fields, obj];
     this.setState({[type]: copyOfState});
-    
+    this.updateTotal(type);
   }
 
   saveNewIncomeHelper(obj) {
