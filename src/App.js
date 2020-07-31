@@ -56,56 +56,86 @@ class App extends Component {
         ]
       },
     }
-    this.updateValue = this.updateValue.bind(this);
-    this.updateTotal = this.updateTotal.bind(this);
-    this.updateIncomeHelper = this.updateIncomeHelper.bind(this);
-    this.updateExpensesHelper = this.updateExpensesHelper.bind(this);
-    this.saveNewIncomeHelper = this.saveNewIncomeHelper.bind(this);
-    this.saveNewExpensesHelper = this.saveNewExpensesHelper.bind(this);
-    this.saveNewField = this.saveNewField.bind(this);
+    this.updateValue            = this.updateValue.bind(this);
+    this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
+    this.updateFullTotal        = this.updateFullTotal.bind(this);
+    this.updateIncomeHelper     = this.updateIncomeHelper.bind(this);
+    this.updateExpensesHelper   = this.updateExpensesHelper.bind(this);
+    this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this);
+    this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this);
+    this.saveNewField           = this.saveNewField.bind(this);
   }
 
-  updateValue(name, num, type) {
+  updateValue(incOrExp, category, name, num) {
+    console.log("incOrExp: ", incOrExp)
+    console.log("category: ", category)
+    console.log("name: ", name)
+    console.log("num: ", num)
     // Makes new copy of state...
-    let dataCopy1 = this.state[type];
+    let newState = this.state[incOrExp];
+    console.log("dataCopy1: ", newState)
+
     // ...in that copy, finds the field that needs to be updated...
-    const fieldToUpdate = dataCopy1.categories.find(elem => elem.fieldTitle === name);
+    const categoryToUpdate = newState.categories.find(elem => elem.title === category);
+    console.log("categoryToUpdate: ", categoryToUpdate);
+
+    const fieldToUpdate = categoryToUpdate.fields.find(elem => elem.title === name);
+    console.log("fieldToUpdate: ", fieldToUpdate);
+
     // ...and sets that field's value to the variable "num".
     fieldToUpdate.value = num;
 
     // Sets relevant state with updated numbers, starts callback to update totals
-    this.setState({[type]: dataCopy1}, () => {
-      console.log("1st ", type)
-      this.updateTotal(type);
+    this.setState({[incOrExp]: newState}, () => {
+      this.updateCategoryTotal(incOrExp, category);
+      // this.updateFullTotal(incOrExp);
     })
   }
 
   // **********************************************
   // UPDATING TOTALS ******************************
   // **********************************************
-  updateTotal(type) {
+  updateCategoryTotal(incOrExp, category) {
+    // console.log("*******************")
+    // console.log("updateCategoryTotal")
+    // console.log("incOrExp: ", incOrExp);
+    // console.log("category: ", category);
+    let newState = this.state[incOrExp];
+    const categoryToUpdate = newState.categories.find(elem => elem.title === category);
+
+    let newSubTotal = categoryToUpdate.fields.reduce(
+      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+      , 0
+    );
+    categoryToUpdate.subtotal = newSubTotal;
+    this.setState({[incOrExp]: newState}, () => {
+      this.updateFullTotal(incOrExp);
+    });
+  }
+
+  updateFullTotal(incOrExp) {
     // Makes new copy of state
-    let dataCopy = this.state[type];
+    let dataCopy = this.state[incOrExp];
 
     // Reduces array of fields to find total of values
-    let newTotal = dataCopy.fields.reduce(
-      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+    let newTotal = dataCopy.categories.reduce(
+      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.subtotal)
       , 0
     );
     // Sets this reduced number as the total
     dataCopy.total = newTotal;
     // ...and sets state with that updated object.
-    this.setState({[type]: dataCopy});
+    this.setState({[incOrExp]: dataCopy});
   }
 
   // For changes to income fields, sends relevant info to updateTotal
-  updateIncomeHelper(name, num) {
-    this.updateValue(name, num, "incomeData");
+  updateIncomeHelper(name, num, category) {
+    this.updateValue("incomeData", category, name, num);
   }
 
   // For changes to expenses fields, sends relevant info to updateTotal
-  updateExpensesHelper(name, num) {
-    this.updateValue(name, num, "expensesData");
+  updateExpensesHelper(name, num, category) {
+    this.updateValue("expensesData", category, name, num);
   }
 
 

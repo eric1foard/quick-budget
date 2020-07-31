@@ -12,16 +12,15 @@ class Form extends Component {
   //  ...which then passes the info to App. The field's value is updated in state,
   //  ...and the totals and summary are updated.
   handleChange(evt) {
-    this.props.handleUpdate(evt.target.name, evt.target.value);
+    this.props.handleUpdate(evt.target.name, evt.target.value, this.props.categoryTitle);
   }
 
   render() {
     let dataTarget = `#${this.props.categoryTitle}`
-    console.log("this.props: ", this.props);
+    
     return (
       <div id="accordion">
         <li className="list-group-item">
-          {/* <form> */}
 
             <div className="row">
               {/* Form's title, in upper case */}
@@ -39,7 +38,6 @@ class Form extends Component {
               </div>
             
             </div>
-          {/* </form> */}
           
           <div id={this.props.categoryTitle} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             {this.props.fields.map(field =>

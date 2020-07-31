@@ -19,8 +19,8 @@ class Box extends Component {
   // updateBox receives info from Form's handleChange function
   //  ...and sends the name of the field and the number to App.js,
   //  ...where updateTotals crunches the numbers.
-  updateBox(name, num) {
-    this.props.handleUpdate(name, num);
+  updateBox(name, num, category) {
+    this.props.handleUpdate(name, num, category);
   }
 
   toggleAddNewField() {
