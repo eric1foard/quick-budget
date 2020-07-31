@@ -1,6 +1,7 @@
 .label-title{
   font-size: 1.1rem;
   font-weight: bold;
+  vertical-align: middle
 }
 
 .label-description{
@@ -8,6 +9,24 @@
   font-style: oblique;
 }
 
+.category-title-income{
+  background-color: rgba(62, 172, 62, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
+.category-title-expenses{
+  background-color: rgba(149, 57, 57, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
 .input-group{
   margin-top: 12px;
+}
+
+.subtotal{
+  margin-top: 13px;
 }
