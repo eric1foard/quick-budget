@@ -1,15 +1,13 @@
 # Roadmap
 
-## Done
-- Add comments to explain.
-- User can add fields
-
 ## To Do
-0.5) Improve variable naming.
-1) User can delete fields
-1.5) User can edit fields
-2) Total changes (color as well?) depending on +/-
-3) Forecast - calculate accumulating savings over months, or diminishing from total.
+- Improve variable naming.
+- Add realistic categories
+- Use UUID for unique keys - help with collapse issue?
+- User can delete fields
+- User can edit fields
+- Total changes (color as well?) depending on +/-
+- Forecast - calculate accumulating savings over months, or diminishing from total.
 
 ## Ideas
 - put forms into toggle-able subheadings (optional).  If so, each subheading shows subtotal.

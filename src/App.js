@@ -16,17 +16,29 @@ class App extends Component {
         total: 0,
         categories: [
           {
-            title: 'salary', 
+            title: 'Net Monthly Pay', 
             subtotal: 0, 
             fields: [
-              {title: 'Cody income', description: 'How much Cody makes', value: 0}, 
-              {title: 'Kaitlin income', description: 'How much Kaitlin makes', value: 0}
+              {title: 'Your Net Monthly Pay', description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0}, 
+              {title: 'Spouse\'s Net Monthly Pay', description: 'Same as above, but for your partner (if applicable)', value: 0}
             ]
           },
-
-          // {fieldTitle: 'salary', fieldDescription: 'Salary description here', value: 0},
-          // {fieldTitle: 'savings', fieldDescription: 'Savings description here', value: 0},
-          // {fieldTitle: 'other', fieldDescription: 'Other description here', value: 0},
+          {
+            title: 'more things here', 
+            subtotal: 0, 
+            fields: [
+              {title: 'alimony', description: 'Example Example Example Example', value: 0}, 
+              {title: 'child support', description: 'Example Example Example Example', value: 0}
+            ]
+          },
+          {
+            title: 'perhaps we try this', 
+            subtotal: 0, 
+            fields: [
+              {title: 'alimony', description: 'Example Example Example Example', value: 0}, 
+              {title: 'child support', description: 'Example Example Example Example', value: 0}
+            ]
+          },
         ]
       },
       expensesData: {               
@@ -42,19 +54,23 @@ class App extends Component {
             ]
           },
           {
-            title: 'utilities',
+            title: 'utilities and such',
+            subtotal: 0,
+            fields: [
+              {title: 'Gas', description: 'Gas bill', value: 0}, 
+              {title: 'Electric', description: 'Electricity', value: 0}
+            ]
+          },
+          {
+            title: 'utilities and blah',
             subtotal: 0,
             fields: [
               {title: 'Gas', description: 'Gas bill', value: 0}, 
               {title: 'Electric', description: 'Electricity', value: 0}
             ]
           }
-
-          // {fieldTitle: 'food', fieldDescription: 'Food description here', value: 0},
-          // {fieldTitle: 'electricity', fieldDescription: 'Electricity description here', value: 0},
-          // {fieldTitle: 'groceries', fieldDescription: 'Groceries description here', value: 0},
         ]
-      },
+      }
     }
     this.updateValue            = this.updateValue.bind(this);
     this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
@@ -66,21 +82,17 @@ class App extends Component {
     this.saveNewField           = this.saveNewField.bind(this);
   }
 
+  // **********************************************
+  // UPDATING VALUES & TOTALS *********************
+  // **********************************************
   updateValue(incOrExp, category, name, num) {
-    console.log("incOrExp: ", incOrExp)
-    console.log("category: ", category)
-    console.log("name: ", name)
-    console.log("num: ", num)
     // Makes new copy of state...
     let newState = this.state[incOrExp];
-    console.log("dataCopy1: ", newState)
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
-    console.log("categoryToUpdate: ", categoryToUpdate);
 
     const fieldToUpdate = categoryToUpdate.fields.find(elem => elem.title === name);
-    console.log("fieldToUpdate: ", fieldToUpdate);
 
     // ...and sets that field's value to the variable "num".
     fieldToUpdate.value = num;
@@ -88,18 +100,10 @@ class App extends Component {
     // Sets relevant state with updated numbers, starts callback to update totals
     this.setState({[incOrExp]: newState}, () => {
       this.updateCategoryTotal(incOrExp, category);
-      // this.updateFullTotal(incOrExp);
     })
   }
 
-  // **********************************************
-  // UPDATING TOTALS ******************************
-  // **********************************************
   updateCategoryTotal(incOrExp, category) {
-    // console.log("*******************")
-    // console.log("updateCategoryTotal")
-    // console.log("incOrExp: ", incOrExp);
-    // console.log("category: ", category);
     let newState = this.state[incOrExp];
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
 
@@ -143,19 +147,22 @@ class App extends Component {
   // SAVING NEW FIELDS ****************************
   // **********************************************
   // Appends the new field object to the end of the correct part of state
-  saveNewField(obj, type) {
-    let copyOfState = this.state[type]
-    copyOfState.fields = [...copyOfState.fields, obj];
-    this.setState({[type]: copyOfState});
-    this.updateTotal(type);
+  saveNewField(obj, type, category) {
+    let newState = this.state[type]
+    const categoryToSaveIn = newState.categories.find(elem => elem.title === category);
+
+    categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
+    this.setState({[type]: newState}, () => {
+      this.updateCategoryTotal(type, category);
+    });
   }
 
-  saveNewIncomeHelper(obj) {
-    this.saveNewField(obj, "incomeData");
+  saveNewIncomeHelper(obj, category) {
+    this.saveNewField(obj, "incomeData", category);
   }
 
-  saveNewExpensesHelper(obj) {
-    this.saveNewField(obj, "expensesData");
+  saveNewExpensesHelper(obj, category) {
+    this.saveNewField(obj, "expensesData", category);
   }
 
 

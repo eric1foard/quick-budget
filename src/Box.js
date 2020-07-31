@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 
 import Form from './Form';
-import NewField from './NewField'
 import './Box.css';
 
 class Box extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      addingNewField: false,
-    }
     this.updateBox = this.updateBox.bind(this);
-    this.toggleAddNewField = this.toggleAddNewField.bind(this);
     this.handleSaveNew = this.handleSaveNew.bind(this);
     this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
   }
@@ -23,23 +18,20 @@ class Box extends Component {
     this.props.handleUpdate(name, num, category);
   }
 
-  toggleAddNewField() {
-    this.state.addingNewField === true ? this.setState({addingNewField: false}) : this.setState({addingNewField: true});
-  }
-
-  handleSaveNew(obj) {
-    this.props.handleSaveNew(obj);
-  }
-
   // Helper function to capitlize the first letter when needed.
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  handleSaveNew(obj, category) {
+    this.props.handleSaveNew(obj, category);
+  }
+
 
   render() {
     const boxTitle = this.capitalizeFirstLetter(this.props.boxData.title); // For clarity below
-    const dataTarget = `#${this.props.boxData.title}`; // Lets dataTarget change dynamically for income/expenses
+    const dataId = this.props.boxData.title.split(" ").join("-")
+    const dataTarget = `#${dataId}`;
     
     // These are used for defining the class dynamically, used to style in the css file.
     const boxType = this.props.boxData.title; 
@@ -54,30 +46,26 @@ class Box extends Component {
 
             {/* Header displays title, and is given classes for styling */}
             <div className={cardHeaderClasses} id="headingOne">
-              <button className="btn btn-link" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
+              <button className="btn btn-link btn-link-heading" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
                 {boxTitle}
               </button>
             </div>
 
             {/* Maps through each item in income/expenses, passing this information to Form.js component */}
-            <div id={this.props.boxData.title} className="collapse show" aria-labelledby="headingOne" data-parent="#accordionBox">
+            <div id={dataId} className="collapse show category-income" aria-labelledby="headingOne" data-parent="#accordionBox">
               <ul className="list-group list-group-flush">
                 {this.props.boxData.categories.map(category =>
                   <Form 
+                    boxType={boxType}
                     categoryTitle={category.title}
                     subtotal={category.subtotal}
                     fields={category.fields}
                     handleUpdate={this.updateBox}
+                    key={category.title}
+                    handleSaveNew={this.handleSaveNew}
                   />
                 )}
               </ul>
-              <div>
-                <NewField 
-                  addingNewField={this.state.addingNewField}
-                  toggleAddNewField={this.toggleAddNewField}
-                  sendNewFieldInfo={this.handleSaveNew}
-                />
-              </div>
             </div>
 
             {/* Footer displays the total of the income/expenses fields */}

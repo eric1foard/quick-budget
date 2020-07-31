@@ -10,10 +10,10 @@ class NewField extends Component {
       description: '',
       value: '',
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleAddNew = this.handleAddNew.bind(this);
-    this.handleSaveNew = this.handleSaveNew.bind(this);
-    this.handleCancelNew = this.handleCancelNew.bind(this);
+    this.handleChange     = this.handleChange.bind(this);
+    this.handleAddNew     = this.handleAddNew.bind(this);
+    this.handleSaveNew    = this.handleSaveNew.bind(this);
+    this.handleCancelNew  = this.handleCancelNew.bind(this);
   }
 
   handleChange(evt) {
@@ -26,10 +26,11 @@ class NewField extends Component {
   }
 
   handleSaveNew(evt) {
+    console.log("Does this fire?")
     evt.preventDefault();
     let newFieldInfo =  {
-      fieldTitle: this.state.name, 
-      fieldDescription: this.state.description, 
+      title: this.state.name, 
+      description: this.state.description, 
       value: this.state.value
     }
     this.props.sendNewFieldInfo(newFieldInfo);
@@ -47,7 +48,7 @@ class NewField extends Component {
       <div>
         {this.props.addingNewField 
         ? 
-        <li className="list-group-item">
+        // <li className="list-group-item">
           <form>
             <div className="form-group row">
 
@@ -85,14 +86,14 @@ class NewField extends Component {
               </div>
 
             </div>
-            <button type="button" class="btn btn-info" onClick={this.handleSaveNew}>Save Item</button>
-            <button type="button" class="btn btn-danger" onClick={this.handleCancelNew}>Cancel</button>
+            <button type="button" className="btn btn-info" onClick={this.handleSaveNew}>Save Item</button>
+            <button type="button" className="btn btn-danger" onClick={this.handleCancelNew}>Cancel</button>
 
           </form>
-        </li> 
+        // </li> 
         :  
         <div className="list-group-item">
-          <button type="button" class="btn btn-info" onClick={this.handleAddNew}>Add Item</button>
+          <button type="button" className="btn btn-info" onClick={this.handleAddNew}>Add Item</button>
         </div>}
       </div>
     )
