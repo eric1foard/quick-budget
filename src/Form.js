@@ -69,7 +69,6 @@ class Form extends Component {
             {this.props.fields.map(field =>
               // <li className="list-group-item">
                 <form>
-                  
                   <div className="form-group row">
                     {/* Form's title, in upper case */}
                     <div className="col-sm-9">
@@ -104,16 +103,16 @@ class Form extends Component {
                 </form>
               // </li>
             )}
+            <div>
+              <NewField 
+                addingNewField={this.state.addingNewField}
+                toggleAddNewField={this.toggleAddNewField}
+                sendNewFieldInfo={this.handleSaveNew}
+              />
+            </div>
           </div>
         </li>
 
-        <div>
-          <NewField 
-            addingNewField={this.state.addingNewField}
-            toggleAddNewField={this.toggleAddNewField}
-            sendNewFieldInfo={this.handleSaveNew}
-          />
-        </div>
       </div>
 
           

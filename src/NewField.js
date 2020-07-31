@@ -92,7 +92,7 @@ class NewField extends Component {
           </form>
         // </li> 
         :  
-        <div className="list-group-item">
+        <div>
           <button type="button" className="btn btn-info" onClick={this.handleAddNew}>Add Item</button>
         </div>}
       </div>
