@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 
+import './NewField.css';
+
 class NewField extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       description: '',
-      amount: '',
+      value: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleAddNew = this.handleAddNew.bind(this);
     this.handleSaveNew = this.handleSaveNew.bind(this);
+    this.handleCancelNew = this.handleCancelNew.bind(this);
   }
 
   handleChange(evt) {
@@ -24,10 +27,19 @@ class NewField extends Component {
 
   handleSaveNew(evt) {
     evt.preventDefault();
-    this.props.sendNewFieldInfo({ fieldTitle: this.state.name, 
-                                  fieldDescription: this.state.description, 
-                                  value: this.state.amount
-                                });
+    let newFieldInfo =  {
+      fieldTitle: this.state.name, 
+      fieldDescription: this.state.description, 
+      value: this.state.value
+    }
+    this.props.sendNewFieldInfo(newFieldInfo);
+    this.props.toggleAddNewField();
+    this.setState({ name: '', description: '', value: '' })
+  }
+
+  handleCancelNew(evt) {
+    evt.preventDefault();
+    this.props.toggleAddNewField();
   }
 
   render() {
@@ -43,6 +55,7 @@ class NewField extends Component {
                 <input 
                   type="text" 
                   name="name"
+                  value={this.state.name}
                   onChange={this.handleChange} 
                   className="form-control" 
                   placeholder="Name of Item" 
@@ -53,6 +66,7 @@ class NewField extends Component {
                 <input 
                   type="text" 
                   name="description"
+                  value={this.state.description}
                   onChange={this.handleChange} 
                   className="form-control" 
                   placeholder="Description" 
@@ -62,7 +76,8 @@ class NewField extends Component {
               <div className="col-sm-3">
                 <input 
                   type="number" 
-                  name="amount"
+                  name="value"
+                  value={this.state.value}
                   onChange={this.handleChange}
                   className="form-control" 
                   placeholder="Amount" 
@@ -71,6 +86,8 @@ class NewField extends Component {
 
             </div>
             <button type="button" class="btn btn-info" onClick={this.handleSaveNew}>Save Item</button>
+            <button type="button" class="btn btn-danger" onClick={this.handleCancelNew}>Cancel</button>
+
           </form>
         </li> 
         :  

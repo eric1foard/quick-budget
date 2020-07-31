@@ -2,10 +2,12 @@
 
 ## Done
 - Add comments to explain.
+- User can add fields
 
 ## To Do
 0.5) Improve variable naming.
-1) User can add fields
+1) User can delete fields
+1.5) User can edit fields
 2) Total changes (color as well?) depending on +/-
 3) Forecast - calculate accumulating savings over months, or diminishing from total.
 

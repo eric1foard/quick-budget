@@ -54,7 +54,9 @@ class App extends Component {
     })
   }
 
-
+  // **********************************************
+  // UPDATING TOTALS ******************************
+  // **********************************************
   updateTotal(type) {
     // Makes new copy of state
     let dataCopy = this.state[type];
@@ -80,6 +82,10 @@ class App extends Component {
     this.updateValue(name, num, "expensesData");
   }
 
+
+  // **********************************************
+  // SAVING NEW FIELDS ****************************
+  // **********************************************
   // Appends the new field object to the end of the correct part of state
   saveNewField(obj, type) {
     let copyOfState = this.state[type]

@@ -24,7 +24,7 @@ class Box extends Component {
   }
 
   toggleAddNewField() {
-    this.setState({addingNewField: true});
+    this.state.addingNewField === true ? this.setState({addingNewField: false}) : this.setState({addingNewField: true});
   }
 
   handleSaveNew(obj) {
