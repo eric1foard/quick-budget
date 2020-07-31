@@ -49,7 +49,7 @@ class Box extends Component {
     return(
       <div>
         {/* Uses collapsable bootstrap accordion */}
-        <div id="accordion">
+        <div id="accordionBox">
           <div className="card w-75">
 
             {/* Header displays title, and is given classes for styling */}
@@ -60,22 +60,22 @@ class Box extends Component {
             </div>
 
             {/* Maps through each item in income/expenses, passing this information to Form.js component */}
-            <div id={this.props.boxData.title} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div id={this.props.boxData.title} className="collapse show" aria-labelledby="headingOne" data-parent="#accordionBox">
               <ul className="list-group list-group-flush">
-                {this.props.boxData.fields.map(field =>
+                {this.props.boxData.categories.map(category =>
                   <Form 
-                    formLabel={field.fieldTitle}
-                    formDescription={field.fieldDescription}
-                    value={field.value}
+                    categoryTitle={category.title}
+                    subtotal={category.subtotal}
+                    fields={category.fields}
                     handleUpdate={this.updateBox}
                   />
                 )}
               </ul>
               <div>
                 <NewField 
-                  addingNewField = {this.state.addingNewField}
-                  toggleAddNewField = {this.toggleAddNewField}
-                  sendNewFieldInfo = {this.handleSaveNew}
+                  addingNewField={this.state.addingNewField}
+                  toggleAddNewField={this.toggleAddNewField}
+                  sendNewFieldInfo={this.handleSaveNew}
                 />
               </div>
             </div>

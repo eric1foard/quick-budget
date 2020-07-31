@@ -4,6 +4,13 @@
   margin-bottom: 30px; 
 }
 
+/* .card-header{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  text-decoration: underline;
+} */
+
 .card-header-income{
   background-color: rgba(62, 172, 62, 0.698);
 }

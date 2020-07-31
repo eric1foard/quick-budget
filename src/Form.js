@@ -16,42 +16,76 @@ class Form extends Component {
   }
 
   render() {
+    let dataTarget = `#${this.props.categoryTitle}`
+    console.log("this.props: ", this.props);
     return (
-      <li className="list-group-item">
-        <form>
-          
-          <div className="form-group row">
-            {/* Form's title, in upper case */}
-            <div className="col-sm-9">
-              <label htmlFor={this.props.formLabel} className="col-form-label label-title">
-                {this.props.formLabel.toUpperCase()}
-              </label>
-              {/* Underneath the title, a description */}
-              <div className="label-description">
-                {this.props.formDescription}
-              </div>
-            </div>
+      <div id="accordion">
+        <li className="list-group-item">
+          {/* <form> */}
 
-            {/* On the right side, the input for users to put $ amounts */}
-            <div className="col-sm-3">
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
-                </div>
-                <input
-                  type="number" 
-                  name={this.props.formLabel}
-                  id={this.props.formLabel}
-                  onChange={this.handleChange}
-                  className="form-control"
-                  value={this.props.value}
-                />
+            <div className="row">
+              {/* Form's title, in upper case */}
+              <div className="col-sm-9">
+                <label htmlFor={this.props.categoryTitle} className="col-form-label label-title">
+                  <button className="btn btn-link" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
+                    {this.props.categoryTitle.toUpperCase()}
+                  </button>
+                </label>
               </div>
+              
+              {/* Displays subtotal for this category */}
+              <div className="col-sm-3">
+                {this.props.subtotal}
+              </div>
+            
             </div>
+          {/* </form> */}
           
+          <div id={this.props.categoryTitle} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            {this.props.fields.map(field =>
+              <li className="list-group-item">
+                <form>
+                  
+                  <div className="form-group row">
+                    {/* Form's title, in upper case */}
+                    <div className="col-sm-9">
+                      <label htmlFor={field.title} className="col-form-label label-title">
+                        {field.title}
+                      </label>
+                      {/* Underneath the title, a description */}
+                      <div className="label-description">
+                        {field.description}
+                      </div>
+                    </div>
+
+                    {/* On the right side, the input for users to put $ amounts */}
+                    <div className="col-sm-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
+                        </div>
+                        <input
+                          type="number" 
+                          name={field.title}
+                          id={field.title}
+                          onChange={this.handleChange}
+                          className="form-control"
+                          value={field.value}
+                        />
+                      </div>
+                    </div>
+                  
+                  </div>
+                </form>
+              </li>
+            )}
           </div>
-        </form>
-      </li>
+
+        </li>
+      </div>
+
+          
+      
     )
   }
 }

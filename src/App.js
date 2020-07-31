@@ -14,19 +14,45 @@ class App extends Component {
       incomeData: {
         title: 'income',
         total: 0,
-        fields: [
-          {fieldTitle: 'salary', fieldDescription: 'Salary description here', value: 0},
-          {fieldTitle: 'savings', fieldDescription: 'Savings description here', value: 0},
-          {fieldTitle: 'other', fieldDescription: 'Other description here', value: 0},
+        categories: [
+          {
+            title: 'salary', 
+            subtotal: 0, 
+            fields: [
+              {title: 'Cody income', description: 'How much Cody makes', value: 0}, 
+              {title: 'Kaitlin income', description: 'How much Kaitlin makes', value: 0}
+            ]
+          },
+
+          // {fieldTitle: 'salary', fieldDescription: 'Salary description here', value: 0},
+          // {fieldTitle: 'savings', fieldDescription: 'Savings description here', value: 0},
+          // {fieldTitle: 'other', fieldDescription: 'Other description here', value: 0},
         ]
       },
       expensesData: {               
         title: 'expenses', 
         total: 0,
-        fields: [
-          {fieldTitle: 'food', fieldDescription: 'Food description here', value: 0},
-          {fieldTitle: 'electricity', fieldDescription: 'Electricity description here', value: 0},
-          {fieldTitle: 'groceries', fieldDescription: 'Groceries description here', value: 0},
+        categories: [
+          {
+            title: 'food',
+            subtotal: 0,
+            fields: [
+              {title: 'Groceries', description: 'Food from the grocery store', value: 0}, 
+              {title: 'Restaurants', description: 'Meals purchased at restaurants', value: 0}
+            ]
+          },
+          {
+            title: 'utilities',
+            subtotal: 0,
+            fields: [
+              {title: 'Gas', description: 'Gas bill', value: 0}, 
+              {title: 'Electric', description: 'Electricity', value: 0}
+            ]
+          }
+
+          // {fieldTitle: 'food', fieldDescription: 'Food description here', value: 0},
+          // {fieldTitle: 'electricity', fieldDescription: 'Electricity description here', value: 0},
+          // {fieldTitle: 'groceries', fieldDescription: 'Groceries description here', value: 0},
         ]
       },
     }
@@ -43,7 +69,7 @@ class App extends Component {
     // Makes new copy of state...
     let dataCopy1 = this.state[type];
     // ...in that copy, finds the field that needs to be updated...
-    const fieldToUpdate = dataCopy1.fields.find(elem => elem.fieldTitle === name);
+    const fieldToUpdate = dataCopy1.categories.find(elem => elem.fieldTitle === name);
     // ...and sets that field's value to the variable "num".
     fieldToUpdate.value = num;
 
