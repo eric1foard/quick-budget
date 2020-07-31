@@ -24,19 +24,10 @@ class App extends Component {
             ]
           },
           {
-            title: 'more things here', 
+            title: 'Other Monthly Income', 
             subtotal: 0, 
             fields: [
-              {title: 'alimony', description: 'Example Example Example Example', value: 0}, 
-              {title: 'child support', description: 'Example Example Example Example', value: 0}
-            ]
-          },
-          {
-            title: 'perhaps we try this', 
-            subtotal: 0, 
-            fields: [
-              {title: 'alimony', description: 'Example Example Example Example', value: 0}, 
-              {title: 'child support', description: 'Example Example Example Example', value: 0}
+              {title: 'Other Monthly Income', description: 'Enter additional sources of income here, such as Social Security, child support, alimony, investments, pensions, etc.', value: 0}, 
             ]
           },
         ]
@@ -46,29 +37,94 @@ class App extends Component {
         total: 0,
         categories: [
           {
-            title: 'food',
+            title: 'housing and utilities',
             subtotal: 0,
             fields: [
-              {title: 'Groceries', description: 'Food from the grocery store', value: 0}, 
-              {title: 'Restaurants', description: 'Meals purchased at restaurants', value: 0}
+              {title: 'Rent or Mortgage', description: '', value: 0}, 
+              {title: 'Home or Renters Insurance', description: 'If not already included in mortgage payment', value: 0},
+              {title: 'Property Tax', description: 'If not already included in mortgage payment', value: 0},
+              {title: 'Homeowner Association (HOA) Fees', description: '', value: 0},
+              {title: 'Home Repair and Maintenance', description: 'Even if it\'s not a monthly expense, add what you estimate this costs per month', value: 0},
+              {title: 'Electricity and Gas', description: '', value: 0},
+              {title: 'Water and Sewer', description: '', value: 0},
+              {title: 'Cable and Internet', description: '', value: 0},
+              {title: 'Cell Phone', description: '', value: 0},
             ]
           },
           {
-            title: 'utilities and such',
+            title: 'transportation',
             subtotal: 0,
             fields: [
-              {title: 'Gas', description: 'Gas bill', value: 0}, 
-              {title: 'Electric', description: 'Electricity', value: 0}
+              {title: 'Car Payment', description: '', value: 0}, 
+              {title: '2nd Car Payment', description: '', value: 0},
+              {title: 'Car Insurance', description: 'Be sure to divide this into a monthly cost', value: 0},
+              {title: 'Gas', description: '', value: 0},
+              {title: 'Car Maintenance', description: '', value: 0},
+              {title: 'Parking and Tolls', description: '', value: 0},
             ]
           },
           {
-            title: 'utilities and blah',
+            title: 'groceries and food',
             subtotal: 0,
             fields: [
-              {title: 'Gas', description: 'Gas bill', value: 0}, 
-              {title: 'Electric', description: 'Electricity', value: 0}
+              {title: 'Groceries', description: '', value: 0}, 
+              {title: 'Meals at Restaurants', description: '', value: 0}
             ]
-          }
+          },
+          {
+            title: 'health and beauty',
+            subtotal: 0,
+            fields: [
+              {title: 'Health Insurance', description: 'If not already deducted from your paycheck', value: 0}, 
+              {title: 'Life Insurance', description: 'If not already deducted from your paycheck', value: 0}, 
+              {title: 'Prescriptions', description: '', value: 0}, 
+              {title: 'Gym Membership', description: '', value: 0},
+              {title: 'Clothes', description: '', value: 0},
+              {title: 'Dry Cleaning and Laundry', description: '', value: 0},
+              {title: 'Haircut and Color', description: '', value: 0},
+              {title: 'Beauty Supplies', description: '', value: 0},
+            ]
+          },
+          {
+            title: 'children',
+            subtotal: 0,
+            fields: [
+              {title: 'Child Care', description: 'If not already deducted from your paycheck', value: 0}, 
+              {title: 'Child Support', description: '', value: 0}, 
+              {title: 'Tuition and Supplies', description: '', value: 0},
+            ]
+          },
+          {
+            title: 'children',
+            subtotal: 0,
+            fields: [
+              {title: 'Child Care', description: 'If not already deducted from your paycheck', value: 0}, 
+              {title: 'Child Support', description: '', value: 0}, 
+              {title: 'Tuition and Supplies', description: '', value: 0},
+            ]
+          },
+          {
+            title: 'debts and loans',
+            subtotal: 0,
+            fields: [
+              {title: 'Credit Cards', description: 'total minimum monthly payment due', value: 0}, 
+              {title: 'Student Loans', description: 'total minimum monthly payment due', value: 0}, 
+              {title: 'Medical Debt', description: 'total minimum monthly payment due', value: 0},
+            ]
+          },
+          {
+            title: 'miscellaneous',
+            subtotal: 0,
+            fields: [
+              {title: 'Hobbies', description: '', value: 0}, 
+              {title: 'Tobacco & Alcohol', description: '', value: 0}, 
+              {title: 'Newspapers and Magazines', description: '', value: 0},
+              {title: 'Other Media Subscriptions', description: 'Examples: Netflix, Disney+, etc.', value: 0},
+              {title: 'Travel and Vacation', description: '', value: 0},
+              {title: 'Donations', description: '', value: 0},
+              {title: 'Pet Care', description: '', value: 0},
+            ]
+          },
         ]
       }
     }
