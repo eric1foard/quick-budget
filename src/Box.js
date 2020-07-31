@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 
 import Form from './Form';
+import NewField from './NewField'
 import './Box.css';
 
 class Box extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      addingNewField: false,
+    }
     this.updateBox = this.updateBox.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.toggleAddNewField = this.toggleAddNewField.bind(this);
+    this.handleSaveNew = this.handleSaveNew.bind(this);
     this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
   }
 
@@ -18,9 +23,12 @@ class Box extends Component {
     this.props.handleUpdate(name, num);
   }
 
-  handleClick(evt) {
-    evt.preventDefault();
-    alert("Clicked oh yeah");
+  toggleAddNewField() {
+    this.setState({addingNewField: true});
+  }
+
+  handleSaveNew(obj) {
+    this.props.handleSaveNew(obj);
   }
 
   // Helper function to capitlize the first letter when needed.
@@ -53,21 +61,23 @@ class Box extends Component {
 
             {/* Maps through each item in income/expenses, passing this information to Form.js component */}
             <div id={this.props.boxData.title} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-              {this.props.boxData.fields.map(field =>
-                <Form 
-                  formLabel={field.fieldTitle}
-                  formDescription={field.fieldDescription}
-                  updateBox={this.updateBox}
+              <ul className="list-group list-group-flush">
+                {this.props.boxData.fields.map(field =>
+                  <Form 
+                    formLabel={field.fieldTitle}
+                    formDescription={field.fieldDescription}
+                    value={field.value}
+                    handleUpdate={this.updateBox}
+                  />
+                )}
+              </ul>
+              <div>
+                <NewField 
+                  addingNewField = {this.state.addingNewField}
+                  toggleAddNewField = {this.toggleAddNewField}
+                  sendNewFieldInfo = {this.handleSaveNew}
                 />
-              )}
-            </div>
-
-            <div>
-              NewFormHere
-            </div>
-
-            <div>
-              <button type="button" class="btn btn-info" onClick={this.handleClick}>Add Item</button>
+              </div>
             </div>
 
             {/* Footer displays the total of the income/expenses fields */}

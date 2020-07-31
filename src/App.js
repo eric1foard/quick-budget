@@ -30,8 +30,12 @@ class App extends Component {
         ]
       },
     }
+    this.updateTotal = this.updateTotal.bind(this);
     this.updateIncomeHelper = this.updateIncomeHelper.bind(this);
     this.updateExpensesHelper = this.updateExpensesHelper.bind(this);
+    this.saveNewIncomeHelper = this.saveNewIncomeHelper.bind(this);
+    this.saveNewExpensesHelper = this.saveNewExpensesHelper.bind(this);
+    this.saveNewField = this.saveNewField.bind(this);
   }
 
   updateTotal(name, num, type) {
@@ -68,6 +72,22 @@ class App extends Component {
     this.updateTotal(name, num, "expensesData");
   }
 
+  // Appends the new field object to the end of the correct part of state
+  saveNewField(obj, type) {
+    let copyOfState = this.state[type]
+    copyOfState.fields = [...copyOfState.fields, obj];
+    this.setState({[type]: copyOfState});
+    
+  }
+
+  saveNewIncomeHelper(obj) {
+    this.saveNewField(obj, "incomeData");
+  }
+
+  saveNewExpensesHelper(obj) {
+    this.saveNewField(obj, "expensesData");
+  }
+
 
   render() {
     return (
@@ -86,13 +106,15 @@ class App extends Component {
           <Box 
             boxData={this.state.incomeData} 
             handleUpdate={this.updateIncomeHelper}
+            handleSaveNew={this.saveNewIncomeHelper}
             total={this.state.incomeData.total}
           />
 
           {/* Box with expenses information */}
           <Box 
             boxData={this.state.expensesData} 
-            handleUpdate={this.updateExpensesHelper} 
+            handleUpdate={this.updateExpensesHelper}
+            handleSaveNew={this.saveNewExpensesHelper} 
             total={this.state.expensesData.total}
           />
 
