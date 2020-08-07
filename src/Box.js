@@ -61,7 +61,7 @@ class Box extends Component {
                     subtotal={category.subtotal}
                     fields={category.fields}
                     handleUpdate={this.updateBox}
-                    key={category.title}
+                    key={category.id}
                     handleSaveNew={this.handleSaveNew}
                   />
                 )}

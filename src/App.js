@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import Box from './Box.js';
 import Summary from './Summary.js';
@@ -14,6 +15,7 @@ class App extends Component {
       incomeData: {
         title: 'income',
         total: 0,
+        id: uuidv4(),
         categories: [
           {
             title: 'Net Monthly Pay', 
@@ -35,12 +37,13 @@ class App extends Component {
       expensesData: {               
         title: 'expenses', 
         total: 0,
+        id: uuidv4(),
         categories: [
           {
             title: 'housing and utilities',
             subtotal: 0,
             fields: [
-              {title: 'Rent or Mortgage', description: '', value: 0}, 
+              {title: 'Rent or Mortgage', description: '', value: 0, id: uuidv4()}, 
               {title: 'Home or Renters Insurance', description: 'If not already included in mortgage payment', value: 0},
               {title: 'Property Tax', description: 'If not already included in mortgage payment', value: 0},
               {title: 'Homeowner Association (HOA) Fees', description: '', value: 0},
@@ -241,6 +244,7 @@ class App extends Component {
             handleUpdate={this.updateIncomeHelper}
             handleSaveNew={this.saveNewIncomeHelper}
             total={this.state.incomeData.total}
+            key={this.state.incomeData.id}
           />
 
           {/* Box with expenses information */}
@@ -249,6 +253,7 @@ class App extends Component {
             handleUpdate={this.updateExpensesHelper}
             handleSaveNew={this.saveNewExpensesHelper} 
             total={this.state.expensesData.total}
+            key={this.state.expensesData.id}
           />
 
           {/* Summary displays the final total monthly amount */}
