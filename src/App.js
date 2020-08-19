@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Box from './Box.js';
 import Summary from './Summary.js';
-import Test from './Test.js';
 import './App.css';
 
 class App extends Component {
@@ -13,6 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      apiResponse: "",
       incomeData: {
         title: 'income',
         total: 0,
@@ -217,13 +217,21 @@ class App extends Component {
     this.saveNewField(obj, "expensesData", category);
   }
 
+  callAPI() {
+    fetch("http://localhost:3001/testAPI")
+    .then(res => res.text())
+    .then(res => this.setState({ apiResponse: res }));
+  }
+
+  componentWillMount() {
+    this.callAPI();
+  }
+
 
   render() {
     return (
       <div className="App">
         <div className="container">
-
-        <Test />
 
           {/* Title and subtitle */}
           <div className="App-title">
