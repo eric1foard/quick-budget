@@ -60,6 +60,7 @@ class Box extends Component {
                   fields={category.fields}
                   handleUpdate={this.updateBox}
                   key={category.id}
+                  id={category.id}
                   handleSaveNew={this.handleSaveNew}
                 />
               )}

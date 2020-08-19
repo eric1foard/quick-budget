@@ -46,15 +46,12 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Rent or Mortgage', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Home or Renters Insurance', id: uuidv4(), description: 'If not already included in mortgage payment', value: 0},
+              {title: 'Rent or Mortgage', id: uuidv4(), description: 'Monthly amount due.  Add in Home or Renters Insurance if not already included', value: 0}, 
               {title: 'Property Tax', id: uuidv4(), description: 'If not already included in mortgage payment', value: 0},
-              {title: 'Homeowner Association (HOA) Fees', id: uuidv4(), description: '', value: 0},
+              {title: 'Homeowner Association (HOA) Fees', id: uuidv4(), description: 'Only enter if applicable', value: 0},
               {title: 'Home Repair and Maintenance', id: uuidv4(), description: 'Even if it\'s not a monthly expense, add what you estimate this costs per month', value: 0},
-              {title: 'Electricity and Gas', id: uuidv4(), description: '', value: 0},
-              {title: 'Water and Sewer', id: uuidv4(), description: '', value: 0},
-              {title: 'Cable and Internet', id: uuidv4(), description: '', value: 0},
-              {title: 'Cell Phone', id: uuidv4(), description: '', value: 0},
+              {title: 'Utilities', id: uuidv4(), description: 'Include electricity, gas, water, sewer, trash, etc.', value: 0},
+              {title: 'Electronics', id: uuidv4(), description: 'Include cable, internet, cell phone, etc.', value: 0},
             ]
           },
           {
@@ -62,12 +59,11 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Car Payment', id: uuidv4(), description: '', value: 0}, 
-              {title: '2nd Car Payment', id: uuidv4(), description: '', value: 0},
-              {title: 'Car Insurance', id: uuidv4(), description: 'Be sure to divide this into a monthly cost', value: 0},
-              {title: 'Gas', id: uuidv4(), description: '', value: 0},
-              {title: 'Car Maintenance', id: uuidv4(), description: '', value: 0},
-              {title: 'Parking and Tolls', id: uuidv4(), description: '', value: 0},
+              {title: 'Car Payment', id: uuidv4(), description: 'Include any additional car payments, if you have more than one', value: 0}, 
+              {title: 'Car Insurance', id: uuidv4(), description: 'Check your billing, and be sure to divide this into a monthly amount', value: 0},
+              {title: 'Gas', id: uuidv4(), description: 'Average monthly cost of gas', value: 0},
+              {title: 'Car Maintenance', id: uuidv4(), description: 'Average monthly cost of car repairs - you can assume oil changes, with a little extra just in case of additional repairs', value: 0},
+              {title: 'Parking and Tolls', id: uuidv4(), description: 'If applicable', value: 0},
             ]
           },
           {
@@ -75,8 +71,8 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Groceries', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Meals at Restaurants', id: uuidv4(), description: '', value: 0}
+              {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
+              {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
             ]
           },
           {
@@ -84,14 +80,11 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Health Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-              {title: 'Life Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-              {title: 'Prescriptions', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Gym Membership', id: uuidv4(), description: '', value: 0},
-              {title: 'Clothes', id: uuidv4(), description: '', value: 0},
-              {title: 'Dry Cleaning and Laundry', id: uuidv4(), description: '', value: 0},
-              {title: 'Haircut and Color', id: uuidv4(), description: '', value: 0},
-              {title: 'Beauty Supplies', id: uuidv4(), description: '', value: 0},
+              {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
+              {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
+              {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
+              {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
+              {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
             ]
           },
           {
@@ -100,8 +93,8 @@ class App extends Component {
             subtotal: 0,
             fields: [
               {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-              {title: 'Child Support', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Tuition and Supplies', id: uuidv4(), description: '', value: 0},
+              {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
+              {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
             ]
           },
           {
@@ -109,9 +102,9 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Credit Cards', id: uuidv4(), description: 'total minimum monthly payment due', value: 0}, 
-              {title: 'Student Loans', id: uuidv4(), description: 'total minimum monthly payment due', value: 0}, 
-              {title: 'Medical Debt', id: uuidv4(), description: 'total minimum monthly payment due', value: 0},
+              {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+              {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+              {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
             ]
           },
           {
@@ -119,13 +112,12 @@ class App extends Component {
             id: uuidv4(),
             subtotal: 0,
             fields: [
-              {title: 'Hobbies', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Tobacco & Alcohol', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Newspapers and Magazines', id: uuidv4(), description: '', value: 0},
-              {title: 'Other Media Subscriptions', id: uuidv4(), description: 'Examples: Netflix, Disney+, etc.', value: 0},
-              {title: 'Travel and Vacation', id: uuidv4(), description: '', value: 0},
-              {title: 'Donations', id: uuidv4(), description: '', value: 0},
-              {title: 'Pet Care', id: uuidv4(), description: '', value: 0},
+              {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
+              {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
+              {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
+              {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
+              {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
+              {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurnace, toys, etc.', value: 0},
             ]
           },
         ]
