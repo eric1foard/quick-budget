@@ -117,7 +117,7 @@ class App extends Component {
               {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
               {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
               {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
-              {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurnace, toys, etc.', value: 0},
+              {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
             ]
           },
         ]
