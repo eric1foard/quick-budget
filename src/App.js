@@ -105,16 +105,6 @@ class App extends Component {
             ]
           },
           {
-            title: 'children',
-            id: uuidv4(),
-            subtotal: 0,
-            fields: [
-              {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-              {title: 'Child Support', id: uuidv4(), description: '', value: 0}, 
-              {title: 'Tuition and Supplies', id: uuidv4(), description: '', value: 0},
-            ]
-          },
-          {
             title: 'debts and loans',
             id: uuidv4(),
             subtotal: 0,

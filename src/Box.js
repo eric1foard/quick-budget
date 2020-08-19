@@ -40,40 +40,37 @@ class Box extends Component {
 
     return(
       <div>
-        {/* Uses collapsable bootstrap accordion */}
-        <div id="accordionBox">
-          <div className="card w-75">
+        <div className="card w-75">
 
-            {/* Header displays title, and is given classes for styling */}
-            <div className={cardHeaderClasses} id="headingOne">
-              <button className="btn btn-link btn-link-heading" data-toggle="collapse" data-target={dataTarget} aria-expanded="true" aria-controls="collapseOne">
-                {boxTitle}
-              </button>
+          {/* Header displays title, and is given classes for styling */}
+          <div className={cardHeaderClasses}>
+            <div className="btn-link-heading">
+              {boxTitle}
             </div>
-
-            {/* Maps through each item in income/expenses, passing this information to Form.js component */}
-            <div id={dataId} className="collapse show category-income" aria-labelledby="headingOne" data-parent="#accordionBox">
-              <ul className="list-group list-group-flush">
-                {this.props.boxData.categories.map(category =>
-                  <Form 
-                    boxType={boxType}
-                    categoryTitle={category.title}
-                    subtotal={category.subtotal}
-                    fields={category.fields}
-                    handleUpdate={this.updateBox}
-                    key={category.id}
-                    handleSaveNew={this.handleSaveNew}
-                  />
-                )}
-              </ul>
-            </div>
-
-            {/* Footer displays the total of the income/expenses fields */}
-            <div className={cardFooterClasses}>
-              Total Monthly {boxTitle}: ${this.props.total.toFixed(2)}
-            </div>
-
           </div>
+
+          {/* Maps through each item in income/expenses, passing this information to Form.js component */}
+          
+            <ul className="list-group list-group-flush">
+              {this.props.boxData.categories.map(category =>
+                <Form 
+                  boxType={boxType}
+                  categoryTitle={category.title}
+                  subtotal={category.subtotal}
+                  fields={category.fields}
+                  handleUpdate={this.updateBox}
+                  key={category.id}
+                  handleSaveNew={this.handleSaveNew}
+                />
+              )}
+            </ul>
+
+
+          {/* Footer displays the total of the income/expenses fields */}
+          <div className={cardFooterClasses}>
+            Total Monthly {boxTitle}: ${this.props.total.toFixed(2)}
+          </div>
+
         </div>
       </div>
     )
