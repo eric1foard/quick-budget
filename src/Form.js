@@ -65,43 +65,43 @@ class Form extends Component {
             
             </div>
           
+          <hr />
           <div id={dataId} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             {this.props.fields.map(field =>
-              // <li className="list-group-item">
-                <form>
-                  <div className="form-group row">
-                    {/* Form's title, in upper case */}
-                    <div className="col-sm-9">
-                      <label htmlFor={field.title} className="col-form-label label-title">
-                        {field.title}
-                      </label>
-                      {/* Underneath the title, a description */}
-                      <div className="label-description">
-                        {field.description}
-                      </div>
+              <form>
+                <div className="form-group row">
+                  {/* Form's title, in upper case */}
+                  <div className="col-sm-9">
+                    <label htmlFor={field.title} className="col-form-label label-title">
+                      {field.title}
+                    </label>
+                    {/* Underneath the title, a description */}
+                    <div className="label-description">
+                      {field.description}
                     </div>
-
-                    {/* On the right side, the input for users to put $ amounts */}
-                    <div className="col-sm-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
-                        </div>
-                        <input
-                          type="number" 
-                          name={field.title}
-                          id={field.title}
-                          key={field.title}
-                          onChange={this.handleChange}
-                          className="form-control"
-                          value={field.value}
-                        />
-                      </div>
-                    </div>
-
                   </div>
-                </form>
-              // </li>
+
+                  {/* On the right side, the input for users to put $ amounts */}
+                  <div className="col-sm-3">
+                    <div className="input-group mb-3">
+                      <div className="input-group-prepend">
+                        <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
+                      </div>
+                      <input
+                        type="number" 
+                        name={field.title}
+                        id={field.title}
+                        key={field.title}
+                        onChange={this.handleChange}
+                        className="form-control"
+                        value={field.value}
+                      />
+                    </div>
+                  </div>
+
+                </div>
+                <hr />
+              </form>
             )}
             <div>
               <NewField 
