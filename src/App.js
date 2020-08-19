@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Box from './Box.js';
 import Summary from './Summary.js';
+import Test from './Test.js';
 import './App.css';
 
 class App extends Component {
@@ -221,6 +222,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
+
+        <Test />
 
           {/* Title and subtitle */}
           <div className="App-title">
