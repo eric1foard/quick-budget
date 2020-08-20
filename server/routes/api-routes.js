@@ -4,7 +4,7 @@
 
 // Dependencies
 // =============================================================
-var Budget = require("../models/Budget.js");
+var db = require("../models");
 
 
 // Routes
@@ -12,7 +12,7 @@ var Budget = require("../models/Budget.js");
 module.exports = function(app) {
 
   // Get all chirps
-  app.get("/api/all", async function(req, res) {
+  app.get("/api/all", function(req, res) {
 
     // Finding all Budget, and then returning them to the user as JSON.
     // Sequelize queries are asynchronous, which helps with perceived speed.
@@ -24,7 +24,7 @@ module.exports = function(app) {
     // console.log("All users:", JSON.stringify(budget, null, 2));
 
 
-    Budget.findAll({}).then(function(results) {
+    db.Budget.findAll({}).then(function(results) {
       // results are available to us inside the .then
       console.log("made it into api call")
       // console.log("res: ", res);
@@ -40,7 +40,7 @@ module.exports = function(app) {
     console.log("Budget Data:");
     console.log(req.body);
 
-    Budget.create({
+    db.Budget.create({
       user_name: req.body.author,
       money: req.body.body,
     }).then(function(results) {
