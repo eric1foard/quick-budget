@@ -8,9 +8,11 @@ var sequelize = require("../config/connection.js");
 
 // Creates a "Budget" model that matches up with DB
 var Budget = sequelize.define("budget", {
-  author: Sequelize.STRING,
-  body: Sequelize.STRING,
-  created_at: Sequelize.DATE
+  user_name: Sequelize.STRING,
+  money: Sequelize.INTEGER,
+}, {
+  freezeTableName: true,
+  timestamps: false
 });
 
 // Syncs with DB
