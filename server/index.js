@@ -1,14 +1,31 @@
+// *********************************************************************************
+// index.js - This file is the initial starting point for the Node/Express server.
+// *********************************************************************************
+
+// Dependencies
+// =============================================================
 const express = require('express');
-const axios = require('axios')
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const pino = require('express-pino-logger')();
 
-// const testAPIRouter = require("./routes/testAPI"); - example
-
+// Sets up the Express App
+// =============================================================
 const app = express();
+var PORT = process.env.PORT || 3001;
+
+
+// Sets up the Express app to handle data parsing
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
-// app.use('/testAPI', testAPIRouter); - example
+
+// Static directory - do I need this?
+app.use(express.static("app/public"));
+
+// Routes
+// =============================================================
+require("./routes/api-routes.js")(app);
+
 
 // app.get('/api/greeting', (req, res) => {
 //   const name = req.query.name || 'World';
@@ -39,6 +56,6 @@ app.use(pino);
 //   }
 // })
 
-app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
-);
+app.listen(PORT, () => {
+  console.log('App listening on on PORT ' + PORT);
+});
