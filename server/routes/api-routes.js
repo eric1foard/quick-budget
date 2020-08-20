@@ -24,7 +24,7 @@ module.exports = function(app) {
     // console.log("All users:", JSON.stringify(budget, null, 2));
 
 
-    db.Budget.findAll({}).then(function(results) {
+    db.User.findAll({}).then(function(results) {
       // results are available to us inside the .then
       console.log("made it into api call")
       // console.log("res: ", res);
@@ -33,21 +33,4 @@ module.exports = function(app) {
     });
 
   });
-
-  // Add a chirp
-  app.post("/api/new", function(req, res) {
-
-    console.log("Budget Data:");
-    console.log(req.body);
-
-    db.Budget.create({
-      user_name: req.body.author,
-      money: req.body.body,
-    }).then(function(results) {
-      // `results` here would be the newly created Budget
-      res.end();
-    });
-
-  });
-
-};
+}

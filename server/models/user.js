@@ -1,8 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-  var Budget = sequelize.define("Budget", {
-    // Giving the Budget model a name of type STRING
-    user_name: DataTypes.STRING,
+  var User = sequelize.define("User", {
+    // Giving the User model a name of type STRING
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
     money: DataTypes.INTEGER,
+    cars: DataTypes.STRING,
   }, {
     timestamps: false
   });
@@ -15,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  return Budget;
+  return User;
 };
 
 
