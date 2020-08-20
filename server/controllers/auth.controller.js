@@ -5,14 +5,11 @@ const User = db.User;
 const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
-var bcrypt = require("bcrypt");
+var bcrypt = require("bcryptjs");
 
 
 exports.signup = (req, res) => {
   // Save User to Database
-  console.log("======================")
-  console.log("req.body: ", req.body)
-  console.log("req.body.username: ", req.body.username)
   User.create({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 8),
@@ -29,6 +26,10 @@ exports.signup = (req, res) => {
 
 
 exports.signin = (req, res) => {
+  // console.log("Did we arrive Here?")
+  // console.log("======================")
+  // console.log("req.body: ", req.body)
+  // console.log("req.body.username: ", req.body.username)
   User.findOne({
     where: {
       username: req.body.username
@@ -38,11 +39,11 @@ exports.signin = (req, res) => {
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
       }
-
-      var passwordIsValid = bcrypt.compare(req.body.password, config.secret, function(err, result) {
-        console.log(err);
-        console.log(result);
-      });
+      
+      var passwordIsValid = bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
 
       if (!passwordIsValid) {
         return res.status(401).send({
