@@ -24,3 +24,87 @@
   font-size: 2rem;
 
 }
+
+/* For the Box component */
+.card{
+  margin: 0 auto;
+  float: none; 
+  margin-bottom: 30px; 
+}
+
+.card-header-income{
+  background-color: rgba(62, 172, 62, 0.698);
+}
+
+.card-header-expenses{
+  background-color: rgba(149, 57, 57, 0.63);
+}
+
+.card-footer-income{
+  background-color: rgba(0, 128, 0, 0.164);
+}
+
+.card-footer-expenses{
+  background-color: rgba(255, 0, 0, 0.171);
+}
+
+.btn-link-heading{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  text-decoration: underline;
+  padding: 10px;
+}
+
+
+/* For the Form component */
+.label-title{
+  font-size: 1.1rem;
+  font-weight: bold;
+  vertical-align: middle
+}
+
+.label-description{
+  font-size: .8rem;
+  font-style: oblique;
+}
+
+.category-title-income{
+  background-color: rgba(62, 172, 62, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
+.category-title-expenses{
+  background-color: rgba(149, 57, 57, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
+.input-group{
+  margin-top: 12px;
+}
+
+.subtotal{
+  margin-top: 13px;
+}
+
+
+/* For the summary component */
+.card-header-summary{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  background-color: rgba(0, 195, 255, 0.445);
+}
+
+.card-body-summary{
+  background-color: rgba(0, 195, 255, 0.13);;
+}
+
+/* For the NewField component */
+.btn{
+  margin: 5px;
+}

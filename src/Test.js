@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// This can be deleted, just keeping temporarily for reference.
+
 class Test extends Component {
   constructor(props) {
     super(props);

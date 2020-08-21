@@ -14,13 +14,12 @@ const cors = require('cors');
 // Sets up the Express App
 // =============================================================
 const app = express();
-var PORT = process.env.PORT || 3001;
 
 
 // Sets up Cors
 // =============================================================
 var corsOptions = {
-  origin: "http://localhost:3001"
+  origin: "http://localhost:3000"
 }
 app.use(cors(corsOptions));
 
@@ -58,6 +57,7 @@ require("./routes/user.routes")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
+var PORT = process.env.PORT || 3001;
 db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);

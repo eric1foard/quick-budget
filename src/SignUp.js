@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './NewField.css';
+import './App.css';
 
 class SignUp extends Component {
   constructor(props) {

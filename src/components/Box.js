@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Form from './Form';
-import './Box.css';
 
 class Box extends Component {
   constructor(props) {
