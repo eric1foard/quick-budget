@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import NewField from './NewField'
-import './Form.css';
+
 
 class Form extends Component {
   constructor(props) {

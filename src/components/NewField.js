@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import './NewField.css';
-
 class NewField extends Component {
   constructor(props) {
     super(props);
