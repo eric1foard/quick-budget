@@ -10,6 +10,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
+import Budget from"./components/Budget"
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      currentUser: undefined
+      currentUser: undefined,
     };
   }
 
@@ -53,21 +54,23 @@ class App extends Component {
               </li>
 
               {currentUser && (
-                <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                    User
-                  </Link>
-                </li>
+                <div className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to={"/profile"} className="nav-link">
+                      {currentUser.username}
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={"/budget"} className="nav-link">
+                      Budget
+                    </Link>
+                  </li>
+                </div>
               )}
             </div>
 
             {currentUser ? (
               <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/profile"} className="nav-link">
-                    {currentUser.username}
-                  </Link>
-                </li>
                 <li className="nav-item">
                   <a href="/login" className="nav-link" onClick={this.logOut}>
                     LogOut
@@ -97,6 +100,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
+              <Route exact path="/budget" component={Budget} />
               <Route path="/user" component={BoardUser} />
             </Switch>
           </div>

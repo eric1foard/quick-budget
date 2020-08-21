@@ -225,6 +225,7 @@ class App extends Component {
 
   render() {
     return (
+      <div className="budget">
       <div className="App">
         <div className="container">
 
@@ -261,6 +262,7 @@ class App extends Component {
           />
 
         </div>
+      </div>
       </div>
     );
   }
