@@ -225,15 +225,36 @@ class App extends Component {
 
   render() {
     return (
+      <div className="budget">
       <div className="App">
         <div className="container">
 
           {/* Title and subtitle */}
-          <div className="App-title">
-            Quick Budget
-          </div>
-          <div className="App-subtitle">
-            A quick and easy reference tool to calculate your basic monthly budget.
+          <div className="jumbotron jumbo">
+              <div className="row">
+                <div className="col-sm-12 logo">
+                  <span className="welcome-to">Calculator </span>Quick Budget
+                </div>
+              </div>
+            <div className="subtitle">
+              A quick and easy reference tool to calculate your basic monthly budget.
+            </div>
+            <div className="budget-instructions-list">
+                {/* <div className="budget-list-text">
+                  You're just a few steps away:
+                </div> */}
+                <ol className="budget-list-text">
+                  <li className="budget-list-text income">
+                    Add your income below
+                  </li>
+                  <li className="budget-list-text expenses">
+                    After that, we'll guide you through your expenses
+                  </li>
+                  <li className="budget-list-text save">
+                    Click save - we'll store your budget and take you to your dashboard with more insights
+                  </li>
+                </ol>
+              </div>
           </div>
 
           {/* Box with income information */}
@@ -261,6 +282,7 @@ class App extends Component {
           />
 
         </div>
+      </div>
       </div>
     );
   }
