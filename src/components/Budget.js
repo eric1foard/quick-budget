@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Box from './Box.js';
 import Summary from './Summary.js';
+import AuthService from "../services/auth.service";
+import userService from '../services/user.service.js';
 
 class App extends Component {
 
@@ -12,6 +14,12 @@ class App extends Component {
     super(props);
     this.state = {
       apiResponse: "",
+
+      currentUser: AuthService.getCurrentUser(),
+      error: null,
+      isLoaded: false,
+      content: "",
+
       incomeData: {
         title: 'income',
         total: 0,
@@ -222,13 +230,33 @@ class App extends Component {
     .then(res => this.setState({ apiResponse: res }));
   }
 
+  // componentDidMount() {
+  //   userService.getUserBoard().then(
+  //     response => {
+  //       this.setState({
+  //         isLoaded: true,
+  //         content: response.data
+  //       });
+  //     },
+  //     error => {
+  //       this.setState({
+  //         content:
+  //           (error.response && error.response.data) ||
+  //           error.message ||
+  //           error.toString()
+  //       });
+  //     }
+  //   );
+  // }
+
 
   render() {
+    // this.callAPI()
     return (
       <div className="budget">
       <div className="App">
         <div className="container">
-
+          <h1>{this.state.items}</h1>
           {/* Title and subtitle */}
           <div className="jumbotron jumbo">
               <div className="row">
