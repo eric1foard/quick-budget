@@ -230,33 +230,39 @@ class App extends Component {
     .then(res => this.setState({ apiResponse: res }));
   }
 
-  // componentDidMount() {
-  //   userService.getUserBoard().then(
-  //     response => {
-  //       this.setState({
-  //         isLoaded: true,
-  //         content: response.data
-  //       });
-  //     },
-  //     error => {
-  //       this.setState({
-  //         content:
-  //           (error.response && error.response.data) ||
-  //           error.message ||
-  //           error.toString()
-  //       });
-  //     }
-  //   );
-  // }
+  componentDidMount() {
+    if (!this.state.currentUser) {
+      this.setState({ content: 'No user' })
+    } else {
+      userService.getUserCar().then(
+        response => {
+          this.setState({
+            isLoaded: true,
+            content: response.data
+          });
+        },
+        error => {
+          this.setState({
+            content:
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString()
+          });
+        }
+      );
+    }
+  }
 
 
   render() {
     // this.callAPI()
+    console.log(this.state.currentUser);
     return (
       <div className="budget">
       <div className="App">
         <div className="container">
-          <h1>{this.state.items}</h1>
+          <h1>{this.state.content}</h1>
+
           {/* Title and subtitle */}
           <div className="jumbotron jumbo">
               <div className="row">

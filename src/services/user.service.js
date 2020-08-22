@@ -11,6 +11,10 @@ class UserService {
   getUserBoard() {
     return axios.get(API_URL + 'user', { headers: authHeader() });
   }
+
+  getUserCar() {
+    return axios.get(API_URL + 'user/car', { headers: authHeader() });
+  }
 }
 
 export default new UserService();

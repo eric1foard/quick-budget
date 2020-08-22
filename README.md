@@ -10,6 +10,8 @@
 -- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
 - Register
 -- Should also log the user in and take them to profile?
+- Controller
+ - get logic out of controller and into models
 
 ### Icebox:
 - To do's - minor
