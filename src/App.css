@@ -6,7 +6,8 @@
   height: 100vh;
 }
 
-.App-title{
+/* Not using at the moment */
+/* .App-title{
   margin-top: 1rem;
   color: rgba(28, 29, 28, 0.801);
   margin-bottom: 0;
@@ -14,7 +15,7 @@
   display: inline-block;
   font-size: 5rem;
   width: 50%;
-}
+} */
 
 .App-subtitle{
   color: rgba(0, 0, 0, 0.801);
@@ -25,7 +26,7 @@
 }
 
 /* For the Home component */
-.welcome-logo{
+.logo{
   margin-top: 1rem;
   color: rgba(82, 197, 107, 0.801);
   margin-bottom: 0;
@@ -39,9 +40,10 @@
   font-weight: 20;
 }
 
-.jumbo-welcome{
-  background-color: rgba(217, 235, 227, 0.979);
-  margin-top: 30px
+.jumbo{
+  background-color: rgb(255, 255, 255);
+  margin-top: 30px;
+  border-radius: 50px;
 }
 
 .subtitle{
@@ -77,12 +79,63 @@
   border-color: rgb(7, 7, 7);
 }
 
+.btn-login:hover{
+  background-color: rgba(180, 255, 215, 0.5);
+  color: rgba(0, 0, 0, 0.842);
+}
+
 .btn-register{
   padding: 7px 65px;
   border-radius: 20px;
   background-color: rgba(13, 97, 72, 0.842);
-  color: rgb(255, 255, 255);}
+  color: rgb(255, 255, 255);
+}
 
+.btn-register:hover{
+  background-color: rgba(7, 121, 86, 0.767);
+  color:  rgb(0, 0, 0);
+}
+
+
+/* For the Budget component */
+.budget-instructions-list{
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+ol.budget-list-text {
+  list-style: none;
+  counter-reset: item;
+  align-items: left;
+}
+
+li.budget-list-text{
+  list-style-position: inside;
+  counter-increment: item;
+  margin-top: 15px;
+}
+
+li.budget-list-text:before {
+  margin-right: 10px;
+  content: counter(item);
+  border-radius: 100%;
+  color: white;
+  width: 1.6em;
+  text-align: center;
+  display: inline-block;
+}
+
+li.income:before{
+  background: rgba(34, 133, 42, 0.698);
+}
+
+li.expenses:before{
+  background: rgba(149, 57, 57, 0.63);
+}
+
+li.save:before{
+  background: rgba(0, 195, 255, 0.445);
+}
 
 
 

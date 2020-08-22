@@ -1,19 +1,29 @@
 # Roadmap
 
 ## To Do
-- Improve variable naming.
-- Add realistic categories
-- Use UUID for unique keys - help with collapse issue?
-- User can delete fields
-- User can edit fields
-- Total changes (color as well?) depending on +/-
-- Forecast - calculate accumulating savings over months, or diminishing from total.
 
-## Ideas
-- put forms into toggle-able subheadings (optional).  If so, each subheading shows subtotal.
-- Loan interest - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
+### Next:
+- Budget
+-- Need to get fields to save to DB.
+- Dashboard
+-- Displays result of what user entered.
+-- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
+
+### Icebox:
+- To do's - minor
+-- Turn jumbotron into a component (can accept props.children for different stuff below title)
+-- get rid of extra line when collapse sections on budget
+-- How to organize the CSS?  One file like current?  Or split into many?
+-- More things that can be turned into components?
+- To do's - major
+-- Improve variable naming.
+-- User can delete fields (will this be possible?)
+-- User can edit fields (will this be possible?)
+
+### Ideas
+- On dashboard - have loan calculator - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
 - When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
-- Login?  Store info in db?
+- scrollspy on the budget page?
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

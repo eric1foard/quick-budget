@@ -38,9 +38,9 @@ export default class Home extends Component {
       <div className="App">
         <div className="container">
           
-          <div className="jumbotron jumbo-welcome">
+          <div className="jumbotron jumbo">
           <div className="row">
-            <div className="col-sm-12 welcome-logo">
+            <div className="col-sm-12 logo">
               <span className="welcome-to">Welcome to </span>Quick Budget
             </div>
             <div className="col-sm-12 welcome-subtitle">
@@ -64,11 +64,11 @@ export default class Home extends Component {
           <div className="row home-buttons">
             <div className="col-sm-12">
               <Link to={"/login"} className="">
-                <button type="button" class="btn btn-login">Sign In</button>
+                <button type="button" className="btn btn-login">Sign In</button>
               </Link>
               <br />
-              <Link to={"/register"} className="">
-                <button type="button" class="btn btn-register">Register</button>
+              <Link to={"/register"} NameName="">
+                <button type="button" className="btn btn-register">Register</button>
               </Link>
             </div>
           <Switch>
