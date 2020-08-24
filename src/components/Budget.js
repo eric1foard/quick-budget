@@ -257,11 +257,12 @@ class App extends Component {
   render() {
     // this.callAPI()
     console.log(this.state.currentUser);
+    console.log(this.state.content)
     return (
       <div className="budget">
       <div className="App">
         <div className="container">
-          <h1>{this.state.content}</h1>
+          <h1>{this.state.content.car}</h1>
 
           {/* Title and subtitle */}
           <div className="jumbotron jumbo">

@@ -11,10 +11,28 @@ exports.userBoard = (req, res) => {
 };
 
 exports.userCar = (req, res) => {
-  res.status(200).send("Car Content.");
-  // User.findOne({
-  //   where: {
-  //     username: 
-  //   }
-  // })
-}
+  console.log("=======================");
+  console.log("=======================");
+  console.log("req: ", req.userId);
+  console.log("=======================");
+  console.log("=======================");
+  User.findOne({
+    where: {
+      //could be the wrong thing .... check here
+      id: req.userId
+    }
+  })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({ message: "User Not found. Or is not logged in?" });
+      }
+
+      res.status(200).send({
+        car: user.username
+      });
+
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+};

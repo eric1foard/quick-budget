@@ -12,8 +12,9 @@ class UserService {
     return axios.get(API_URL + 'user', { headers: authHeader() });
   }
 
-  getUserCar() {
-    return axios.get(API_URL + 'user/car', { headers: authHeader() });
+  getUserCar(username) {
+    return axios
+      .get(API_URL + 'user/car', { headers: authHeader() });
   }
 }
 
