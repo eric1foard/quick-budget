@@ -12,9 +12,9 @@ class UserService {
     return axios.get(API_URL + 'user', { headers: authHeader() });
   }
 
-  getUserCar(username) {
+  getUserIncome() {
     return axios
-      .get(API_URL + 'user/car', { headers: authHeader() });
+      .get(API_URL + 'user/income', { headers: authHeader() });
   }
 }
 

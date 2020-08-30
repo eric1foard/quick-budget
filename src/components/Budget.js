@@ -224,6 +224,11 @@ class App extends Component {
     this.saveNewField(obj, "expensesData", category);
   }
 
+  handleSave(evt) {
+    evt.preventDefault();
+
+  }
+
   callAPI() {
     fetch("http://localhost:3001/testAPI")
     .then(res => res.text())
@@ -232,9 +237,10 @@ class App extends Component {
 
   componentDidMount() {
     if (!this.state.currentUser) {
+      // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      userService.getUserCar().then(
+      userService.getUserIncome().then(
         response => {
           this.setState({
             isLoaded: true,
@@ -262,7 +268,7 @@ class App extends Component {
       <div className="budget">
       <div className="App">
         <div className="container">
-          <h1>{this.state.content.car}</h1>
+          <h1>Here: {this.state.content.income}</h1>
 
           {/* Title and subtitle */}
           <div className="jumbotron jumbo">
@@ -315,6 +321,10 @@ class App extends Component {
             totalIncome={this.state.incomeData.total}
             totalExpenses={this.state.expensesData.total}
           />
+
+
+          <button onClick={this.handleSave} type="button" class="btn btn-primary">Save</button>
+
 
         </div>
       </div>
