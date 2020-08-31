@@ -18,7 +18,7 @@ class App extends Component {
       currentUser: AuthService.getCurrentUser(),
       error: null,
       isLoaded: false,
-      content: "",
+      userIncome: "",
 
       incomeData: {
         title: 'income',
@@ -30,7 +30,7 @@ class App extends Component {
             id: uuidv4(), 
             subtotal: 0, 
             fields: [
-              {title: 'Your Net Monthly Pay', id: uuidv4(), description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0}, 
+              {title: 'Your Net Monthly Pay', id: uuidv4(), description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0},
               {title: 'Spouse\'s Net Monthly Pay', id: uuidv4(), description: 'Same as above, but for your partner (if applicable)', value: 0}
             ]
           },
@@ -244,8 +244,12 @@ class App extends Component {
         response => {
           this.setState({
             isLoaded: true,
-            content: response.data
+            userIncome: response.data
           });
+          console.log(this.state.currentUser);
+          console.log(this.state.userIncome)
+          console.log(this.state.userIncome.data)
+          console.log(this.state.userIncome.data.monthly_pay)
         },
         error => {
           this.setState({
@@ -261,14 +265,15 @@ class App extends Component {
 
 
   render() {
-    // this.callAPI()
-    console.log(this.state.currentUser);
-    console.log(this.state.content)
+    // These lines are just for testing, can be removed
+      // this.callAPI()
+      console.log(this.state.currentUser);
+      console.log(this.state.userIncome)
     return (
       <div className="budget">
       <div className="App">
         <div className="container">
-          <h1>Here: {this.state.content.income}</h1>
+          {/* <h1>Here: {this.state.userIncome.data.monthly_pay}</h1> */}
 
           {/* Title and subtitle */}
           <div className="jumbotron jumbo">

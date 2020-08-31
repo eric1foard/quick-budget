@@ -19,22 +19,21 @@ exports.userIncome = (req, res) => {
   console.log("=======================");
   Income.findOne({
     where: {
-      //could be the wrong thing .... check here
       user_id: req.userId
     }
   })
     .then(income => {
       if (!income) {
-        return res.status(404).send({ message: "User Not found. Or is not logged in?" });
+        return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
       }
 
       res.status(200).send({
-        income: income.monthly_pay
+        data: income
       });
 
     })
     .catch(err => {
-      console.log("HERE IS THE ERROR")
+
       res.status(500).send({ message: err.message });
     });
 };
