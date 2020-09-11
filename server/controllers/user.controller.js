@@ -28,7 +28,7 @@ exports.userIncome = (req, res) => {
       }
 
       res.status(200).send({
-        data: income
+        userIncomeRes: income
       });
 
     })

@@ -1,6 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.User;
+const Income = db.Income;
 
 const Op = db.Sequelize.Op;
 
@@ -14,11 +15,14 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-    money: 0,
-    cars: 0
   })
     .then(user => {
-      res.send({ message: "User was registered successfully!" });
+      // Creates row in Income table for the user.  Id is obtained through user.null, strangely.
+      Income.create({
+        user_id: user.null
+      }).then(user => {
+        res.send({ message: "User was registered successfully!" });
+      })
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
