@@ -28,7 +28,6 @@ class Box extends Component {
 
 
   render() {
-    const boxTitle = this.capitalizeFirstLetter(this.props.boxData.title); // For clarity below
     const dataId = this.props.boxData.title.split(" ").join("-")
     const dataTarget = `#${dataId}`;
     
@@ -44,7 +43,7 @@ class Box extends Component {
           {/* Header displays title, and is given classes for styling */}
           <div className={cardHeaderClasses}>
             <div className="btn-link-heading">
-              {boxTitle}
+              {this.props.title}
             </div>
           </div>
 
@@ -68,7 +67,7 @@ class Box extends Component {
 
           {/* Footer displays the total of the income/expenses fields */}
           <div className={cardFooterClasses}>
-            Total Monthly {boxTitle}: ${this.props.total.toFixed(2)}
+            Total Monthly {this.props.title}: ${this.props.total.toFixed(2)}
           </div>
 
         </div>

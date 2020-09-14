@@ -311,23 +311,25 @@ class App extends Component {
           {/* Box with income information */}
           <Box 
             title="Income"
-            // incomeInfo=
-            // incomeAmount=
+
+            
 
             boxData={this.props.incomeData} 
-            handleUpdate={this.updateIncomeHelper}
-            handleSaveNew={this.saveNewIncomeHelper}
+            // handleUpdate={this.updateIncomeHelper}
+            // handleSaveNew={this.saveNewIncomeHelper}
             total={this.state.incomeTotal}
-            key={this.props.incomeData.id}
+            // key={this.props.incomeData.id}
           />
 
           {/* Box with expenses information */}
-          <Box 
+          <Box
+            title="Expenses"
+
             boxData={this.props.expensesData} 
-            handleUpdate={this.updateExpensesHelper}
-            handleSaveNew={this.saveNewExpensesHelper} 
+            // handleUpdate={this.updateExpensesHelper}
+            // handleSaveNew={this.saveNewExpensesHelper} 
             total={this.state.expensesTotal}
-            key={this.props.expensesData.id}
+            // key={this.props.expensesData.id}
           />
 
           {/* Summary displays the final total monthly amount */}
