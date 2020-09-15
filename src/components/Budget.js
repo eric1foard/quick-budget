@@ -9,6 +9,23 @@ import userService from '../services/user.service.js';
 class App extends Component {
 
   static defaultProps = {
+
+
+
+    // pay: {
+    //   title: 'Your Net Monthly Pay',
+    //   description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.',
+    //   // id: uuidv4(), 
+    //   value: 0
+    // },
+
+    // housingUtilities: {
+    //   title: 'Housing and Utilities',
+    //   description: ''
+    // }
+
+    // }
+
     incomeData: {
       title: 'income',
       id: uuidv4(),
@@ -55,60 +72,63 @@ class App extends Component {
             {title: 'Parking and Tolls', id: uuidv4(), description: 'If applicable', value: 0},
           ]
         },
-        // {
-        //   title: 'groceries and food',
-        //   id: uuidv4(),
-        //   subtotal: 0,
-        //   fields: [
-        //     {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
-        //     {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
-        //   ]
-        // },
-        // {
-        //   title: 'health and beauty',
-        //   id: uuidv4(),
-        //   subtotal: 0,
-        //   fields: [
-        //     {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
-        //     {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
-        //     {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
-        //     {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
-        //     {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
-        //   ]
-        // },
-        // {
-        //   title: 'children',
-        //   id: uuidv4(),
-        //   subtotal: 0,
-        //   fields: [
-        //     {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-        //     {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
-        //     {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
-        //   ]
-        // },
-        // {
-        //   title: 'debts and loans',
-        //   id: uuidv4(),
-        //   subtotal: 0,
-        //   fields: [
-        //     {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-        //     {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-        //     {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
-        //   ]
-        // },
-        // {
-        //   title: 'miscellaneous',
-        //   id: uuidv4(),
-        //   subtotal: 0,
-        //   fields: [
-        //     {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
-        //     {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
-        //     {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
-        //     {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
-        //     {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
-        //     {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
-        //   ]
-        // },
+
+
+
+        {
+          title: 'groceries and food',
+          id: uuidv4(),
+          subtotal: 0,
+          fields: [
+            {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
+            {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
+          ]
+        },
+        {
+          title: 'health and beauty',
+          id: uuidv4(),
+          subtotal: 0,
+          fields: [
+            {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
+            {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
+            {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
+            {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
+            {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
+          ]
+        },
+        {
+          title: 'children',
+          id: uuidv4(),
+          subtotal: 0,
+          fields: [
+            {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
+            {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
+            {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
+          ]
+        },
+        {
+          title: 'debts and loans',
+          id: uuidv4(),
+          subtotal: 0,
+          fields: [
+            {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+            {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+            {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
+          ]
+        },
+        {
+          title: 'miscellaneous',
+          id: uuidv4(),
+          subtotal: 0,
+          fields: [
+            {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
+            {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
+            {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
+            {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
+            {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
+            {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
+          ]
+        },
       ]
     }
   }
@@ -130,7 +150,7 @@ class App extends Component {
       expensesTotal: 0,
 
       // Income fields
-      monthlyPay: 0,
+      pay: 0,
       spouseMonthlyPay: 0,
       otherMonthlyIncome: 0,
 
@@ -312,6 +332,7 @@ class App extends Component {
           <Box 
             title="Income"
 
+            
             
 
             boxData={this.props.incomeData} 

@@ -2,6 +2,8 @@
 
 ## To Do
 
+- First, consider how we will get the information from the db - how to structure that api call(will likely need use the user and category as anchors, and find all the items associated in common).  Then, decide how we will provide it in default props.
+
 ### Next:
 - Budget
 -- Need to get fields to save to DB.
