@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var IncomeCategory = sequelize.define("IncomeCategory", {
+  var Income_Category = sequelize.define("Income_Category", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -31,5 +31,5 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  return IncomeCategory;
+  return Income_Category;
 };

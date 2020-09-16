@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var IncomeType = sequelize.define("IncomeType", {
+  var Income_Type = sequelize.define("Income_Type", {
     // ID for other tables to reference
     id: {
       type: DataTypes.INTEGER,
@@ -44,5 +44,5 @@ module.exports = function(sequelize, DataTypes) {
   });
 
 
-  return IncomeType;
+  return Income_Type;
 };

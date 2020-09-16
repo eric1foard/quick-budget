@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var ExpenseCategory = sequelize.define("ExpenseCategory", {
+  var Expense_Category = sequelize.define("Expense_Category", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -12,5 +12,5 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  return ExpenseCategory;
+  return Expense_Category;
 };

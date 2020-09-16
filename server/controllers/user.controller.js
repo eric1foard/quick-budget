@@ -17,18 +17,21 @@ exports.userBudget = (req, res) => {
   console.log("req: ", req.userId);
   console.log("=======================");
   console.log("=======================");
-  Income.findOne({
+  
+  db.Income_Category.findOne({
     where: {
-      user_id: req.userId
+      id: 1
     }
   })
-    .then(income => {
-      if (!income) {
+    .then(cat => {
+      console.log(cat);
+
+      if (!cat) {
         return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
       }
 
       res.status(200).send({
-        userIncomeRes: income
+        category: cat
       });
 
     })
@@ -36,4 +39,27 @@ exports.userBudget = (req, res) => {
 
       res.status(500).send({ message: err.message });
     });
+
+
+  // SAVING FOR REFERENCE
+  // Income.findOne({
+  //   where: {
+  //     user_id: req.userId
+  //   }
+  // })
+  //   .then(income => {
+  //     if (!income) {
+  //       return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
+  //     }
+
+  //     res.status(200).send({
+  //       userIncomeRes: income
+  //     });
+
+  //   })
+  //   .catch(err => {
+
+  //     res.status(500).send({ message: err.message });
+  //   });
+
 };

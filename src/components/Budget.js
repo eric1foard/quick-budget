@@ -140,7 +140,10 @@ class App extends Component {
     this.state = {
       apiResponse: "",
 
+      // Seems this is already being called from 
       currentUser: AuthService.getCurrentUser(),
+      visible: "Hi there!",
+
       error: null,
       isLoaded: false,
       userIncome: "",
@@ -267,16 +270,12 @@ class App extends Component {
     } else {
       userService.getUserBudget().then(
         response => {
-          console.log({response});
+          console.log("componentDidMount API call response: ", response.data);
           this.setState({
             isLoaded: true,
-            monthlyPay: response.data.userIncomeRes.monthly_pay,
-            spouseMonthlyPay: response.data.userIncomeRes.spouse_monthly_pay,
-            otherMonthlyIncome: response.data.userIncomeRes.other_monthly,
+            apiResponse: response.data.category.name
+            // budget: response.data.category
           });
-          console.log("monthly pay: ", this.state.monthlyPay);
-          console.log("spouse pay: ", this.state.spouseMonthlyPay);
-          console.log("other pay: ", this.state.otherMonthlyIncome);
         },
         error => {
           this.setState({
@@ -294,8 +293,10 @@ class App extends Component {
   render() {
     // These lines are just for testing, can be removed
       // this.callAPI()
-      console.log(this.state.currentUser);
-      console.log(this.state.userIncome)
+      console.log(this.state.apiResponse);
+      // console.log(this.state.userIncome)
+
+
     return (
       <div className="budget">
       <div className="App">
