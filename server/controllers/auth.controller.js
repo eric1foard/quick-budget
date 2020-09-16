@@ -17,13 +17,8 @@ exports.signup = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8),
   })
     .then(user => {
-      // Creates row in Income table for the user.  Id is obtained through user.null, strangely.
-      Income.create({
-        user_id: user.null
-      }).then(user => {
         res.send({ message: "User was registered successfully!" });
       })
-    })
     .catch(err => {
       res.status(500).send({ message: err.message });
     });

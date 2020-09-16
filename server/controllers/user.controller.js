@@ -11,7 +11,7 @@ exports.userBoard = (req, res) => {
   res.status(200).send("User Content.");
 };
 
-exports.userIncome = (req, res) => {
+exports.userBudget = (req, res) => {
   console.log("=======================");
   console.log("=======================");
   console.log("req: ", req.userId);

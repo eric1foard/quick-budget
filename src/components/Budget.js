@@ -265,9 +265,9 @@ class App extends Component {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      userService.getUserIncome().then(
+      userService.getUserBudget().then(
         response => {
-          console.log(response);
+          console.log({response});
           this.setState({
             isLoaded: true,
             monthlyPay: response.data.userIncomeRes.monthly_pay,
