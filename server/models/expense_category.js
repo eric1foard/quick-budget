@@ -1,9 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-  var ExpenseCategories = sequelize.define("ExpenseCategories", {
+  var ExpenseCategory = sequelize.define("ExpenseCategory", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
+    
     // Here, we only store the names of the categories of expenses
     name: DataTypes.STRING,
 
@@ -11,5 +12,5 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  return ExpenseCategories;
+  return ExpenseCategory;
 };
