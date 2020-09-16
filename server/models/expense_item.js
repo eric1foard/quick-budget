@@ -28,6 +28,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
 
+
+
+  }, {
+    timestamps: false,
+    
     // Adds an index to user_id for quicker lookups (TODO: does this work?)
     indexes: [
       {
@@ -35,9 +40,6 @@ module.exports = function(sequelize, DataTypes) {
         fields: ['user_id']
       }
     ]
-
-  }, {
-    timestamps: false
   });
 
 
