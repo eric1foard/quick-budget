@@ -21,11 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     // }
   },
   {
-    classMethods:{
-      associate:function(models){
-        Income_Category.belongsTo(models.Income_Type, { foreignKey: 'category_id' } );
-      }
-    },
+    // classMethods:{
+    //   associate:function(models){
+    //     Income_Category.belongsToMany(models.Income_Type, { foreignKey: 'category_id' } );
+    //   }
+    // },
     timestamps: false
   });
 

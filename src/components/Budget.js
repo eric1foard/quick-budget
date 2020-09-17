@@ -273,7 +273,7 @@ class App extends Component {
           console.log("componentDidMount API call response: ", response.data);
           this.setState({
             isLoaded: true,
-            apiResponse: response.data.category.name
+            apiResponse: response.data
             // budget: response.data.category
           });
         },

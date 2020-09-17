@@ -18,16 +18,24 @@ exports.userBudget = (req, res) => {
   console.log("=======================");
   console.log("=======================");
   
-  db.Income_Category.findAll({
-    // where: {
-    //   id: 1
+  db.Income_Item.findAll({
+    where: {
+      user_id: req.userId
+    },
+    // include: [db.User]
+    include: [{
+      model: db.Type
+    }]
+
+
+    
+
+    // include: {
+    //   model: User,
+    //   where: {
+    //     id: 1
+    //   }
     // }
-    include: {
-      model: User,
-      where: {
-        id: 1
-      }
-    }
   })
     .then(cat => {
       console.log(cat);

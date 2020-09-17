@@ -14,12 +14,12 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
   }, {
-    classMethods:{
-      associate:function(models){
-        User.belongsTo(models.Income_Type, { foreignKey: 'user_id' } );
-        User.belongsTo(models.Income_Item, { foreignKey:  'user_id'}  );
-      }
-    },
+    // classMethods:{
+    //   associate:function(models){
+    //     User.belongsToMany(models.Income_Type, { foreignKey: 'user_id' } );
+    //     User.belongsToMany(models.Income_Item, { foreignKey:  'user_id'}  );
+    //   }
+    // },
     timestamps: false
   });
 
