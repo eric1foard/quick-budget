@@ -1,3 +1,8 @@
+const db = require("../models");
+const Income_Item = db.Income_Item;
+const Income_Type = db.Income_Type;
+const Income_Category = db.Income_Category;
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
     id: {
@@ -20,6 +25,8 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
+  User.belongsTo(Income_Item);
+  User.belongsTo(Income_Type);
 
   return User;
 };

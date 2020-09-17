@@ -18,9 +18,15 @@ exports.userBudget = (req, res) => {
   console.log("=======================");
   console.log("=======================");
   
-  db.Income_Category.findOne({
-    where: {
-      id: 1
+  db.Income_Category.findAll({
+    // where: {
+    //   id: 1
+    // }
+    include: {
+      model: User,
+      where: {
+        id: 1
+      }
     }
   })
     .then(cat => {

@@ -1,3 +1,8 @@
+const db = require("../models");
+const User = db.User;
+const Income_Category = db.Income_Category;
+const Income_Item = db.Income_Item;
+
 module.exports = function(sequelize, DataTypes) {
   var Income_Type = sequelize.define("Income_Type", {
     // ID for other tables to reference
@@ -42,6 +47,11 @@ module.exports = function(sequelize, DataTypes) {
     ]
 
   });
+
+
+  Income_Type.hasMany(User);
+  Income_Type.hasMany(Income_Category);
+  Income_Type.belongsTo(Income_Item);
 
 
   return Income_Type;
