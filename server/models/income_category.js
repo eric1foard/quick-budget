@@ -25,8 +25,7 @@ module.exports = function(sequelize, DataTypes) {
       associate:function(models){
         Income_Category.belongsTo(models.Income_Type, { foreignKey: 'category_id' } );
       }
-    }
-  }, {
+    },
     timestamps: false
   });
 

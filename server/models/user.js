@@ -19,8 +19,7 @@ module.exports = function(sequelize, DataTypes) {
         User.belongsTo(models.Income_Type, { foreignKey: 'user_id' } );
         User.belongsTo(models.Income_Item, { foreignKey:  'user_id'}  );
       }
-    }
-  }, {
+    },
     timestamps: false
   });
 

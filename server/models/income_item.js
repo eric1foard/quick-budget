@@ -40,8 +40,7 @@ module.exports = function(sequelize, DataTypes) {
         Income_Item.hasMany(models.Income_Type, { foreignKey: 'income_type' } );
         Income_Item.hasMany(models.User, { foreignKey: 'user_id' } );
       }
-    }
-  }, {
+    },
     timestamps: false,
 
     // Adds an index to user_id for quicker lookups (TODO: does this work?)

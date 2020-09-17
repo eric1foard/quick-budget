@@ -19,15 +19,15 @@ exports.userBudget = (req, res) => {
   console.log("=======================");
   
   db.Income_Category.findAll({
-    where: {
-      id: 1
-    }
-    // include: {
-    //   model: User,
-    //   where: {
-    //     id: 1
-    //   }
+    // where: {
+    //   id: 1
     // }
+    include: {
+      model: User,
+      where: {
+        id: 1
+      }
+    }
   })
     .then(cat => {
       console.log(cat);
