@@ -1,7 +1,7 @@
-const db = require("../models");
-const Income_Item = db.Income_Item;
-const Income_Type = db.Income_Type;
-const Income_Category = db.Income_Category;
+// const db = require("../models");
+// const Income_Item = db.Income_Item;
+// const Income_Type = db.Income_Type;
+// const Income_Category = db.Income_Category;
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
@@ -14,6 +14,13 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
   }, {
+    classMethods:{
+      associate:function(models){
+        User.belongsTo(models.Income_Type, { foreignKey: 'user_id' } );
+        User.belongsTo(models.Income_Item, { foreignKey:  'user_id'}  );
+      }
+    }
+  }, {
     timestamps: false
   });
 
@@ -25,8 +32,8 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  User.belongsTo(Income_Item);
-  User.belongsTo(Income_Type);
+  // User.belongsTo(Income_Item);
+  // User.belongsTo(Income_Type);
 
   return User;
 };

@@ -1,5 +1,5 @@
-const db = require("../models");
-const Income_Type = db.Income_Type;
+// const db = require("../models");
+// const Income_Type = db.Income_Type;
 
 module.exports = function(sequelize, DataTypes) {
   var Income_Category = sequelize.define("Income_Category", {
@@ -19,6 +19,13 @@ module.exports = function(sequelize, DataTypes) {
     //     key: 'id'
     //   }
     // }
+  },
+  {
+    classMethods:{
+      associate:function(models){
+        Income_Category.belongsTo(models.Income_Type, { foreignKey: 'category_id' } );
+      }
+    }
   }, {
     timestamps: false
   });
@@ -34,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  Income_Category.belongsTo(Income_Type)
+  // Income_Category.belongsTo(Income_Type)
 
   return Income_Category;
 };
