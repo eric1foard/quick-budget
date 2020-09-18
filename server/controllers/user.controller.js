@@ -24,18 +24,10 @@ exports.userBudget = (req, res) => {
     },
     // include: [db.User]
     include: [{
-      model: db.Type
+      model: db.User,
+      // where: {id: 1}
     }]
-
-
     
-
-    // include: {
-    //   model: User,
-    //   where: {
-    //     id: 1
-    //   }
-    // }
   })
     .then(cat => {
       console.log(cat);

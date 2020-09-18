@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
   {
     // classMethods:{
     //   associate:function(models){
-    //     Income_Category.belongsToMany(models.Income_Type, { foreignKey: 'category_id' } );
+    //     Income_Category.belongsToMany(models.Income_Type, { through: 'UserBudget', foreignKey: 'category_id' } );
     //   }
     // },
     timestamps: false
@@ -40,7 +40,9 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  // Income_Category.belongsTo(Income_Type)
+  Income_Category.associate = function(models) {
+    Income_Category.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'income_category_id' } );
+  }
 
   return Income_Category;
 };

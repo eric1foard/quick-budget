@@ -1,6 +1,4 @@
 // const db = require("../models");
-// const Income_Type = db.Income_Type;
-// const User = db.User;
 
 module.exports = function(sequelize, DataTypes) {
   var Income_Item = sequelize.define("Income_Item", {
@@ -13,24 +11,24 @@ module.exports = function(sequelize, DataTypes) {
     // *** Stores the value of the item, the dollar amount the user enters ***
     value: DataTypes.INTEGER,
 
-    // Foreign Key - relates to the id of income_types table.
-    // ...This allows us to access the name and description of the item, and its respective category.
-    income_type: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'income_types',
-        key: 'id'
-      }
-    },
+    // // Foreign Key - relates to the id of income_types table.
+    // // ...This allows us to access the name and description of the item, and its respective category.
+    // income_type: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'income_types',
+    //     key: 'id'
+    //   }
+    // },
     
-    // Foreign Key - relates to the user's id in the user table
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
+    // // Foreign Key - relates to the user's id in the user table
+    // user_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'users',
+    //     key: 'id'
+    //   }
+    // },
 
 
   }, 
@@ -53,9 +51,10 @@ module.exports = function(sequelize, DataTypes) {
     
   });
 
-
-  // Income_Item.hasMany(Income_Type);
-  // Income_Item.hasMany(User);
+  Income_Item.associate = function(models) {
+    Income_Item.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'income_item_idTYPE' } );
+    Income_Item.belongsToMany(models.User, { through: 'User_Budget', foreignKey: 'income_item_idUSER' } );
+  }
 
   return Income_Item;
 };

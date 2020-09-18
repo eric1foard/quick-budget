@@ -1,7 +1,4 @@
 // const db = require("../models");
-// const Income_Item = db.Income_Item;
-// const Income_Type = db.Income_Type;
-// const Income_Category = db.Income_Category;
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define("User", {
@@ -16,8 +13,8 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     // classMethods:{
     //   associate:function(models){
-    //     User.belongsToMany(models.Income_Type, { foreignKey: 'user_id' } );
-    //     User.belongsToMany(models.Income_Item, { foreignKey:  'user_id'}  );
+    //     User.belongsToMany(models.Income_Type, { through: 'UserBudget', foreignKey: 'user_id' } );
+    //     User.belongsToMany(models.Income_Item, { through: 'UserBudget', foreignKey:  'user_id'}  );
     //   }
     // },
     timestamps: false
@@ -31,8 +28,12 @@ module.exports = function(sequelize, DataTypes) {
   //   });
   // };
 
-  // User.belongsTo(Income_Item);
-  // User.belongsTo(Income_Type);
+  User.associate = function(models) {
+    User.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'asdfType' } );
+    User.belongsToMany(models.Income_Item, { through: 'User_Budget', foreignKey:  'asdfITEMBEFORE'}  );  
+  }
+
+
 
   return User;
 };
