@@ -41,19 +41,19 @@ module.exports = function(sequelize, DataTypes) {
     // },
     timestamps: false,
 
-    // Adds an index to user_id for quicker lookups (TODO: does this work?)
-    indexes: [
-      {
-        unique: true,
-        fields: ['user_id']
-      }
-    ]
+    // // Adds an index to user_id for quicker lookups (TODO: does this work?)
+    // indexes: [
+    //   {
+    //     unique: true,
+    //     fields: ['user_id']
+    //   }
+    // ]
     
   });
 
   Income_Item.associate = function(models) {
-    Income_Item.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'income_item_idTYPE' } );
-    Income_Item.belongsToMany(models.User, { through: 'User_Budget', foreignKey: 'income_item_idUSER' } );
+    Income_Item.belongsTo(models.Income_Type, { foreignKey: 'income_type_id' } ); // updated
+    Income_Item.belongsTo(models.User, { foreignKey: 'user_id' } ); // updated
   }
 
   return Income_Item;

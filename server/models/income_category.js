@@ -41,7 +41,8 @@ module.exports = function(sequelize, DataTypes) {
   // };
 
   Income_Category.associate = function(models) {
-    Income_Category.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'income_category_id' } );
+    Income_Category.hasMany(models.Income_Type, { foreignKey: 'income_category_id' } ); // updated
+    Income_Category.belongsToMany(models.User, { through: 'user_categories' } ); // updated?
   }
 
   return Income_Category;

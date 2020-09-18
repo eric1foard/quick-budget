@@ -22,11 +22,11 @@ exports.userBudget = (req, res) => {
     where: {
       user_id: req.userId
     },
-    // include: [db.User]
-    include: [{
-      model: db.User,
-      // where: {id: 1}
-    }]
+    // include: [db.user_category]
+    // include: [{
+    //   model: db.User,
+    //   // where: {id: 1}
+    // }]
     
   })
     .then(cat => {

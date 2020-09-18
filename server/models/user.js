@@ -29,8 +29,8 @@ module.exports = function(sequelize, DataTypes) {
   // };
 
   User.associate = function(models) {
-    User.belongsToMany(models.Income_Type, { through: 'User_Budget', foreignKey: 'asdfType' } );
-    User.belongsToMany(models.Income_Item, { through: 'User_Budget', foreignKey:  'asdfITEMBEFORE'}  );  
+    User.belongsToMany(models.Income_Category, { through: 'user_categories' } ); // updated?
+    User.hasMany(models.Income_Item, { foreignKey:  'user_id' }  ); // updated
   }
 
 
