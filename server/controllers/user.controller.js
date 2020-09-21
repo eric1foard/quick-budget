@@ -22,6 +22,7 @@ exports.userBudget = (req, res) => {
     where: {
       user_id: req.userId
     },
+    include: [db.Income_Type]
     // include: [db.user_category]
     // include: [{
     //   model: db.User,
@@ -36,8 +37,21 @@ exports.userBudget = (req, res) => {
         return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
       }
 
+
+      console.log('cat: ', cat);
+      let arr = [];
+      cat.forEach(elem => {
+        let obj = {};
+        obj.val = elem.value;
+        obj.name = elem.Income_Type.name;
+        obj.desc = elem.Income_Type.description;
+        arr.push(obj);
+      })
+
+
+
       res.status(200).send({
-        category: cat
+        category: arr
       });
 
     })
