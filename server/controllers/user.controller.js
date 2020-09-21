@@ -26,9 +26,9 @@ exports.userBudget = (req, res) => {
       {
         model: db.Income_Type
       }, 
-      // {
-      //   model: db.Income_Category
-      // }
+      {
+        model: db.Income_Category
+      }
     ]
     // include: [db.user_category]
     // include: [{
@@ -45,23 +45,40 @@ exports.userBudget = (req, res) => {
       }
 
 
-      // console.log('cat: ', cat);
+      // // console.log('cat: ', cat);
       let arr = [];
       cat.forEach(elem => {
-        let categoryID = elem.Income_Type.income_category_id
-        if (!arr[categoryID]) arr[categoryID] = [];
+
         let obj = {};
-        obj.val = elem.value;
-        obj.name = elem.Income_Type.name;
-        obj.desc = elem.Income_Type.description;
-        obj.cat = categoryID;
-        arr[categoryID].push(obj);
-      })
+        obj.title = elem.Income_Category.name;
+        obj.fields.val = elem.value;
+        obj.fields.name = elem.Income_Type.name;
+        obj.fields.desc = elem.Income_Type.description;
+        // obj.field.cat = elem.Income_Category.name;
 
+        let idx = arr.find(x => (x === elem.Income_Category.name))
 
+        console.log(obj, idx, arr)
+
+        if (idx === undefined) {
+          let newObj = 
+            {
+              title: elem.Income_Category.name,
+              values: [obj]
+            };
+          arr.push(newObj); 
+        } else {
+          arr[idx].values.push(obj);
+        }
+  
+        
+        arr.push(obj);
+        // arr[categoryID].push(obj);
+      });
 
       res.status(200).send({
         category: JSON.stringify(arr, null, 1)
+        // category: cat
       });
 
     })

@@ -54,6 +54,7 @@ module.exports = function(sequelize, DataTypes) {
   Income_Item.associate = function(models) {
     Income_Item.belongsTo(models.Income_Type, { foreignKey: 'income_type_id' } ); // updated
     Income_Item.belongsTo(models.User, { foreignKey: 'user_id' } ); // updated
+    Income_Item.belongsTo(models.Income_Category, { foreignKey: 'income_category_id' });
   }
 
   return Income_Item;
