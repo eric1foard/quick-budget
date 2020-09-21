@@ -22,7 +22,14 @@ exports.userBudget = (req, res) => {
     where: {
       user_id: req.userId
     },
-    include: [db.Income_Type]
+    include: [
+      {
+        model: db.Income_Type
+      }, 
+      // {
+      //   model: db.Income_Category
+      // }
+    ]
     // include: [db.user_category]
     // include: [{
     //   model: db.User,
@@ -38,20 +45,23 @@ exports.userBudget = (req, res) => {
       }
 
 
-      console.log('cat: ', cat);
+      // console.log('cat: ', cat);
       let arr = [];
       cat.forEach(elem => {
+        let categoryID = elem.Income_Type.income_category_id
+        if (!arr[categoryID]) arr[categoryID] = [];
         let obj = {};
         obj.val = elem.value;
         obj.name = elem.Income_Type.name;
         obj.desc = elem.Income_Type.description;
-        arr.push(obj);
+        obj.cat = categoryID;
+        arr[categoryID].push(obj);
       })
 
 
 
       res.status(200).send({
-        category: arr
+        category: JSON.stringify(arr, null, 1)
       });
 
     })
