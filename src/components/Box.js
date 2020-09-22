@@ -28,13 +28,18 @@ class Box extends Component {
 
 
   render() {
-    const dataId = this.props.boxData.title.split(" ").join("-")
-    const dataTarget = `#${dataId}`;
+    // Looks like these are no longer necessary - CB 9/22
+    // const dataId = this.props.title.split(" ").join("-")
+    // const dataTarget = `#${dataId}`;
     
     // These are used for defining the class dynamically, used to style in the css file.
-    const boxType = this.props.boxData.title; 
+    const boxType = this.props.boxType; 
     const cardHeaderClasses = `card-header card-header-${boxType}`
     const cardFooterClasses = `card-footer card-footer-${boxType}`
+
+    console.log('================')
+    console.log(this.props.boxData)
+    console.log('================')
 
     return(
       <div>
@@ -48,7 +53,6 @@ class Box extends Component {
           </div>
 
           {/* Maps through each item in income/expenses, passing this information to Form.js component */}
-          
             <ul className="list-group list-group-flush">
               {this.props.boxData.categories.map(category =>
                 <Form 

@@ -38,7 +38,6 @@ exports.userBudget = (req, res) => {
         return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
       }
 
-
       let arr = [];
       cat.forEach(item => {
 
@@ -74,8 +73,11 @@ exports.userBudget = (req, res) => {
         }
       });
 
+      let categoryObj = {categories: arr}
+
       res.status(200).send({
-        category: JSON.stringify(arr, null, 1)
+        response: JSON.stringify(categoryObj)
+        // categories: arr
         // category: cat
         // category: arr
       });
