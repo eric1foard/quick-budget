@@ -39,40 +39,45 @@ exports.userBudget = (req, res) => {
       }
 
 
-      // // // console.log('cat: ', cat);
-      // let arr = [];
-      // cat.forEach(elem => {
+      let arr = [];
+      cat.forEach(item => {
 
-      //   let obj = {};
-      //   obj.title = elem.Income_Category.name;
-      //   obj.fields.val = elem.value;
-      //   obj.fields.name = elem.Income_Type.name;
-      //   obj.fields.desc = elem.Income_Type.description;
-      //   // obj.field.cat = elem.Income_Category.name;
+        let itemObj = 
+        {
+          title: item.Income_Type.name,
+          description: item.Income_Type.description,
+          value: item.value,
+        }
 
-      //   let idx = arr.find(x => (x === elem.Income_Category.name))
+        let categoryIdentifier = item.Income_Type.Income_Category.id;
+        let categoryName = item.Income_Type.Income_Category.name;
+        let categoryIndex = false;
 
-      //   console.log(obj, idx, arr)
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i].categoryId === categoryIdentifier) {
+            categoryIndex = i;
+            break;
+          }
+        }
 
-      //   if (idx === undefined) {
-      //     let newObj = 
-      //       {
-      //         title: elem.Income_Category.name,
-      //         values: [obj]
-      //       };
-      //     arr.push(newObj); 
-      //   } else {
-      //     arr[idx].values.push(obj);
-      //   }
-  
-        
-      //   arr.push(obj);
-      //   // arr[categoryID].push(obj);
-      // });
+        // let catNameIdx = arr.find(x => (x.title === catName));
+        if (categoryIndex === false) {
+          let obj = 
+          {
+            title: categoryName,
+            categoryId: item.Income_Type.Income_Category.id,
+            fields: [itemObj],
+          }
+          arr.push(obj);
+        } else {
+          arr[categoryIndex].fields.push(itemObj);
+        }
+      });
 
       res.status(200).send({
-        // category: JSON.stringify(arr, null, 1)
-        category: cat
+        category: JSON.stringify(arr, null, 1)
+        // category: cat
+        // category: arr
       });
 
     })
