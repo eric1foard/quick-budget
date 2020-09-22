@@ -24,18 +24,12 @@ exports.userBudget = (req, res) => {
     },
     include: [
       {
-        model: db.Income_Type
-      }, 
-      {
-        model: db.Income_Category
+        model: db.Income_Type,
+        include: [
+            db.Income_Category
+        ]
       }
     ]
-    // include: [db.user_category]
-    // include: [{
-    //   model: db.User,
-    //   // where: {id: 1}
-    // }]
-    
   })
     .then(cat => {
       console.log(cat);
@@ -45,40 +39,40 @@ exports.userBudget = (req, res) => {
       }
 
 
-      // // console.log('cat: ', cat);
-      let arr = [];
-      cat.forEach(elem => {
+      // // // console.log('cat: ', cat);
+      // let arr = [];
+      // cat.forEach(elem => {
 
-        let obj = {};
-        obj.title = elem.Income_Category.name;
-        obj.fields.val = elem.value;
-        obj.fields.name = elem.Income_Type.name;
-        obj.fields.desc = elem.Income_Type.description;
-        // obj.field.cat = elem.Income_Category.name;
+      //   let obj = {};
+      //   obj.title = elem.Income_Category.name;
+      //   obj.fields.val = elem.value;
+      //   obj.fields.name = elem.Income_Type.name;
+      //   obj.fields.desc = elem.Income_Type.description;
+      //   // obj.field.cat = elem.Income_Category.name;
 
-        let idx = arr.find(x => (x === elem.Income_Category.name))
+      //   let idx = arr.find(x => (x === elem.Income_Category.name))
 
-        console.log(obj, idx, arr)
+      //   console.log(obj, idx, arr)
 
-        if (idx === undefined) {
-          let newObj = 
-            {
-              title: elem.Income_Category.name,
-              values: [obj]
-            };
-          arr.push(newObj); 
-        } else {
-          arr[idx].values.push(obj);
-        }
+      //   if (idx === undefined) {
+      //     let newObj = 
+      //       {
+      //         title: elem.Income_Category.name,
+      //         values: [obj]
+      //       };
+      //     arr.push(newObj); 
+      //   } else {
+      //     arr[idx].values.push(obj);
+      //   }
   
         
-        arr.push(obj);
-        // arr[categoryID].push(obj);
-      });
+      //   arr.push(obj);
+      //   // arr[categoryID].push(obj);
+      // });
 
       res.status(200).send({
-        category: JSON.stringify(arr, null, 1)
-        // category: cat
+        // category: JSON.stringify(arr, null, 1)
+        category: cat
       });
 
     })
