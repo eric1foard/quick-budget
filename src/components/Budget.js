@@ -5,6 +5,7 @@ import Box from './Box.js';
 import Summary from './Summary.js';
 import AuthService from "../services/auth.service";
 import userService from '../services/user.service.js';
+import Axios from 'axios';
 
 class App extends Component {
 
@@ -136,7 +137,7 @@ class App extends Component {
 
       total: 0,
       incomeTotal: 0,
-      expensesTotal: 0,
+      expenseTotal: 0,
 
       // Income fields
       pay: 0,
@@ -257,71 +258,36 @@ class App extends Component {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      const [income, expense] = await Promise.all([userService.getUserIncome(), userService.getUserExpense()]);
-      
-      const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
-      const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
-      
-      console.log(income, expense)
+      Promise.all([userService.getUserIncome(), userService.getUserExpense()])
+        .then(values =>{
+          const [income, expense] = [values[0], values[1]];
 
-      console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-      console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
+          const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
+          const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
+    
+          console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+          console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
 
-
-      this.setState({
-        incomeData: jsonParsedIncomeObject,
-        expenseData: jsonParsedExpenseObject,
-        isLoaded: true,
-      });
-      
-        // error => {
-        //   this.setState({
-        //     content:
-        //       (error.response && error.response.data) ||
-        //       error.message ||
-        //       error.toString()
-        //   });
-        // }
-      
+          console.log("This one: ", expense.data.other);
+    
+          this.setState({
+            incomeData: jsonParsedIncomeObject,
+            expenseData: jsonParsedExpenseObject,
+            incomeTotal: income.data.total,
+            expenseTotal: expense.data.total,
+            isLoaded: true,
+          });
+        })
+        .catch(error => {
+          console.error(error.message)
+        });
     }
   }
-
-  // async componentDidMount() {
-  //   if (!this.state.currentUser) {
-  //     // TODO: Figure out how to handle user who has not logged in yet
-  //     this.setState({ content: 'No user' })
-  //   } else {
-  //     try {
-  //       const incomeResponse = await userService.getUserIncome();
-  //       console.log(incomeResponse.ok);
-  //       if (!incomeResponse.ok) {
-  //         throw Error(incomeResponse.statusText);
-  //       }
-  //       const jsonParsedIncomeObject = await JSON.parse(incomeResponse.data.jsonStringResponse);
-  //       console.log("componentDidMount API call response: ", jsonParsedIncomeObject);
-        
-  //       this.setState({
-  //         isLoaded: true,
-  //         incomeData: jsonParsedIncomeObject,
-  //       });
-
-  //     } catch(error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // }
-
-
-
-
-
-        
-
 
   render() {
     // These lines are just for testing, can be removed
       // this.callAPI()
-      console.log(this.state.incomeData);
+      // console.log(this.state.incomeData);
       // console.log(this.state.userIncome)
 
 
@@ -384,14 +350,14 @@ class App extends Component {
                   boxData={this.state.expenseData} 
                   handleUpdate={this.updateExpensesHelper}
                   // handleSaveNew={this.saveNewExpensesHelper} 
-                  total={this.state.expensesTotal}
+                  total={this.state.expenseTotal}
                   // key={this.props.expensesData.id}
                 />
 
                 {/* Summary displays the final total monthly amount */}
                 <Summary 
                   totalIncome={this.state.incomeTotal}
-                  totalExpenses={this.state.expensesTotal}
+                  totalExpenses={this.state.expenseTotal}
                 />
 
 

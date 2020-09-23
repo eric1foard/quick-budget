@@ -75,8 +75,22 @@ exports.userIncome = (req, res) => {
 
       let categoryObj = {categories: arr}
 
+      categoryObj.categories.forEach(catElem => {
+        let sub = 0;
+        catElem.fields.forEach(typeElem => {
+          sub += typeElem.value;
+        })
+        catElem["subtotal"] = sub
+      });
+
+      let total = 0;
+      categoryObj.categories.forEach(catElem => {
+        total += catElem.subtotal;
+      });
+
       res.status(200).send({
-        jsonStringResponse: JSON.stringify(categoryObj)
+        jsonStringResponse: JSON.stringify(categoryObj),
+        total: total
         // categories: arr
         // category: cat
         // category: arr
@@ -144,6 +158,7 @@ exports.userExpense = (req, res) => {
           {
             title: categoryName,
             categoryId: item.Expense_Type.Expense_Category.id,
+            subtotal: 0.00,
             fields: [itemObj],
           }
           arr.push(obj);
@@ -154,8 +169,22 @@ exports.userExpense = (req, res) => {
 
       let categoryObj = {categories: arr}
 
+      categoryObj.categories.forEach(catElem => {
+        let sub = 0;
+        catElem.fields.forEach(typeElem => {
+          sub += typeElem.value;
+        })
+        catElem["subtotal"] = sub
+      })
+
+      let total = 0;
+      categoryObj.categories.forEach(catElem => {
+        total += catElem.subtotal;
+      })
+
       res.status(200).send({
-        jsonStringResponse: JSON.stringify(categoryObj)
+        jsonStringResponse: JSON.stringify(categoryObj),
+        total: total
         // categories: arr
         // category: cat
         // category: arr

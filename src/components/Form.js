@@ -59,7 +59,7 @@ class Form extends Component {
               {/* Displays subtotal for this category */}
               <div className="col-sm-3">
                 <div className="subtotal">
-                  {/* ${this.props.subtotal.toFixed(2)} */}
+                  ${this.props.subtotal.toFixed(2)}
                 </div>
               </div>
             
