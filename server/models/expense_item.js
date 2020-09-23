@@ -11,22 +11,22 @@ module.exports = function(sequelize, DataTypes) {
 
     // Foreign Key - relates to the id of Expense_types table.
     // ...This allows us to access the name and description of the item, and its respective category.
-    expense_type: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'expense_types',
-        key: 'id'
-      }
-    },
+    // expense_type: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'expense_types',
+    //     key: 'id'
+    //   }
+    // },
     
     // Foreign Key - relates to the user's id in the user table
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
+    // user_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     model: 'users',
+    //     key: 'id'
+    //   }
+    // },
 
 
 
@@ -34,13 +34,18 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     
     // Adds an index to user_id for quicker lookups (TODO: does this work?)
-    indexes: [
-      {
-        unique: true,
-        fields: ['user_id']
-      }
-    ]
+    // indexes: [
+    //   {
+    //     unique: true,
+    //     fields: ['user_id']
+    //   }
+    // ]
   });
+
+  Expense_Item.associate = function(models) {
+    Expense_Item.belongsTo(models.Expense_Type, { foreignKey: 'expense_type_id' } ); // updated
+    Expense_Item.belongsTo(models.User, { foreignKey: 'user_id' } ); // updated
+  }
 
 
   return Expense_Item;

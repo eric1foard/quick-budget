@@ -12,5 +12,10 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
+  Expense_Category.associate = function(models) {
+    Expense_Category.hasMany(models.Expense_Type, { foreignKey: 'expense_category_id' } ); // updated
+    Expense_Category.belongsToMany(models.User, { through: 'user_categories' } ); // updated?
+  }
+
   return Expense_Category;
 };
