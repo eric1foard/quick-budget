@@ -76,7 +76,7 @@ exports.userBudget = (req, res) => {
       let categoryObj = {categories: arr}
 
       res.status(200).send({
-        response: JSON.stringify(categoryObj)
+        jsonStringResponse: JSON.stringify(categoryObj)
         // categories: arr
         // category: cat
         // category: arr

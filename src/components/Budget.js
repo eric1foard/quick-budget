@@ -139,6 +139,7 @@ class App extends Component {
     super(props);
     this.state = {
       apiResponse: null,
+      incomeData: null,
 
       // Seems this is already being called from 
       currentUser: AuthService.getCurrentUser(),
@@ -173,8 +174,13 @@ class App extends Component {
   // UPDATING VALUES & TOTALS *********************
   // **********************************************
   updateValue(incOrExp, category, name, num) {
+
+    console.log(incOrExp, category, name, num)
+
     // Makes new copy of state...
     let newState = this.state[incOrExp];
+
+    console.log(newState);
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
@@ -270,15 +276,14 @@ class App extends Component {
     } else {
       userService.getUserBudget().then(
         response => {
-          console.log("componentDidMount API call response: ", response.data);
 
-          let parsedResponse = JSON.parse(response.data.response);
-          console.log("componentDidMount API call response: ", parsedResponse);
+          let jsonParsedObject = JSON.parse(response.data.jsonStringResponse);
+          console.log("componentDidMount API call response: ", jsonParsedObject);
 
 
           this.setState({
             isLoaded: true,
-            apiResponse: parsedResponse
+            incomeData: jsonParsedObject
 
             // budget: response.data.category
           });
@@ -299,7 +304,7 @@ class App extends Component {
   render() {
     // These lines are just for testing, can be removed
       // this.callAPI()
-      console.log(this.state.apiResponse);
+      console.log(this.state.incomeData);
       // console.log(this.state.userIncome)
 
 
@@ -336,48 +341,47 @@ class App extends Component {
 
           {/* TODO: Put subtotals back in */}
           {/* Box with income information */}
-          {this.state.apiResponse 
+          {this.state.incomeData 
             ?
               <div>
-              <Box 
-                title="Income"
-                boxType="income"
+                <Box 
+                  title="Income"
+                  boxType="income"
 
-                
-                
-                boxData={this.state.apiResponse} 
-                // test={this.state.apiResponse.categories[0].fields[0].title}
-                // boxData={this.props.incomeData} 
+                  boxData={this.state.incomeData} 
 
 
 
-                // handleUpdate={this.updateIncomeHelper}
-                // handleSaveNew={this.saveNewIncomeHelper}
-                total={this.state.incomeTotal}
-                // key={this.props.incomeData.id}
-              />
 
-              {/* Box with expenses information */}
-              <Box
-                title="Expenses"
+                  handleUpdate={this.updateIncomeHelper}
+                  // handleSaveNew={this.saveNewIncomeHelper}
+                  total={this.state.incomeTotal}
+                  // key={this.props.incomeData.id}
+                />
 
-                boxData={this.props.expensesData} 
-                // handleUpdate={this.updateExpensesHelper}
-                // handleSaveNew={this.saveNewExpensesHelper} 
-                total={this.state.expensesTotal}
-                // key={this.props.expensesData.id}
-              />
+                {/* Box with expenses information */}
+                <Box
+                  title="Expenses"
+                  boxType="expenses"
 
-              {/* Summary displays the final total monthly amount */}
-              <Summary 
-                totalIncome={this.state.incomeTotal}
-                totalExpenses={this.state.expensesTotal}
-              />
+                  boxData={this.props.expensesData} 
+                  // handleUpdate={this.updateExpensesHelper}
+                  // handleSaveNew={this.saveNewExpensesHelper} 
+                  total={this.state.expensesTotal}
+                  // key={this.props.expensesData.id}
+                />
+
+                {/* Summary displays the final total monthly amount */}
+                <Summary 
+                  totalIncome={this.state.incomeTotal}
+                  totalExpenses={this.state.expensesTotal}
+                />
 
 
-              <button onClick={this.handleSave} type="button" class="btn btn-primary">Save</button>
+                <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
               </div>
             :
+              // TODO: 9/22 - add a loading image
               <div>Loading</div>
           }
 
