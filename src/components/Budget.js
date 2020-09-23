@@ -10,22 +10,6 @@ class App extends Component {
 
   static defaultProps = {
 
-
-
-    // pay: {
-    //   title: 'Your Net Monthly Pay',
-    //   description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.',
-    //   // id: uuidv4(), 
-    //   value: 0
-    // },
-
-    // housingUtilities: {
-    //   title: 'Housing and Utilities',
-    //   description: ''
-    // }
-
-    // }
-
     incomeData: {
       title: 'income',
       id: uuidv4(),
@@ -140,6 +124,7 @@ class App extends Component {
     this.state = {
       apiResponse: null,
       incomeData: null,
+      expenseData: null,
 
       // Seems this is already being called from 
       currentUser: AuthService.getCurrentUser(),
@@ -179,8 +164,6 @@ class App extends Component {
 
     // Makes new copy of state...
     let newState = this.state[incOrExp];
-
-    console.log(newState);
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
@@ -232,7 +215,7 @@ class App extends Component {
 
   // For changes to expenses fields, sends relevant info to updateTotal
   updateExpensesHelper(name, num, category) {
-    this.updateValue("expensesData", category, name, num);
+    this.updateValue("expenseData", category, name, num);
   }
 
 
@@ -269,36 +252,70 @@ class App extends Component {
     .then(res => this.setState({ apiResponse: res }));
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!this.state.currentUser) {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      userService.getUserBudget().then(
-        response => {
+      const [income, expense] = await Promise.all([userService.getUserIncome(), userService.getUserExpense()]);
+      
+      const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
+      const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
+      
+      console.log(income, expense)
 
-          let jsonParsedObject = JSON.parse(response.data.jsonStringResponse);
-          console.log("componentDidMount API call response: ", jsonParsedObject);
+      console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+      console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
 
 
-          this.setState({
-            isLoaded: true,
-            incomeData: jsonParsedObject
-
-            // budget: response.data.category
-          });
-        },
-        error => {
-          this.setState({
-            content:
-              (error.response && error.response.data) ||
-              error.message ||
-              error.toString()
-          });
-        }
-      );
+      this.setState({
+        incomeData: jsonParsedIncomeObject,
+        expenseData: jsonParsedExpenseObject,
+        isLoaded: true,
+      });
+      
+        // error => {
+        //   this.setState({
+        //     content:
+        //       (error.response && error.response.data) ||
+        //       error.message ||
+        //       error.toString()
+        //   });
+        // }
+      
     }
   }
+
+  // async componentDidMount() {
+  //   if (!this.state.currentUser) {
+  //     // TODO: Figure out how to handle user who has not logged in yet
+  //     this.setState({ content: 'No user' })
+  //   } else {
+  //     try {
+  //       const incomeResponse = await userService.getUserIncome();
+  //       console.log(incomeResponse.ok);
+  //       if (!incomeResponse.ok) {
+  //         throw Error(incomeResponse.statusText);
+  //       }
+  //       const jsonParsedIncomeObject = await JSON.parse(incomeResponse.data.jsonStringResponse);
+  //       console.log("componentDidMount API call response: ", jsonParsedIncomeObject);
+        
+  //       this.setState({
+  //         isLoaded: true,
+  //         incomeData: jsonParsedIncomeObject,
+  //       });
+
+  //     } catch(error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // }
+
+
+
+
+
+        
 
 
   render() {
@@ -341,7 +358,7 @@ class App extends Component {
 
           {/* TODO: Put subtotals back in */}
           {/* Box with income information */}
-          {this.state.incomeData 
+          {this.state.isLoaded 
             ?
               <div>
                 <Box 
@@ -364,8 +381,8 @@ class App extends Component {
                   title="Expenses"
                   boxType="expenses"
 
-                  boxData={this.props.expensesData} 
-                  // handleUpdate={this.updateExpensesHelper}
+                  boxData={this.state.expenseData} 
+                  handleUpdate={this.updateExpensesHelper}
                   // handleSaveNew={this.saveNewExpensesHelper} 
                   total={this.state.expensesTotal}
                   // key={this.props.expensesData.id}

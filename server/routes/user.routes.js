@@ -19,8 +19,15 @@ module.exports = function(app) {
   );
 
   app.get(
-    "/api/test/user/budget",
+    "/api/test/user/income",
     [authJwt.verifyToken],
-    controller.userBudget
+    controller.userIncome
   );
+
+  app.get(
+    "/api/test/user/expense",
+    [authJwt.verifyToken],
+    controller.userExpense
+  );
+
 }
