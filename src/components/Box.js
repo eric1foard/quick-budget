@@ -37,9 +37,9 @@ class Box extends Component {
     const cardHeaderClasses = `card-header card-header-${boxType}`
     const cardFooterClasses = `card-footer card-footer-${boxType}`
 
-    console.log('================')
-    console.log(this.props.boxData)
-    console.log('================')
+    // console.log('================')
+    // console.log(this.props.boxData)
+    // console.log('================')
 
     return(
       <div>

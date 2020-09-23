@@ -11,6 +11,8 @@ exports.userBoard = (req, res) => {
   res.status(200).send("User Content.");
 };
 
+// TODO 9/23 CLB - there is a lot of repitition in these API calls.
+// ... They should probably be moved to models, and then I can make helper functions to call.
 exports.userIncome = (req, res) => {
   console.log("=======================");
   console.log("=======================");

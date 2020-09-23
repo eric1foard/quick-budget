@@ -5,118 +5,118 @@ import Box from './Box.js';
 import Summary from './Summary.js';
 import AuthService from "../services/auth.service";
 import userService from '../services/user.service.js';
-import Axios from 'axios';
+
 
 class App extends Component {
 
-  static defaultProps = {
+  // static defaultProps = {
 
-    incomeData: {
-      title: 'income',
-      id: uuidv4(),
-      categories: [
-        {title: 'Net Monthly Pay',
-          fields: [
-            {title: 'Your Net Monthly Pay', id: uuidv4(), description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0},
-            {title: 'Spouse\'s Net Monthly Pay', id: uuidv4(), description: 'Same as above, but for your partner (if applicable)', value: 0}
-          ]
-        },
-        {
-          title: 'Other Monthly Income',
-          id: uuidv4(), 
-          fields: [
-            {title: 'Other Monthly Income', id: uuidv4(), description: 'Enter additional sources of income here, such as Social Security, child support, alimony, investments, pensions, etc.', value: 0}, 
-          ]
-        },
-      ]
-    },
-    expensesData: {               
-      title: 'expenses',
-      id: uuidv4(), 
-      categories: [
-        {
-          title: 'housing and utilities',
-          id: uuidv4(),
-          fields: [
-            {title: 'Rent or Mortgage', id: uuidv4(), description: 'Monthly amount due.  Add in Home or Renters Insurance if not already included', value: 0}, 
-            {title: 'Property Tax', id: uuidv4(), description: 'If not already included in mortgage payment', value: 0},
-            {title: 'Homeowner Association (HOA) Fees', id: uuidv4(), description: 'Only enter if applicable', value: 0},
-            {title: 'Home Repair and Maintenance', id: uuidv4(), description: 'Even if it\'s not a monthly expense, add what you estimate this costs per month', value: 0},
-            {title: 'Utilities', id: uuidv4(), description: 'Include electricity, gas, water, sewer, trash, etc.', value: 0},
-            {title: 'Electronics', id: uuidv4(), description: 'Include cable, internet, cell phone, etc.', value: 0},
-          ]
-        },
-        {
-          title: 'transportation',
-          id: uuidv4(),
-          fields: [
-            {title: 'Car Payment', id: uuidv4(), description: 'Include any additional car payments, if you have more than one', value: 0}, 
-            {title: 'Car Insurance', id: uuidv4(), description: 'Check your billing, and be sure to divide this into a monthly amount', value: 0},
-            {title: 'Gas', id: uuidv4(), description: 'Average monthly cost of gas', value: 0},
-            {title: 'Car Maintenance', id: uuidv4(), description: 'Average monthly cost of car repairs - you can assume oil changes, with a little extra just in case of additional repairs', value: 0},
-            {title: 'Parking and Tolls', id: uuidv4(), description: 'If applicable', value: 0},
-          ]
-        },
+  //   incomeData: {
+  //     title: 'income',
+  //     id: uuidv4(),
+  //     categories: [
+  //       {title: 'Net Monthly Pay',
+  //         fields: [
+  //           {title: 'Your Net Monthly Pay', id: uuidv4(), description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0},
+  //           {title: 'Spouse\'s Net Monthly Pay', id: uuidv4(), description: 'Same as above, but for your partner (if applicable)', value: 0}
+  //         ]
+  //       },
+  //       {
+  //         title: 'Other Monthly Income',
+  //         id: uuidv4(), 
+  //         fields: [
+  //           {title: 'Other Monthly Income', id: uuidv4(), description: 'Enter additional sources of income here, such as Social Security, child support, alimony, investments, pensions, etc.', value: 0}, 
+  //         ]
+  //       },
+  //     ]
+  //   },
+  //   expensesData: {               
+  //     title: 'expenses',
+  //     id: uuidv4(), 
+  //     categories: [
+  //       {
+  //         title: 'housing and utilities',
+  //         id: uuidv4(),
+  //         fields: [
+  //           {title: 'Rent or Mortgage', id: uuidv4(), description: 'Monthly amount due.  Add in Home or Renters Insurance if not already included', value: 0}, 
+  //           {title: 'Property Tax', id: uuidv4(), description: 'If not already included in mortgage payment', value: 0},
+  //           {title: 'Homeowner Association (HOA) Fees', id: uuidv4(), description: 'Only enter if applicable', value: 0},
+  //           {title: 'Home Repair and Maintenance', id: uuidv4(), description: 'Even if it\'s not a monthly expense, add what you estimate this costs per month', value: 0},
+  //           {title: 'Utilities', id: uuidv4(), description: 'Include electricity, gas, water, sewer, trash, etc.', value: 0},
+  //           {title: 'Electronics', id: uuidv4(), description: 'Include cable, internet, cell phone, etc.', value: 0},
+  //         ]
+  //       },
+  //       {
+  //         title: 'transportation',
+  //         id: uuidv4(),
+  //         fields: [
+  //           {title: 'Car Payment', id: uuidv4(), description: 'Include any additional car payments, if you have more than one', value: 0}, 
+  //           {title: 'Car Insurance', id: uuidv4(), description: 'Check your billing, and be sure to divide this into a monthly amount', value: 0},
+  //           {title: 'Gas', id: uuidv4(), description: 'Average monthly cost of gas', value: 0},
+  //           {title: 'Car Maintenance', id: uuidv4(), description: 'Average monthly cost of car repairs - you can assume oil changes, with a little extra just in case of additional repairs', value: 0},
+  //           {title: 'Parking and Tolls', id: uuidv4(), description: 'If applicable', value: 0},
+  //         ]
+  //       },
 
 
 
-        {
-          title: 'groceries and food',
-          id: uuidv4(),
-          subtotal: 0,
-          fields: [
-            {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
-            {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
-          ]
-        },
-        {
-          title: 'health and beauty',
-          id: uuidv4(),
-          subtotal: 0,
-          fields: [
-            {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
-            {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
-            {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
-            {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
-            {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
-          ]
-        },
-        {
-          title: 'children',
-          id: uuidv4(),
-          subtotal: 0,
-          fields: [
-            {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-            {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
-            {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
-          ]
-        },
-        {
-          title: 'debts and loans',
-          id: uuidv4(),
-          subtotal: 0,
-          fields: [
-            {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-            {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-            {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
-          ]
-        },
-        {
-          title: 'miscellaneous',
-          id: uuidv4(),
-          subtotal: 0,
-          fields: [
-            {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
-            {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
-            {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
-            {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
-            {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
-            {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
-          ]
-        },
-      ]
-    }
-  }
+  //       {
+  //         title: 'groceries and food',
+  //         id: uuidv4(),
+  //         subtotal: 0,
+  //         fields: [
+  //           {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
+  //           {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
+  //         ]
+  //       },
+  //       {
+  //         title: 'health and beauty',
+  //         id: uuidv4(),
+  //         subtotal: 0,
+  //         fields: [
+  //           {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
+  //           {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
+  //           {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
+  //           {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
+  //           {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
+  //         ]
+  //       },
+  //       {
+  //         title: 'children',
+  //         id: uuidv4(),
+  //         subtotal: 0,
+  //         fields: [
+  //           {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
+  //           {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
+  //           {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
+  //         ]
+  //       },
+  //       {
+  //         title: 'debts and loans',
+  //         id: uuidv4(),
+  //         subtotal: 0,
+  //         fields: [
+  //           {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+  //           {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
+  //           {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
+  //         ]
+  //       },
+  //       {
+  //         title: 'miscellaneous',
+  //         id: uuidv4(),
+  //         subtotal: 0,
+  //         fields: [
+  //           {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
+  //           {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
+  //           {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
+  //           {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
+  //           {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
+  //           {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
+  //         ]
+  //       },
+  //     ]
+  //   }
+  // }
 
   // State is used to store the relevant information regarding the user's income and expenses fields,
   // ...and is used by other components to calculate inferences.
@@ -138,13 +138,6 @@ class App extends Component {
       total: 0,
       incomeTotal: 0,
       expenseTotal: 0,
-
-      // Income fields
-      pay: 0,
-      spouseMonthlyPay: 0,
-      otherMonthlyIncome: 0,
-
-      
     }
     this.updateValue            = this.updateValue.bind(this);
     this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
@@ -160,8 +153,6 @@ class App extends Component {
   // UPDATING VALUES & TOTALS *********************
   // **********************************************
   updateValue(incOrExp, category, name, num) {
-
-    console.log(incOrExp, category, name, num)
 
     // Makes new copy of state...
     let newState = this.state[incOrExp];
@@ -189,12 +180,16 @@ class App extends Component {
       , 0
     );
     categoryToUpdate.subtotal = newSubTotal;
+
     this.setState({[incOrExp]: newState}, () => {
       this.updateFullTotal(incOrExp);
     });
   }
 
   updateFullTotal(incOrExp) {
+    // Based on incOrExp, determines which total to update
+    let totalToUpdate = (incOrExp === "incomeData" ? "incomeTotal" : "expenseTotal")
+    
     // Makes new copy of state
     let dataCopy = this.state[incOrExp];
 
@@ -203,10 +198,9 @@ class App extends Component {
       (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.subtotal)
       , 0
     );
-    // Sets this reduced number as the total
-    dataCopy.total = newTotal;
-    // ...and sets state with that updated object.
-    this.setState({[incOrExp]: dataCopy});
+
+    // ...and sets state with that updated value.
+    this.setState({[totalToUpdate]: newTotal});
   }
 
   // For changes to income fields, sends relevant info to updateTotal
@@ -244,6 +238,7 @@ class App extends Component {
 
   handleSave(evt) {
     evt.preventDefault();
+    console.log("boop");
 
   }
 
@@ -253,7 +248,7 @@ class App extends Component {
     .then(res => this.setState({ apiResponse: res }));
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (!this.state.currentUser) {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
@@ -267,8 +262,6 @@ class App extends Component {
     
           console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
           console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
-
-          console.log("This one: ", expense.data.other);
     
           this.setState({
             incomeData: jsonParsedIncomeObject,
@@ -331,11 +324,7 @@ class App extends Component {
                   title="Income"
                   boxType="income"
 
-                  boxData={this.state.incomeData} 
-
-
-
-
+                  boxData={this.state.incomeData}
                   handleUpdate={this.updateIncomeHelper}
                   // handleSaveNew={this.saveNewIncomeHelper}
                   total={this.state.incomeTotal}
