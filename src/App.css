@@ -97,6 +97,12 @@
   color:  rgb(0, 0, 0);
 }
 
+/* For the Login Page */
+.login-label{
+  background-color: rgba(82, 197, 107, 0.801);
+  font-weight: 12;
+}
+
 
 /* For the Budget component */
 .budget-instructions-list{

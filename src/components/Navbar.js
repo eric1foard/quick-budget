@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
 class Navbar extends Component {
+  
+
+
   render() {
     return(
       <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -35,7 +38,7 @@ class Navbar extends Component {
         {this.props.currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={this.logOut}>
+              <a href="/login" className="nav-link" onClick={this.props.logOut}>
                 LogOut
               </a>
             </li>

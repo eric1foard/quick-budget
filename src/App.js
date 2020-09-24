@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Layout from "./components/Layout";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
@@ -48,7 +46,10 @@ class App extends Component {
         <Router>
           <div>
 
-            <Layout currentUser={currentUser}>
+            <Layout 
+              currentUser={currentUser}
+              logOut={this.logOut}
+            >
 
               <div className="container mt-3">
                 <Switch>

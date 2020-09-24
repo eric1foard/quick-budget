@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Navbar from './Navbar';
-import Footer from './Footer';
 import "../App.css";
 
 class Layout extends Component {
@@ -12,6 +11,7 @@ class Layout extends Component {
         <div>
           <Navbar 
             currentUser={this.props.currentUser}
+            logOut={this.props.logOut}
           />
         </div>
 
@@ -19,6 +19,8 @@ class Layout extends Component {
           {this.props.children}
         </div>
 
+        {/* TODO: Add a footer in.  Tried extensively, but had issues with it rendering
+        ... in the middle of the Budget component.  (CLB 9/24/20) */}
         {/* <div>
           <Footer />
         </div> */}
