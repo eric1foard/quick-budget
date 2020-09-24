@@ -99,8 +99,21 @@
 
 /* For the Login Page */
 .login-label{
-  background-color: rgba(82, 197, 107, 0.801);
-  font-weight: 12;
+  background-color: rgba(137, 177, 157, 0.801);
+  padding-top: 10px;
+  padding-bottom: 15px;
+  border-radius: 20px;
+  border-color: red;
+  border-width: thick;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+
+.login-form{
+  width: 90%;
+  margin: 0 auto;
 }
 
 

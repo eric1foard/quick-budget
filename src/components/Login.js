@@ -103,11 +103,12 @@ export default class Login extends Component {
                           this.form = c;
                         }}
                       >
+
                         <div className="form-group login-label">
                           <label htmlFor="username">Username</label>
                           <Input
                             type="text"
-                            className="form-control"
+                            className="form-control login-form"
                             name="username"
                             value={this.state.username}
                             onChange={this.onChangeUsername}
@@ -115,17 +116,20 @@ export default class Login extends Component {
                           />
                         </div>
 
+
                         <div className="form-group login-label">
                           <label htmlFor="password">Password</label>
                           <Input
                             type="password"
-                            className="form-control"
+                            className="form-control login-form"
                             name="password"
                             value={this.state.password}
                             onChange={this.onChangePassword}
                             validations={[required]}
                           />
                         </div>
+
+
 
                         <div className="form-group">
                           <button
