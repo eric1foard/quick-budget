@@ -144,6 +144,8 @@ li.save:before{
   margin: 0 auto;
   float: none; 
   margin-bottom: 30px; 
+  border-radius: 40px;
+  overflow: hidden;
 }
 
 .card-header-income{

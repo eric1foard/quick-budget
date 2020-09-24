@@ -1,19 +1,37 @@
 # Roadmap
 
-## To Do
-
-- First, consider how we will get the information from the db - how to structure that api call(will likely need use the user and category as anchors, and find all the items associated in common).  Then, decide how we will provide it in default props.
+## Now
+- Beautify the user's profile page.
+- Beautify the login page.
+- Beautify the register page.
+- Add a bottom navbar
 
 ### Next:
+- DB
+-- How to seed information
+- Register
+-- Should also log the user in and take them to profile.
+- User Controller
+-- get logic out of controller and into models
+-- reduce repitition between user/expense logic
+- Starting App
+-- Consolidate "npm start" and "nodemon index/server"
+- README
+-- Improve it for others!
+- About Me
+-- Add one, why not.
+
+
 - Budget
--- Need to get fields to save to DB.
+-- Add something after user saves - sweetalert?
+-- Add a loading image for while the GET requests are being made.
+-- Track if user has made changes.  If they have, warn them before leaving page.
+-- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
 - Dashboard
 -- Displays result of what user entered.
 -- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
-- Register
--- Should also log the user in and take them to profile?
-- Controller
- - get logic out of controller and into models
+
+
 
 ### Icebox:
 - To do's - minor
@@ -26,12 +44,19 @@
 -- User can delete fields (will this be possible?)
 -- User can edit fields (will this be possible?)
 
+
+
 ### Ideas
 - On dashboard - have loan calculator - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
 - When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
 - scrollspy on the budget page?
 - demo version without need to sign in
 
+### Done!
+- Figure out how to structure DB.
+- User can get info from DB onto the Budget component.
+- User can save changes they make on the Budget component back into the DB.
+- Subtotals and totals display on DOM.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
