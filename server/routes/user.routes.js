@@ -30,4 +30,10 @@ module.exports = function(app) {
     controller.userExpense
   );
 
+  app.put(
+    "/api/test/user/save",
+    [authJwt.verifyToken],
+    controller.userSave
+  );
+
 }

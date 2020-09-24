@@ -14,11 +14,11 @@ exports.userBoard = (req, res) => {
 // TODO 9/23 CLB - there is a lot of repitition in these API calls.
 // ... They should probably be moved to models, and then I can make helper functions to call.
 exports.userIncome = (req, res) => {
-  console.log("=======================");
-  console.log("=======================");
-  console.log("req: ", req.userId);
-  console.log("=======================");
-  console.log("=======================");
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("req: ", req.userId);
+  // console.log("=======================");
+  // console.log("=======================");
   
   db.Income_Item.findAll({
     where: {
@@ -34,7 +34,7 @@ exports.userIncome = (req, res) => {
     ]
   })
     .then(cat => {
-      console.log(cat);
+      // console.log(cat);
 
       if (!cat) {
         return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
@@ -107,11 +107,11 @@ exports.userIncome = (req, res) => {
 
 
 exports.userExpense = (req, res) => {
-  console.log("=======================");
-  console.log("=======================");
-  console.log("req: ", req.userId);
-  console.log("=======================");
-  console.log("=======================");
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("req: ", req.userId);
+  // console.log("=======================");
+  // console.log("=======================");
   
   db.Expense_Item.findAll({
     where: {
@@ -127,7 +127,7 @@ exports.userExpense = (req, res) => {
     ]
   })
     .then(cat => {
-      console.log(cat);
+      // console.log(cat);
 
       if (!cat) {
         return res.status(404).send({ message: "User's Expense not found. Or is user not logged in?" });
@@ -190,6 +190,45 @@ exports.userExpense = (req, res) => {
         // categories: arr
         // category: cat
         // category: arr
+      });
+
+    })
+    .catch(err => {
+
+      res.status(500).send({ message: err.message });
+    });
+}
+
+exports.userSave = (req, res) => {
+  console.log("=======================");
+  console.log("=======================");
+  console.log("req: ", req.body.income.categories);
+  console.log("=======================");
+  console.log("=======================");
+  
+  db.Income_Item.findAll({
+    where: {
+      user_id: req.userId
+    },
+    // include: [
+    //   {
+    //     model: db.Income_Type,
+    //     include: [
+    //         db.Income_Category
+    //     ]
+    //   }
+    // ]
+  })
+    .then(dbItems => {
+      console.log("dbItems: ", dbItems);
+
+      for (let i = 0; i < dbItems.length; i++) {
+        console.log(dbItems[i].dataValues.value);
+      }
+
+      res.status(200).send({
+        // response: JSON.stringify(cat),
+        response: "hi"
       });
 
     })

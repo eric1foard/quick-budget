@@ -147,6 +147,7 @@ class App extends Component {
     this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this);
     this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this);
     this.saveNewField           = this.saveNewField.bind(this);
+    this.handleSave             = this.handleSave.bind(this);
   }
 
   // **********************************************
@@ -239,8 +240,25 @@ class App extends Component {
   handleSave(evt) {
     evt.preventDefault();
     console.log("boop");
-
+    userService.saveUserBudget(this.state.incomeData, this.state.incomeData)
+      .then(res =>{
+        console.log(res)
+      })
+      .catch(error => {
+        console.error(error.message)
+      });
   }
+
+  // saveBudget(incomeData, expenseData) {
+  //   console.log("boop");
+  //   userService.saveUserBudget(incomeData, expenseData)
+  //     .then(res =>{
+  //       console.log(res)
+  //     })
+  //     .catch(error => {
+  //       console.error(error.message)
+  //     });
+  // }
 
   callAPI() {
     fetch("http://localhost:3001/testAPI")
@@ -315,11 +333,11 @@ class App extends Component {
             </div>
           </div>
 
-          {/* TODO: Put subtotals back in */}
-          {/* Box with income information */}
+          
           {this.state.isLoaded 
             ?
               <div>
+                {/* Box with income information */}
                 <Box 
                   title="Income"
                   boxType="income"

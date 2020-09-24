@@ -22,6 +22,11 @@ class UserService {
       .get(API_URL + 'user/expense', { headers: authHeader() });
   }
 
+  saveUserBudget(income, expense) {
+    return axios
+      .put(API_URL + 'user/save', {income, expense}, { headers: authHeader() });
+  }
+
 }
 
 export default new UserService();
