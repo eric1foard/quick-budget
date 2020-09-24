@@ -28,14 +28,18 @@ class Box extends Component {
 
 
   render() {
-    const boxTitle = this.capitalizeFirstLetter(this.props.boxData.title); // For clarity below
-    const dataId = this.props.boxData.title.split(" ").join("-")
-    const dataTarget = `#${dataId}`;
+    // Looks like these are no longer necessary - CB 9/22
+    // const dataId = this.props.title.split(" ").join("-")
+    // const dataTarget = `#${dataId}`;
     
     // These are used for defining the class dynamically, used to style in the css file.
-    const boxType = this.props.boxData.title; 
+    const boxType = this.props.boxType; 
     const cardHeaderClasses = `card-header card-header-${boxType}`
     const cardFooterClasses = `card-footer card-footer-${boxType}`
+
+    // console.log('================')
+    // console.log(this.props.boxData)
+    // console.log('================')
 
     return(
       <div>
@@ -44,12 +48,11 @@ class Box extends Component {
           {/* Header displays title, and is given classes for styling */}
           <div className={cardHeaderClasses}>
             <div className="btn-link-heading">
-              {boxTitle}
+              {this.props.title}
             </div>
           </div>
 
           {/* Maps through each item in income/expenses, passing this information to Form.js component */}
-          
             <ul className="list-group list-group-flush">
               {this.props.boxData.categories.map(category =>
                 <Form 
@@ -68,7 +71,7 @@ class Box extends Component {
 
           {/* Footer displays the total of the income/expenses fields */}
           <div className={cardFooterClasses}>
-            Total Monthly {boxTitle}: ${this.props.total.toFixed(2)}
+            Total Monthly {this.props.title}: ${this.props.total.toFixed(2)}
           </div>
 
         </div>

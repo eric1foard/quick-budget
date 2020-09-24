@@ -17,4 +17,29 @@ module.exports = function(app) {
     [authJwt.verifyToken],
     controller.userBoard
   );
+
+  app.get(
+    "/api/test/user/income",
+    [authJwt.verifyToken],
+    controller.userIncome
+  );
+
+  app.get(
+    "/api/test/user/expense",
+    [authJwt.verifyToken],
+    controller.userExpense
+  );
+
+  app.put(
+    "/api/test/user/save/income",
+    [authJwt.verifyToken],
+    controller.saveIncome
+  );
+
+  app.put(
+    "/api/test/user/save/expense",
+    [authJwt.verifyToken],
+    controller.saveExpense
+  );
+
 }

@@ -24,6 +24,7 @@ fs
     db[model.name] = model;
   });
 
+// TODO: 9/18 - this may need to go below after exporting the db - not sure.
 Object.keys(db).forEach(function(modelName) {
   if (db[modelName].associate) {
     db[modelName].associate(db);

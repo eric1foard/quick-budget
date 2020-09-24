@@ -2,12 +2,18 @@
 
 ## To Do
 
+- First, consider how we will get the information from the db - how to structure that api call(will likely need use the user and category as anchors, and find all the items associated in common).  Then, decide how we will provide it in default props.
+
 ### Next:
 - Budget
 -- Need to get fields to save to DB.
 - Dashboard
 -- Displays result of what user entered.
 -- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
+- Register
+-- Should also log the user in and take them to profile?
+- Controller
+ - get logic out of controller and into models
 
 ### Icebox:
 - To do's - minor
@@ -24,6 +30,7 @@
 - On dashboard - have loan calculator - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
 - When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
 - scrollspy on the budget page?
+- demo version without need to sign in
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
