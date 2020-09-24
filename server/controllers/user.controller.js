@@ -205,6 +205,13 @@ exports.userSave = (req, res) => {
   console.log("req: ", req.body.income.categories);
   console.log("=======================");
   console.log("=======================");
+
+  for (let i = 0; i < req.body.income.categories.length; i++) {
+    console.log("LOOPING HERE: ", req.body.income.categories[i]);
+    for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
+      console.log("SUBLOOP: ", req.body.income.categories[i])
+    }
+  }
   
   db.Income_Item.findAll({
     where: {
@@ -220,11 +227,11 @@ exports.userSave = (req, res) => {
     // ]
   })
     .then(dbItems => {
-      console.log("dbItems: ", dbItems);
+      // console.log("dbItems: ", dbItems);
 
-      for (let i = 0; i < dbItems.length; i++) {
-        console.log(dbItems[i].dataValues.value);
-      }
+      // for (let i = 0; i < dbItems.length; i++) {
+      //   console.log(dbItems[i].dataValues.value);
+      // }
 
       res.status(200).send({
         // response: JSON.stringify(cat),
