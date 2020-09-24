@@ -224,3 +224,9 @@ li.save:before{
 .btn{
   margin: 5px;
 }
+
+/* For the Footer component */
+.footer {
+  margin-top: 100vh;
+}
+

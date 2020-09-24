@@ -5,6 +5,7 @@
 - Beautify the login page.
 - Beautify the register page.
 - Add a bottom navbar
+- (see budget section below)
 
 ### Next:
 - DB
@@ -23,6 +24,7 @@
 
 
 - Budget
+-- Make the save button look nicer.
 -- Add something after user saves - sweetalert?
 -- Add a loading image for while the GET requests are being made.
 -- Track if user has made changes.  If they have, warn them before leaving page.
