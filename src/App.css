@@ -25,6 +25,7 @@
   font-size: 2rem;
 }
 
+
 /* For the Home component */
 .logo{
   margin-top: 1rem;
@@ -225,8 +226,5 @@ li.save:before{
   margin: 5px;
 }
 
-/* For the Footer component */
-.footer {
-  margin-top: 100vh;
-}
+
 
