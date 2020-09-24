@@ -48,6 +48,7 @@ exports.userIncome = (req, res) => {
           title: item.Income_Type.name,
           description: item.Income_Type.description,
           value: item.value,
+          id: item.id
         }
 
         let categoryIdentifier = item.Income_Type.Income_Category.id;
@@ -141,6 +142,7 @@ exports.userExpense = (req, res) => {
           title: item.Expense_Type.name,
           description: item.Expense_Type.description,
           value: item.value,
+          id: item.id
         }
 
         let categoryIdentifier = item.Expense_Type.Expense_Category.id;
@@ -199,48 +201,70 @@ exports.userExpense = (req, res) => {
     });
 }
 
-exports.userSave = (req, res) => {
+exports.saveIncome = (req, res) => {
   console.log("=======================");
   console.log("=======================");
   console.log("req: ", req.body.income.categories);
   console.log("=======================");
   console.log("=======================");
 
+  let dataArray = [];
   for (let i = 0; i < req.body.income.categories.length; i++) {
     console.log("LOOPING HERE: ", req.body.income.categories[i]);
     for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
-      console.log("SUBLOOP: ", req.body.income.categories[i])
+      console.log("SUB LOOP: ", req.body.income.categories[i].fields[j]);
+      dataArray.push(req.body.income.categories[i].fields[j]);
     }
   }
-  
-  db.Income_Item.findAll({
-    where: {
-      user_id: req.userId
-    },
-    // include: [
-    //   {
-    //     model: db.Income_Type,
-    //     include: [
-    //         db.Income_Category
-    //     ]
-    //   }
-    // ]
+
+  console.log("AFTER LOOP: ", dataArray);
+
+  db.Income_Item.bulkCreate(dataArray, {
+    fields: ["id", "value", "user_id", "income_type_id"],
+    updateOnDuplicate: ["value"]
   })
-    .then(dbItems => {
-      // console.log("dbItems: ", dbItems);
-
-      // for (let i = 0; i < dbItems.length; i++) {
-      //   console.log(dbItems[i].dataValues.value);
-      // }
-
-      res.status(200).send({
-        // response: JSON.stringify(cat),
-        response: "hi"
+    .then(response => {
+      // console.log("response: ", response);
+      res.status(204).send({
+        // Based on research, it appears that successful PUT requests...
+        // ...should return no content and a 204 status
       });
-
     })
     .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+}
 
+exports.saveExpense = (req, res) => {
+  console.log("=======================");
+  console.log("=======================");
+  console.log("req: ", req.body.expense.categories);
+  console.log("=======================");
+  console.log("=======================");
+
+  let dataArray = [];
+  for (let i = 0; i < req.body.expense.categories.length; i++) {
+    console.log("LOOPING HERE: ", req.body.expense.categories[i]);
+    for (let j = 0; j < req.body.expense.categories[i].fields.length; j++) {
+      console.log("SUB LOOP: ", req.body.expense.categories[i].fields[j]);
+      dataArray.push(req.body.expense.categories[i].fields[j]);
+    }
+  }
+
+  console.log("AFTER LOOP: ", dataArray);
+
+  db.Expense_Item.bulkCreate(dataArray, {
+    fields: ["id", "value", "user_id", "expense_type_id"],
+    updateOnDuplicate: ["value"]
+  })
+    .then(response => {
+      // console.log("response: ", response);
+      res.status(204).send({
+        // Based on research, it appears that successful PUT requests...
+        // ...should return no content and a 204 status
+      });
+    })
+    .catch(err => {
       res.status(500).send({ message: err.message });
     });
 }

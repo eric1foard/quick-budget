@@ -237,28 +237,28 @@ class App extends Component {
     this.saveNewField(obj, "expensesData", category);
   }
 
+  // TODO: How to handle users who have not signed up who click save (CB 9/24/20)
   handleSave(evt) {
+    // evt.preventDefault();
+    // console.log("boop");
+    // userService.saveUserBudget(this.state.incomeData, this.state.incomeData)
+    //   .then(res =>{
+    //     console.log(res)
+    //   })
+    //   .catch(error => {
+    //     console.error(error.message)
+    //   });
+    
     evt.preventDefault();
-    console.log("boop");
-    userService.saveUserBudget(this.state.incomeData, this.state.incomeData)
+    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
       .then(res =>{
-        console.log(res)
+        console.log(res);
       })
       .catch(error => {
         console.error(error.message)
       });
   }
 
-  // saveBudget(incomeData, expenseData) {
-  //   console.log("boop");
-  //   userService.saveUserBudget(incomeData, expenseData)
-  //     .then(res =>{
-  //       console.log(res)
-  //     })
-  //     .catch(error => {
-  //       console.error(error.message)
-  //     });
-  // }
 
   callAPI() {
     fetch("http://localhost:3001/testAPI")

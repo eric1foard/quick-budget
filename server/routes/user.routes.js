@@ -31,9 +31,15 @@ module.exports = function(app) {
   );
 
   app.put(
-    "/api/test/user/save",
+    "/api/test/user/save/income",
     [authJwt.verifyToken],
-    controller.userSave
+    controller.saveIncome
+  );
+
+  app.put(
+    "/api/test/user/save/expense",
+    [authJwt.verifyToken],
+    controller.saveExpense
   );
 
 }

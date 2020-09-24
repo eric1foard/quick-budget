@@ -22,9 +22,14 @@ class UserService {
       .get(API_URL + 'user/expense', { headers: authHeader() });
   }
 
-  saveUserBudget(income, expense) {
+  saveIncome(income) {
     return axios
-      .put(API_URL + 'user/save', {income, expense}, { headers: authHeader() });
+      .put(API_URL + 'user/save/income', {income}, { headers: authHeader() });
+  }
+
+  saveExpense(expense) {
+    return axios
+      .put(API_URL + 'user/save/expense', {expense}, { headers: authHeader() });
   }
 
 }
