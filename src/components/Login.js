@@ -5,9 +5,7 @@ import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
 import Swal from 'sweetalert2'
 
-
 import '../App.css';
-
 
 export default class Login extends Component {
   constructor(props) {
@@ -15,7 +13,6 @@ export default class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    // this.required = this.required.bind(this);
 
     this.state = {
       username: "",
@@ -37,23 +34,6 @@ export default class Login extends Component {
     });
   }
 
-  // required(value) {
-  //   if (!value && this.state.message) {
-  //     return (
-  //       // <div className="alert alert-danger" role="alert">
-  //       //   {Swal.fire({
-  //       //     icon: 'success',
-  //       //     title: 'Congratulations!',
-  //       //     text: 'You successfully chose all the monkeys correct. You are the real MVP.',
-  //       //   })}
-  //       // </div>
-  //       <div className="alert alert-danger" role="alert">
-  //         This field is required!
-  //       </div>
-  //     );
-  //   }
-  // };
-
   handleLogin(e) {
     e.preventDefault();
 
@@ -62,19 +42,19 @@ export default class Login extends Component {
         icon: 'warning',
         title: 'Oops!',
         text: 'Please enter a username and password.',
-      })
+      });
     } else if (!this.state.username) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Please enter a username.',
-      })
+      });
     } else  if (!this.state.password) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Please enter a password.',
-      })
+      });
     } else {
       this.setState({
         message: "",
@@ -84,33 +64,44 @@ export default class Login extends Component {
       this.form.validateAll();
   
       if (this.checkBtn.context._errors.length === 0) {
-        AuthService.login(this.state.username, this.state.password).then(
-          () => {
-            this.props.history.push("/profile");
-            window.location.reload();
-          },
-          error => {
-            const resMessage =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'You are now logged in.  Redirecting you to your dashboard.',
+          showConfirmButton: false,
+          timer: 1500
+        }).then( () => {
+          AuthService.login(this.state.username, this.state.password).then(
+            () => {
+              this.props.history.push("/profile");
+              window.location.reload();
+            },
+            error => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+  
+                console.log(resMessage);
+                
+                this.setState({
+                  loading: false,
+                  // message: resMessage
+                });
+                
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'Oops!',
+                  text: resMessage,
+                })
+            }
+          );
 
-              console.log(resMessage);
-              
-              this.setState({
-                loading: false,
-                // message: resMessage
-              });
-              
-              Swal.fire({
-                icon: 'warning',
-                title: 'Oops!',
-                text: resMessage,
-              })
-          }
-        );
+        });
+
       } else {
         this.setState({
           loading: false
@@ -120,8 +111,7 @@ export default class Login extends Component {
   }
 
   render() {
-    // TODO: The validation error messages are really ugly.  Should come up with a different way to present them
-    // ...Also, it would be nice to have a "successful" message from sweetAlert.  Maybe both these can be fixed at same time.
+    // ...Also, it would be nice to have a "successful" message from sweetAlert.
     return (
       <div>
         <div className="App">
@@ -185,7 +175,6 @@ export default class Login extends Component {
                         </div>
 
                         {this.state.message && (
-                          // This one is for above button
                           <div className="form-group">
                             <div className="alert alert-danger" role="alert">
                               {this.state.message}
