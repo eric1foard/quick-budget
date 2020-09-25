@@ -3,14 +3,14 @@
 ## Now
 - Beautify the user's profile page.
 - Beautify the login page.
-- Beautify the register page.
+- Beautify the signup page.
 - Add a bottom navbar
 - (see budget section below)
 
 ### Next:
 - DB
 -- How to seed information
-- Register
+- SignUp
 -- Should also log the user in and take them to profile.
 - User Controller
 -- get logic out of controller and into models
@@ -18,7 +18,10 @@
 - Starting App
 -- Consolidate "npm start" and "nodemon index/server"
 - README
--- Improve it for others!
+-- Improve it for others to read!
+- To Turn into Components
+-- Login/Registration fields
+-- Login/Registration buttons
 - About Me
 -- Add one, why not.
 

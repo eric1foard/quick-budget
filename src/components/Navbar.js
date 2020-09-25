@@ -39,7 +39,7 @@ class Navbar extends Component {
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <a href="/login" className="nav-link" onClick={this.props.logOut}>
-                LogOut
+                Log Out
               </a>
             </li>
           </div>
@@ -47,12 +47,12 @@ class Navbar extends Component {
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">
-                Login
+                Log In
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
+              <Link to={"/signup"} className="nav-link">
                 Sign Up
               </Link>
             </li>

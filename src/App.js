@@ -8,7 +8,7 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
-import Register from "./components/Register";
+import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
@@ -55,7 +55,7 @@ class App extends Component {
                 <Switch>
                   <Route exact path={["/", "/home"]} component={Home} />
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/signup" component={SignUp} />
                   <Route exact path="/profile" component={Profile} />
                   <Route exact path="/budget" component={Budget} />
                   <Route path="/user" component={BoardUser} />

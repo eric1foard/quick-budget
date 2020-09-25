@@ -85,14 +85,14 @@
   color: rgba(0, 0, 0, 0.842);
 }
 
-.btn-register{
+.btn-signup{
   padding: 7px 65px;
   border-radius: 20px;
   background-color: rgba(13, 97, 72, 0.842);
   color: rgb(255, 255, 255);
 }
 
-.btn-register:hover{
+.btn-signup:hover{
   background-color: rgba(7, 121, 86, 0.767);
   color:  rgb(0, 0, 0);
 }
@@ -103,17 +103,18 @@
   padding-top: 10px;
   padding-bottom: 15px;
   border-radius: 20px;
-  border-color: red;
-  border-width: thick;
+  border-width: medium;
   width: 60%;
   margin: 0 auto;
   margin-bottom: 25px;
-  font-weight: 300;
+  font-weight: 10;
 }
 
 .login-form{
   width: 90%;
   margin: 0 auto;
+  text-align: center;
+  border-radius: 20px
 }
 
 
