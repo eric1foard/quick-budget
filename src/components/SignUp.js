@@ -69,14 +69,14 @@ export default class SignUp extends Component {
           Swal.fire({
             icon: 'success',
             title: 'Success!',
-            html: 'You are now registered!<br>Redirecting you to your dashboard...',
+            html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
             showConfirmButton: false,
             timer: 1500
           })
             .then( () => {
               AuthService.login(this.state.username, this.state.password)
               .then( () => {
-                this.props.history.push("/profile");
+                this.props.history.push("/dashboard");
                 window.location.reload();
               }).catch(error => {
                 const resMessage =

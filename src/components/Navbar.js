@@ -22,7 +22,7 @@ class Navbar extends Component {
           {this.props.currentUser && (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
+                <Link to={"/dashboard"} className="nav-link">
                   {this.props.currentUser.username}
                 </Link>
               </li>

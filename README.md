@@ -1,9 +1,9 @@
 # Roadmap
 
 ## Now
-- Beautify the user's profile page.
-- Beautify the login page.
-- Beautify the signup page.
+- Beautify dashboard.
+- ✓ Beautify the login page.
+- ✓ Beautify the signup page.
 - Add a bottom navbar
 - (see budget section below)
 
@@ -11,7 +11,7 @@
 - DB
 -- How to seed information
 - SignUp
--- Should also log the user in and take them to profile.
+-- Should also log the user in and take them to dashboard.
 - User Controller
 -- get logic out of controller and into models
 -- reduce repitition between user/expense logic

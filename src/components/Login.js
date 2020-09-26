@@ -56,13 +56,12 @@ export default class LogIn extends Component {
             Swal.fire({
               icon: 'success',
               title: 'Success!',
-              text: 'You are now logged in',
-              footer: 'Redirecting you to your dashboard...',
+              html: 'You are now logged in!<br><br>Redirecting you to your dashboard...',
               showConfirmButton: false,
               timer: 1500
             })
               .then( () => {
-                this.props.history.push("/profile");
+                this.props.history.push("/dashboard");
                 window.location.reload();
               })
           }

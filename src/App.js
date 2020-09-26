@@ -10,7 +10,7 @@ import AuthService from "./services/auth.service";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
 import BoardUser from "./components/BoardUser";
 import Budget from"./components/Budget"
 
@@ -56,7 +56,7 @@ class App extends Component {
                   <Route exact path={["/", "/home"]} component={Home} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/signup" component={SignUp} />
-                  <Route exact path="/profile" component={Profile} />
+                  <Route exact path="/dashboard" component={Dashboard} />
                   <Route exact path="/budget" component={Budget} />
                   <Route path="/user" component={BoardUser} />
                 </Switch>
