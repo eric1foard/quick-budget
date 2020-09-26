@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Link } from "react-router-dom";
 import '@fortawesome/fontawesome-free/js/all.js';
 
 import Login from "./Login";
@@ -49,13 +49,13 @@ export default class Home extends Component {
                 </div>
                 <div className="welcome-list">
                   <div className="welcome-list-text">
-                    <i class="fas fa-check-circle welcome-list-icon"></i>   Quick Budget guides you through entering your monthly income and expenses
+                    <i className="fas fa-check-circle welcome-list-icon"></i>   Quick Budget guides you through entering your monthly income and expenses
                   </div>
                   <div className="welcome-list-text">
-                    <i class="fas fa-chart-bar welcome-list-icon"></i> We'll crunch the numbers and let you know your monthly surplus or shortfall
+                    <i className="fas fa-chart-bar welcome-list-icon"></i> We'll crunch the numbers and let you know your monthly surplus or shortfall
                   </div>
                   <div className="welcome-list-text">
-                    <i class="far fa-clock welcome-list-icon"></i> Your budget is stored here, so you can return and adjust whenever needed
+                    <i className="far fa-clock welcome-list-icon"></i> Your budget is stored here, so you can return and adjust whenever needed
                   </div>
                 </div>
               </div>

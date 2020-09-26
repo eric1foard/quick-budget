@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 import Box from './Box.js';
 import Summary from './Summary.js';

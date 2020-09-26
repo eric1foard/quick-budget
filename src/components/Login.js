@@ -50,37 +50,38 @@ export default class LogIn extends Component {
       });
 
       AuthService.login(this.state.username, this.state.password)
-        .then(res => {
-          console.log("success res: ", res);
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: 'You are now logged in',
-            footer: 'Redirecting you to your dashboard...',
-            showConfirmButton: false,
-            timer: 1500
-          })
-            .then( () => {
-              this.props.history.push("/profile");
-              window.location.reload();
+        .then(
+          res => {
+            console.log("success res: ", res);
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'You are now logged in',
+              footer: 'Redirecting you to your dashboard...',
+              showConfirmButton: false,
+              timer: 1500
             })
-        })
-          .catch(error => {
-            const resMessage =
-              (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-              error.message ||
-              error.toString();
-              
-              this.setState({ loading: false });
-              Swal.fire({
-                icon: 'warning',
-                title: 'Oops!',
-                text: `${resMessage} Please try again.`, 
-                footer: 'Or, if you have not yet signed up, please do so.'
+              .then( () => {
+                this.props.history.push("/profile");
+                window.location.reload();
               })
-            })
+          }
+        ).catch(error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+            
+          this.setState({ loading: false });
+          Swal.fire({
+            icon: 'warning',
+            title: 'Oops!',
+            text: `${resMessage} Please try again.`, 
+            footer: 'Or, if you have not yet signed up, please do so.'
+          })
+        });
     };
   }
 
