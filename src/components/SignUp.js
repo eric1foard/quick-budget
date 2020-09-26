@@ -119,92 +119,89 @@ export default class SignUp extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="container">
-          <div className="jumbotron jumbo">
-            <div className="row">
-              <div className="col-sm-12 logo">
-                <span className="welcome-to">Sign Up </span>Quick Budget
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 welcome-subtitle">
-                <div className="subtitle">
-                  To create an account, please fill out the fields below.
-                </div>
-              </div>
-            </div>
-            <form>
-              <div className="form-group">
-
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="card login-label">
-                      <label htmlFor="username">Username</label>
-                      <input 
-                        type="text" 
-                        name="username"
-                        value={this.state.username}
-                        onChange={this.handleChange} 
-                        className="form-control login-form" 
-                        placeholder="Enter Username Here" 
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="card login-label">
-                      <label htmlFor="email">Email</label>
-                      <input 
-                        type="text" 
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.handleChange} 
-                        className="form-control login-form" 
-                        placeholder="youremail@gmail.com" 
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="card login-label">
-                      <label htmlFor="password">Password</label>
-                      <input 
-                        type="password" 
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChange} 
-                        className="form-control login-form" 
-                        placeholder="Enter Password Here"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-12">
-                    <button
-                      className="btn btn-signup"
-                      disabled={this.state.loading}
-                      onClick={this.handleSignUp}
-                      >
-                      {this.state.loading && (
-                        <span className="spinner-border spinner-border-sm"></span>
-                        )}
-                      <span>Sign Up</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-
+      <div className="jumbotron jumbo">
+        <div className="row">
+          <div className="col-sm-12 logo">
+            <span className="welcome-to">Sign Up </span>Quick Budget
           </div>
         </div>
+        <div className="row">
+          <div className="col-sm-12 welcome-subtitle">
+            <div className="subtitle">
+              To create an account, please fill out the fields below.
+            </div>
+          </div>
+        </div>
+        <form>
+          <div className="form-group">
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card login-label">
+                  <label htmlFor="username">Username</label>
+                  <input 
+                    type="text" 
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleChange} 
+                    className="form-control login-form" 
+                    placeholder="Enter Username Here" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card login-label">
+                  <label htmlFor="email">Email</label>
+                  <input 
+                    type="text" 
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange} 
+                    className="form-control login-form" 
+                    placeholder="youremail@gmail.com" 
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card login-label">
+                  <label htmlFor="password">Password</label>
+                  <input 
+                    type="password" 
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleChange} 
+                    className="form-control login-form" 
+                    placeholder="Enter Password Here"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <button
+                  className="btn btn-signup"
+                  disabled={this.state.loading}
+                  onClick={this.handleSignUp}
+                  >
+                  {this.state.loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                  <span>Sign Up</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
       </div>
+
     );
   }
 }

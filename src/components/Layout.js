@@ -6,7 +6,7 @@ import "../App.css";
 class Layout extends Component {
   render() {
     return(
-      <div className="layout">
+      <div>
 
         <div>
           <Navbar 

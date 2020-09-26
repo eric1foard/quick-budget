@@ -42,31 +42,32 @@ class App extends Component {
     const { currentUser } = this.state;
 
     return (
-      <div>
+
         <Router>
-          <div>
+          <Layout 
+            currentUser={currentUser}
+            logOut={this.logOut}
+          >
 
-            <Layout 
-              currentUser={currentUser}
-              logOut={this.logOut}
-            >
+            <div className="App">
+              <div className="container">
 
-              <div className="container mt-3">
-                <Switch>
-                  <Route exact path={["/", "/home"]} component={Home} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/signup" component={SignUp} />
-                  <Route exact path="/dashboard" component={Dashboard} />
-                  <Route exact path="/budget" component={Budget} />
-                  <Route path="/user" component={BoardUser} />
-                </Switch>
+                <div className="mt-3">
+                  <Switch>
+                    <Route exact path={["/", "/home"]} component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={SignUp} />
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/budget" component={Budget} />
+                    <Route path="/user" component={BoardUser} />
+                  </Switch>
+                </div>
+
               </div>
+            </div>
 
-            </Layout>
-
-          </div>
+          </Layout>
         </Router>
-      </div>
     );
   }
 }

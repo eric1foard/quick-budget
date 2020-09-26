@@ -10,18 +10,24 @@
 ### Next:
 - DB
 -- How to seed information
-- SignUp
--- Should also log the user in and take them to dashboard.
+
 - User Controller
 -- get logic out of controller and into models
 -- reduce repitition between user/expense logic
+
 - Starting App
 -- Consolidate "npm start" and "nodemon index/server"
+
 - README
 -- Improve it for others to read!
+
+- Dashboard
+-- Finish making it look nice
+-- Add some other insights or tools (saving goals, loan calculator, etc)
+
 - To Turn into Components
--- Login/Registration fields
--- Login/Registration buttons
+-- ?
+
 - About Me
 -- Add one, why not.
 

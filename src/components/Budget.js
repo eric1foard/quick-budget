@@ -296,87 +296,76 @@ class App extends Component {
   }
 
   render() {
-    // These lines are just for testing, can be removed
-      // this.callAPI()
-      // console.log(this.state.incomeData);
-      // console.log(this.state.userIncome)
-
-
     return (
       <div className="budget">
-      <div className="App">
-        <div className="container">
-          {/* <h1>Here: {this.state.userIncome.data.monthly_pay}</h1> */}
 
-          {/* Title and subtitle */}
-          <div className="jumbotron jumbo">
-              <div className="row">
-                <div className="col-sm-12 logo">
-                  <span className="welcome-to">Calculator </span>Quick Budget
-                </div>
+        {/* Title and subtitle */}
+        <div className="jumbotron jumbo">
+            <div className="row">
+              <div className="col-sm-12 logo">
+                <span className="welcome-to">Calculator </span>Quick Budget
               </div>
-            <div className="subtitle">
-              A quick and easy reference tool to calculate your basic monthly budget.
             </div>
-            <div className="budget-instructions-list">
-              <ol className="budget-list-text">
-                <li className="budget-list-text income">
-                  Add your income below
-                </li>
-                <li className="budget-list-text expenses">
-                  After that, we'll guide you through your expenses
-                </li>
-                <li className="budget-list-text save">
-                  Click save - we'll store your budget and take you to your dashboard with more insights
-                </li>
-              </ol>
-            </div>
+          <div className="subtitle">
+            A quick and easy reference tool to calculate your basic monthly budget.
           </div>
-
-          
-          {this.state.isLoaded 
-            ?
-              <div>
-                {/* Box with income information */}
-                <Box 
-                  title="Income"
-                  boxType="income"
-
-                  boxData={this.state.incomeData}
-                  handleUpdate={this.updateIncomeHelper}
-                  // handleSaveNew={this.saveNewIncomeHelper}
-                  total={this.state.incomeTotal}
-                  // key={this.props.incomeData.id}
-                />
-
-                {/* Box with expenses information */}
-                <Box
-                  title="Expenses"
-                  boxType="expenses"
-
-                  boxData={this.state.expenseData} 
-                  handleUpdate={this.updateExpensesHelper}
-                  // handleSaveNew={this.saveNewExpensesHelper} 
-                  total={this.state.expenseTotal}
-                  // key={this.props.expensesData.id}
-                />
-
-                {/* Summary displays the final total monthly amount */}
-                <Summary 
-                  totalIncome={this.state.incomeTotal}
-                  totalExpenses={this.state.expenseTotal}
-                />
-
-
-                <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
-              </div>
-            :
-              // TODO: 9/22 - add a loading image
-              <div>Loading</div>
-          }
-
+          <div className="budget-instructions-list">
+            <ol className="budget-list-text">
+              <li className="budget-list-text income">
+                Add your income below
+              </li>
+              <li className="budget-list-text expenses">
+                After that, we'll guide you through your expenses
+              </li>
+              <li className="budget-list-text save">
+                Click save - we'll store your budget and take you to your dashboard with more insights
+              </li>
+            </ol>
+          </div>
         </div>
-      </div>
+
+        
+        {this.state.isLoaded 
+          ?
+            <div>
+              {/* Box with income information */}
+              <Box 
+                title="Income"
+                boxType="income"
+
+                boxData={this.state.incomeData}
+                handleUpdate={this.updateIncomeHelper}
+                // handleSaveNew={this.saveNewIncomeHelper}
+                total={this.state.incomeTotal}
+                // key={this.props.incomeData.id}
+              />
+
+              {/* Box with expenses information */}
+              <Box
+                title="Expenses"
+                boxType="expenses"
+
+                boxData={this.state.expenseData} 
+                handleUpdate={this.updateExpensesHelper}
+                // handleSaveNew={this.saveNewExpensesHelper} 
+                total={this.state.expenseTotal}
+                // key={this.props.expensesData.id}
+              />
+
+              {/* Summary displays the final total monthly amount */}
+              <Summary 
+                totalIncome={this.state.incomeTotal}
+                totalExpenses={this.state.expenseTotal}
+              />
+
+
+              <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
+            </div>
+          :
+            // TODO: 9/22 - add a loading image
+            <div>Loading</div>
+        }
+
       </div>
     );
   }

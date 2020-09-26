@@ -53,8 +53,6 @@ class Dashboard extends Component {
 
     return (
 
-      <div className="App">
-        <div className="container">
           <div className="jumbotron jumbo">
             <div className="row">
               <div className="col-sm-12 logo">
@@ -82,8 +80,6 @@ class Dashboard extends Component {
             </div>
 
           </div>
-        </div>
-      </div>
 
 
       // <div className="container">
