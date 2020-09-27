@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
-import Register from "./components/Register";
+import SignUp from "./components/SignUp";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
 import BoardUser from "./components/BoardUser";
 import Budget from"./components/Budget"
+
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 class App extends Component {
   constructor(props) {
@@ -41,70 +45,28 @@ class App extends Component {
 
     return (
       <Router>
-        <div>
-          <nav className="navbar navbar-expand navbar-dark bg-dark">
-            <Link to={"/"} className="navbar-brand">
-              Quick Budget
-            </Link>
-            <div className="navbar-nav mr-auto">
-              <li className="nav-item">
-                <Link to={"/home"} className="nav-link">
-                  Home
-                </Link>
-              </li>
+          
+        <Navbar currentUser={this.state.currentUser} logOut={this.logOut} />
 
-              {currentUser && (
-                <div className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link to={"/profile"} className="nav-link">
-                      {currentUser.username}
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={"/budget"} className="nav-link">
-                      Budget
-                    </Link>
-                  </li>
-                </div>
-              )}
+        <div className="App">
+          <div className="container">
+
+            <div className="mt-3">
+              <Switch>
+                <Route exact path={["/", "/home"]} component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={SignUp} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/budget" component={Budget} />
+                <Route path="/user" component={BoardUser} />
+              </Switch>
             </div>
 
-            {currentUser ? (
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a href="/login" className="nav-link" onClick={this.logOut}>
-                    LogOut
-                  </a>
-                </li>
-              </div>
-            ) : (
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/login"} className="nav-link">
-                    Login
-                  </Link>
-                </li>
-
-                <li className="nav-item">
-                  <Link to={"/register"} className="nav-link">
-                    Sign Up
-                  </Link>
-                </li>
-              </div>
-            )}
-          </nav>
-
-          <div className="container mt-3">
-            <Switch>
-              <Route exact path={["/", "/home"]} component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/profile" component={Profile} />
-              <Route exact path="/budget" component={Budget} />
-              <Route path="/user" component={BoardUser} />
-            </Switch>
           </div>
         </div>
+
+        <Footer />
+
       </Router>
     );
   }

@@ -5,11 +5,13 @@ const API_URL = 'http://localhost:3001/api/test/';
 
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + 'all');
+    return axios
+      .get(API_URL + 'all');
   }
 
   getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+    return axios
+      .get(API_URL + 'user', { headers: authHeader() });
   }
 
   getUserIncome() {

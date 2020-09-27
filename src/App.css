@@ -2,8 +2,12 @@
   text-align: center;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-  height: 100vh;
+  position: relative;
+  min-height: 88vh;
+}
+
+.container{
+  margin-bottom: 50px;
 }
 
 /* Not using at the moment */
@@ -25,6 +29,7 @@
   font-size: 2rem;
 }
 
+
 /* For the Home component */
 .logo{
   margin-top: 1rem;
@@ -33,7 +38,6 @@
   font-weight: 100;
   display: inline-block;
   font-size: 5rem;
-  width: 50%;
 }
 
 .welcome-to{
@@ -84,16 +88,36 @@
   color: rgba(0, 0, 0, 0.842);
 }
 
-.btn-register{
+.btn-signup{
   padding: 7px 65px;
   border-radius: 20px;
   background-color: rgba(13, 97, 72, 0.842);
   color: rgb(255, 255, 255);
 }
 
-.btn-register:hover{
+.btn-signup:hover{
   background-color: rgba(7, 121, 86, 0.767);
   color:  rgb(0, 0, 0);
+}
+
+/* For the Login Page */
+.login-label{
+  background-color: rgba(137, 177, 157, 0.801);
+  padding-top: 10px;
+  padding-bottom: 15px;
+  border-radius: 20px;
+  border-width: medium;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  font-weight: 10;
+}
+
+.login-form{
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 20px
 }
 
 
@@ -144,6 +168,8 @@ li.save:before{
   margin: 0 auto;
   float: none; 
   margin-bottom: 30px; 
+  border-radius: 40px;
+  overflow: hidden;
 }
 
 .card-header-income{
@@ -221,4 +247,26 @@ li.save:before{
 /* For the NewField component */
 .btn{
   margin: 5px;
+}
+
+
+/* Fot the Footer component */
+.footer-nav{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  min-height: 6vh;
+
+  padding-top: 13px;
+  padding-bottom: 13px;
+  color: rgba(255,255,255,.5);
+}
+
+.spacing-navbar-nav{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.footer-nav-link:hover a{
+  color: #419bfb;;
 }

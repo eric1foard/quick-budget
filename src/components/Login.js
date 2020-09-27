@@ -1,26 +1,15 @@
 import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-
 import AuthService from "../services/auth.service";
+import Swal from "sweetalert2"
 
-const required = value => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    );
-  }
-};
+import Jumbotron from "./Jumbotron";
+import "../App.css";
 
-export default class Login extends Component {
+export default class LogIn extends Component {
   constructor(props) {
     super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+    this.handleLogIn = this.handleLogIn.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       username: "",
@@ -30,123 +19,142 @@ export default class Login extends Component {
     };
   }
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
+  handleChange(evt) {
+    this.setState({[evt.target.name]: evt.target.value});
   }
 
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
-
-  handleLogin(e) {
+  handleLogIn(e) {
     e.preventDefault();
 
-    this.setState({
-      message: "",
-      loading: true
-    });
+    if (!this.state.username && !this.state.password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Please enter a username and password.',
+      });
+    } else if (!this.state.username) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Please enter a username.',
+      });
+    } else  if (!this.state.password) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Please enter a password.',
+      });
+    } else {
+      this.setState({
+        message: "",
+        loading: true
+      });
 
-    this.form.validateAll();
-
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password).then(
-        () => {
-          this.props.history.push("/profile");
-          window.location.reload();
-        },
-        error => {
+      AuthService.login(this.state.username, this.state.password)
+        .then(
+          res => {
+            console.log("success res: ", res);
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              html: 'You are now logged in!<br><br>Redirecting you to your dashboard...',
+              showConfirmButton: false,
+              timer: 1500
+            })
+              .then( () => {
+                this.props.history.push("/dashboard");
+                window.location.reload();
+              })
+          }
+        ).catch(error => {
           const resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
-
-          this.setState({
-            loading: false,
-            message: resMessage
-          });
-        }
-      );
-    } else {
-      this.setState({
-        loading: false
-      });
-    }
+            
+          this.setState({ loading: false });
+          Swal.fire({
+            icon: 'warning',
+            title: 'Oops!',
+            text: `${resMessage} Please try again.`, 
+            footer: 'Or, if you have not yet signed up, please do so.'
+          })
+        });
+    };
   }
 
   render() {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
 
-          <Form
-            onSubmit={this.handleLogin}
-            ref={c => {
-              this.form = c;
-            }}
-          >
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <Input
-                type="text"
-                className="form-control"
-                name="username"
-                value={this.state.username}
-                onChange={this.onChangeUsername}
-                validations={[required]}
-              />
-            </div>
+      <Jumbotron
+        largeTitle="Log In "
+        smallTitle="Quick Budget"
+        subtitle="If you already have an account, enter your information below."
+      >
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChangePassword}
-                validations={[required]}
-              />
-            </div>
+        <form>
+          <div className="form-group">
 
-            <div className="form-group">
-              <button
-                className="btn btn-primary btn-block"
-                disabled={this.state.loading}
-              >
-                {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card login-label">
 
-            {this.state.message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {this.state.message}
+                  <label htmlFor="username">Username</label>
+                  <input 
+                    type="text" 
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleChange} 
+                    className="form-control login-form" 
+                    placeholder="Enter Username Here" 
+                  />
+
                 </div>
               </div>
-            )}
-            <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }}
-            />
-          </Form>
-        </div>
-      </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card login-label">
+                  <label htmlFor="password">Password</label>
+                  <input 
+                    type="password" 
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleChange} 
+                    className="form-control login-form" 
+                    placeholder="Enter Password Here"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <button
+                  className="btn btn-signup"
+                  disabled={this.state.loading}
+                  onClick={this.handleLogIn}
+                  >
+                  {this.state.loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                  <span>Log In</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+
+      </Jumbotron>
+
+
+
+
     );
   }
 }

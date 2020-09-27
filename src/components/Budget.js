@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { Component } from "react";
+// import { v4 as uuidv4 } from "uuid";
 
-import Box from './Box.js';
-import Summary from './Summary.js';
+import Box from "./Box.js";
+import Summary from "./Summary.js";
+import Jumbotron from "./Jumbotron";
 import AuthService from "../services/auth.service";
-import userService from '../services/user.service.js';
+import userService from "../services/user.service.js";
 
 
 class App extends Component {
@@ -296,87 +297,74 @@ class App extends Component {
   }
 
   render() {
-    // These lines are just for testing, can be removed
-      // this.callAPI()
-      // console.log(this.state.incomeData);
-      // console.log(this.state.userIncome)
-
-
     return (
       <div className="budget">
-      <div className="App">
-        <div className="container">
-          {/* <h1>Here: {this.state.userIncome.data.monthly_pay}</h1> */}
 
-          {/* Title and subtitle */}
-          <div className="jumbotron jumbo">
-              <div className="row">
-                <div className="col-sm-12 logo">
-                  <span className="welcome-to">Calculator </span>Quick Budget
-                </div>
-              </div>
-            <div className="subtitle">
-              A quick and easy reference tool to calculate your basic monthly budget.
-            </div>
-            <div className="budget-instructions-list">
-              <ol className="budget-list-text">
-                <li className="budget-list-text income">
-                  Add your income below
-                </li>
-                <li className="budget-list-text expenses">
-                  After that, we'll guide you through your expenses
-                </li>
-                <li className="budget-list-text save">
-                  Click save - we'll store your budget and take you to your dashboard with more insights
-                </li>
-              </ol>
-            </div>
+        {/* Title and subtitle */}
+        <Jumbotron
+        largeTitle="Calculator "
+        smallTitle="Quick Budget"
+        subtitle="A quick and easy reference tool to calculate your basic monthly budget."
+        >
+
+          <div className="budget-instructions-list">
+            <ol className="budget-list-text">
+              <li className="budget-list-text income">
+                Add your income below
+              </li>
+              <li className="budget-list-text expenses">
+                After that, we'll guide you through your expenses
+              </li>
+              <li className="budget-list-text save">
+                Click save - we'll store your budget and take you to your dashboard with more insights
+              </li>
+            </ol>
           </div>
 
-          
-          {this.state.isLoaded 
-            ?
-              <div>
-                {/* Box with income information */}
-                <Box 
-                  title="Income"
-                  boxType="income"
+        </Jumbotron>
 
-                  boxData={this.state.incomeData}
-                  handleUpdate={this.updateIncomeHelper}
-                  // handleSaveNew={this.saveNewIncomeHelper}
-                  total={this.state.incomeTotal}
-                  // key={this.props.incomeData.id}
-                />
+        
+        {this.state.isLoaded 
+          ?
+            <div>
+              {/* Box with income information */}
+              <Box 
+                title="Income"
+                boxType="income"
 
-                {/* Box with expenses information */}
-                <Box
-                  title="Expenses"
-                  boxType="expenses"
+                boxData={this.state.incomeData}
+                handleUpdate={this.updateIncomeHelper}
+                // handleSaveNew={this.saveNewIncomeHelper}
+                total={this.state.incomeTotal}
+                // key={this.props.incomeData.id}
+              />
 
-                  boxData={this.state.expenseData} 
-                  handleUpdate={this.updateExpensesHelper}
-                  // handleSaveNew={this.saveNewExpensesHelper} 
-                  total={this.state.expenseTotal}
-                  // key={this.props.expensesData.id}
-                />
+              {/* Box with expenses information */}
+              <Box
+                title="Expenses"
+                boxType="expenses"
 
-                {/* Summary displays the final total monthly amount */}
-                <Summary 
-                  totalIncome={this.state.incomeTotal}
-                  totalExpenses={this.state.expenseTotal}
-                />
+                boxData={this.state.expenseData} 
+                handleUpdate={this.updateExpensesHelper}
+                // handleSaveNew={this.saveNewExpensesHelper} 
+                total={this.state.expenseTotal}
+                // key={this.props.expensesData.id}
+              />
+
+              {/* Summary displays the final total monthly amount */}
+              <Summary 
+                totalIncome={this.state.incomeTotal}
+                totalExpenses={this.state.expenseTotal}
+              />
 
 
-                <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
-              </div>
-            :
-              // TODO: 9/22 - add a loading image
-              <div>Loading</div>
-          }
+              <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
+            </div>
+          :
+            // TODO: 9/22 - add a loading image
+            <div>Loading</div>
+        }
 
-        </div>
-      </div>
       </div>
     );
   }
