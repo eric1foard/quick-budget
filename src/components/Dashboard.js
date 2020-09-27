@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import AuthService from "../services/auth.service";
 import userService from "../services/user.service";
 
+import Jumbotron from "./Jumbotron";
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -53,60 +55,26 @@ class Dashboard extends Component {
 
     return (
 
-          <div className="jumbotron jumbo">
-            <div className="row">
-              <div className="col-sm-12 logo">
-                <span className="welcome-to">Welcome </span>{currentUser.username}
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12 welcome-subtitle">
-                <div className="subtitle">
-                  Here's a quick summary of what we have on file for you:
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              Total Income: {this.state.incomeTotal}
-            </div>
+      <Jumbotron
+        largeTitle="Welcome "
+        smallTitle={currentUser.username}
+        subtitle="Here's a quick summary of what we have on file for you:"
+      >
 
-            <div>
-              Total Expense: {this.state.expenseTotal}
-            </div>
+        <div>
+          Total Income: {this.state.incomeTotal}
+        </div>
 
-            <div>
-              Go to your Budget
-            </div>
+        <div>
+          Total Expense: {this.state.expenseTotal}
+        </div>
 
-          </div>
+        <div>
+          Go to your Budget
+        </div>
 
-
-      // <div className="container">
-      //   <header className="jumbotron">
-      //     <h3>
-      //       <strong>{currentUser.username}</strong> Dashboard
-      //     </h3>
-      //   </header>
-      //   <p>
-      //     <strong>Token:</strong>{" "}
-      //     {currentUser.accessToken.substring(0, 20)} ...{" "}
-      //     {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-      //   </p>
-      //   <p>
-      //     <strong>Id:</strong>{" "}
-      //     {currentUser.id}
-      //   </p>
-      //   <p>
-      //     <strong>Email:</strong>{" "}
-      //     {currentUser.email}
-      //   </p>
-      //   <strong>Authorities:</strong>
-      //   <ul>
-      //     {currentUser.roles &&
-      //       currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-      //   </ul>
-      // </div>
+      </Jumbotron>
+        
     );
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Swal from 'sweetalert2'
 
 import AuthService from "../services/auth.service";
+import Jumbotron from "./Jumbotron";
 import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
 
 export default class SignUp extends Component {
@@ -119,19 +120,14 @@ export default class SignUp extends Component {
 
   render() {
     return (
-      <div className="jumbotron jumbo">
-        <div className="row">
-          <div className="col-sm-12 logo">
-            <span className="welcome-to">Sign Up </span>Quick Budget
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12 welcome-subtitle">
-            <div className="subtitle">
-              To create an account, please fill out the fields below.
-            </div>
-          </div>
-        </div>
+
+
+      <Jumbotron
+        largeTitle="Sign Up "
+        smallTitle="Quick Budget"
+        subtitle="To create an account, please fill out the fields below."
+      >
+
         <form>
           <div className="form-group">
 
@@ -200,7 +196,9 @@ export default class SignUp extends Component {
           </div>
         </form>
 
-      </div>
+      </Jumbotron>
+
+
 
     );
   }

@@ -4,7 +4,7 @@
   justify-content: center;
   /* align-items: center; */
   position: relative;
-  min-height: 94vh;
+  min-height: 88vh;
 }
 
 .container{
@@ -252,14 +252,24 @@ li.save:before{
   margin: 5px;
 }
 
+
+/* Fot the Footer component */
 .footer-nav{
   position: relative;
   bottom: 0;
   width: 100%;
   min-height: 6vh;
 
-  padding-top: 20px;
-  padding-bottom: 20px;
-  color: white;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  color: rgba(255,255,255,.5);
+}
 
+.spacing-navbar-nav{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.footer-nav-link:hover a{
+  color: #419bfb;;
 }

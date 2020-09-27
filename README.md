@@ -4,7 +4,9 @@
 - Beautify dashboard.
 - ✓ Beautify the login page.
 - ✓ Beautify the signup page.
-- Add a bottom navbar
+- ✓ Add a bottom navbar
+- Make jumbo a component
+- reduce logo font size for small screens
 - (see budget section below)
 
 ### Next:

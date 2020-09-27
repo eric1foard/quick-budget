@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-// import { v4 as uuidv4 } from 'uuid';
+import React, { Component } from "react";
+// import { v4 as uuidv4 } from "uuid";
 
-import Box from './Box.js';
-import Summary from './Summary.js';
+import Box from "./Box.js";
+import Summary from "./Summary.js";
+import Jumbotron from "./Jumbotron";
 import AuthService from "../services/auth.service";
-import userService from '../services/user.service.js';
+import userService from "../services/user.service.js";
 
 
 class App extends Component {
@@ -300,15 +301,12 @@ class App extends Component {
       <div className="budget">
 
         {/* Title and subtitle */}
-        <div className="jumbotron jumbo">
-            <div className="row">
-              <div className="col-sm-12 logo">
-                <span className="welcome-to">Calculator </span>Quick Budget
-              </div>
-            </div>
-          <div className="subtitle">
-            A quick and easy reference tool to calculate your basic monthly budget.
-          </div>
+        <Jumbotron
+        largeTitle="Calculator "
+        smallTitle="Quick Budget"
+        subtitle="A quick and easy reference tool to calculate your basic monthly budget."
+        >
+
           <div className="budget-instructions-list">
             <ol className="budget-list-text">
               <li className="budget-list-text income">
@@ -322,7 +320,8 @@ class App extends Component {
               </li>
             </ol>
           </div>
-        </div>
+
+        </Jumbotron>
 
         
         {this.state.isLoaded 

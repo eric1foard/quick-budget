@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2"
 
-import '../App.css';
+import Jumbotron from "./Jumbotron";
+import "../App.css";
 
 export default class LogIn extends Component {
   constructor(props) {
@@ -86,19 +87,13 @@ export default class LogIn extends Component {
 
   render() {
     return (
-      <div className="jumbotron jumbo">
-        <div className="row">
-          <div className="col-sm-12 logo">
-            <span className="welcome-to">Log In </span>Quick Budget
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12 welcome-subtitle">
-            <div className="subtitle">
-              If you already have an account, enter your information below.
-            </div>
-          </div>
-        </div>
+
+      <Jumbotron
+        largeTitle="Log In "
+        smallTitle="Quick Budget"
+        subtitle="If you already have an account, enter your information below."
+      >
+
         <form>
           <div className="form-group">
 
@@ -153,8 +148,13 @@ export default class LogIn extends Component {
 
           </div>
         </form>
-        
-      </div>
+
+
+      </Jumbotron>
+
+
+
+
     );
   }
 }
