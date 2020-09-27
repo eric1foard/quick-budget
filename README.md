@@ -1,7 +1,6 @@
 # Roadmap
 
 ## Now
-- reduce logo font size for small screens
 - new branch - add in extensive code comments
 - make Readme nicer
 - DB How to seed information
@@ -48,9 +47,7 @@
 
 ### Icebox:
 - To do's - minor
--- Turn jumbotron into a component (can accept props.children for different stuff below title)
 -- get rid of extra line when collapse sections on budget
--- How to organize the CSS?  One file like current?  Or split into many?
 -- More things that can be turned into components?
 - To do's - major
 -- Improve variable naming.
@@ -74,6 +71,7 @@
 - ✓ Beautify the signup page.
 - ✓ Add a bottom navbar
 - ✓ Make jumbo a component
+- ✓ reduce logo font size for small screens
 
 
 
