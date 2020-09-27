@@ -1,12 +1,12 @@
 # Roadmap
 
 ## Now
-- Beautify dashboard.
-- ✓ Beautify the login page.
-- ✓ Beautify the signup page.
-- ✓ Add a bottom navbar
-- Make jumbo a component
 - reduce logo font size for small screens
+- new branch - add in extensive code comments
+- make Readme nicer
+- DB How to seed information
+- Controller -> Models
+- Beautify dashboard.
 - (see budget section below)
 
 ### Next:
@@ -28,11 +28,10 @@
 -- Add some other insights or tools (saving goals, loan calculator, etc)
 
 - To Turn into Components
--- ?
+-- (none at the moment)
 
 - About Me
--- Add one, why not.
-
+-- Add one, why not.  Link it from the bottom nav (and top?)
 
 - Budget
 -- Make the save button look nicer.
@@ -40,6 +39,7 @@
 -- Add a loading image for while the GET requests are being made.
 -- Track if user has made changes.  If they have, warn them before leaving page.
 -- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
+
 - Dashboard
 -- Displays result of what user entered.
 -- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
@@ -66,10 +66,16 @@
 - demo version without need to sign in
 
 ### Done!
-- Figure out how to structure DB.
-- User can get info from DB onto the Budget component.
-- User can save changes they make on the Budget component back into the DB.
-- Subtotals and totals display on DOM.
+- ✓ Figure out how to structure DB.
+- ✓ User can get info from DB onto the Budget component.
+- ✓ User can save changes they make on the Budget component back into the DB.
+- ✓ Subtotals and totals display on DOM.
+- ✓ Beautify the login page.
+- ✓ Beautify the signup page.
+- ✓ Add a bottom navbar
+- ✓ Make jumbo a component
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
