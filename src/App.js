@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Layout from "./components/Layout";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
@@ -13,6 +12,9 @@ import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import BoardUser from "./components/BoardUser";
 import Budget from"./components/Budget"
+
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 class App extends Component {
   constructor(props) {
@@ -42,32 +44,30 @@ class App extends Component {
     const { currentUser } = this.state;
 
     return (
+      <Router>
+          
+        <Navbar currentUser={this.state.currentUser} logOut={this.logOut} />
 
-        <Router>
-          <Layout 
-            currentUser={currentUser}
-            logOut={this.logOut}
-          >
+        <div className="App">
+          <div className="container">
 
-            <div className="App">
-              <div className="container">
-
-                <div className="mt-3">
-                  <Switch>
-                    <Route exact path={["/", "/home"]} component={Home} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/signup" component={SignUp} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/budget" component={Budget} />
-                    <Route path="/user" component={BoardUser} />
-                  </Switch>
-                </div>
-
-              </div>
+            <div className="mt-3">
+              <Switch>
+                <Route exact path={["/", "/home"]} component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={SignUp} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/budget" component={Budget} />
+                <Route path="/user" component={BoardUser} />
+              </Switch>
             </div>
 
-          </Layout>
-        </Router>
+          </div>
+        </div>
+
+        <Footer />
+
+      </Router>
     );
   }
 }
