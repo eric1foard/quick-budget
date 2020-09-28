@@ -1,7 +1,5 @@
-// Fairly certain this is OK... Might have to change file structure to match
 const db = require('./server/models/index');
 
-// Not sure I'm requiring from the right file...
 const Users = db.User;
 const Income_Items = db.Income_Item;
 const Income_Types = db.Income_Type;
@@ -42,17 +40,11 @@ const expenseCategorySeeds = [
 ];
 
 
-// Items
+// Types
 const incomeTypeSeeds = [
   {name: 'Your Net Monthly Pay', description: 'Here is a description!', income_category_id: 1}, // income_item_id may be an issue
   {name: 'Spouse Net Monthly Pay', description: 'Here is a second description!', income_category_id: 1}, // income_item_id may be an issue
   {name: 'Misc Pay', description: 'Here is a third description!', income_category_id: 2}, // income_item_id may be an issue
-];
-
-const incomeItemSeeds = [
-  {value: 100, user_id: 1, income_type_id: 1}, // income_type_id may be an issue
-  {value: 200, user_id: 1, income_type_id: 2}, // income_type_id may be an issue
-  {value: 300, user_id: 1, income_type_id: 3}, // income_type_id may be an issue
 ];
 
 const expenseTypeSeeds = [
@@ -61,12 +53,23 @@ const expenseTypeSeeds = [
   {name: 'Car Payment', description: 'Include any additional car payments, if you have more than one', expense_category_id: 2}, // expense_item_id may be an issu
 ];
 
+
+// Items
+const incomeItemSeeds = [
+  {value: 100, user_id: 1, income_type_id: 1}, // income_type_id may be an issue
+  {value: 200, user_id: 1, income_type_id: 2}, // income_type_id may be an issue
+  {value: 300, user_id: 1, income_type_id: 3}, // income_type_id may be an issue
+];
+
 const expenseItemSeeds = [
   {value: 111, user_id: 1, expense_type_id: 1}, // expense_type_id may be an issue
   {value: 222, user_id: 1, expense_type_id: 2}, // expense_type_id may be an issue
   {value:333, user_id: 1, expense_type_id: 3}, // expense_type_id may be an issue
 ];
 
+
+// 1) Turn seed function into async
+// 2) Have the password get hashed in the seed file, so it can be accessed later.
 
 const seed = () => {
   return Users.bulkCreate(userSeeds)
