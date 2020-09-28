@@ -8,18 +8,21 @@ const Expense_Items = db.Expense_Item;
 const Expense_Types = db.Expense_Type;
 const Expense_Categories = db.Expense_Category;
 
+var bcrypt = require("bcryptjs");
+
 // Users
-// const userSeeds = [
-//   {
-//     username: 'codyishere',
-//     email: 'codyishere@gmail.com',
-//     password: 'blah'
-//   }, {
-//     username: 'beancat',
-//     email: 'beancat@gmail.com',
-//     password: 'bean'
-//   }
-// ];
+// TODO - is having the pre-hash password here a security risk? It's useful for testing, but not necessary... (CB 9/28)
+const userSeeds = [
+  {
+    username: 'test',
+    email: 'test@test.com',
+    password: bcrypt.hashSync('test', 8),
+  }, {
+    username: 'LouieTheCat',
+    email: 'louie@gmail.com',
+    password: bcrypt.hashSync('salmon feast', 8),
+  }
+];
 
 
 // Categories
@@ -221,19 +224,79 @@ const expenseTypeSeeds = [
 
 // Items
 const incomeItemSeeds = [
-  {value: 100, user_id: 1, income_type_id: 1}, // income_type_id may be an issue
-  {value: 200, user_id: 1, income_type_id: 2}, // income_type_id may be an issue
-  {value: 300, user_id: 1, income_type_id: 3}, // income_type_id may be an issue
+  {value: 1000, user_id: 1, income_type_id: 1},
+  {value: 2000, user_id: 1, income_type_id: 2},
+  {value: 3000, user_id: 1, income_type_id: 3},
+
+  {value: 1, user_id: 2, income_type_id: 1},
+  {value: 2, user_id: 2, income_type_id: 2},
+  {value: 3, user_id: 2, income_type_id: 3},
 ];
 
 const expenseItemSeeds = [
-  {value: 111, user_id: 1, expense_type_id: 1}, // expense_type_id may be an issue
-  {value: 222, user_id: 1, expense_type_id: 2}, // expense_type_id may be an issue
-  {value: 333, user_id: 1, expense_type_id: 3}, // expense_type_id may be an issue
+  {value: 111, user_id: 1, expense_type_id: 1},
+  {value: 222, user_id: 1, expense_type_id: 2},
+  {value: 333, user_id: 1, expense_type_id: 3},
+  {value: 111, user_id: 1, expense_type_id: 4},
+  {value: 222, user_id: 1, expense_type_id: 5},
+  {value: 333, user_id: 1, expense_type_id: 6},
+  {value: 111, user_id: 1, expense_type_id: 7},
+  {value: 222, user_id: 1, expense_type_id: 8},
+  {value: 333, user_id: 1, expense_type_id: 9},
+  {value: 111, user_id: 1, expense_type_id: 10},
+  {value: 222, user_id: 1, expense_type_id: 11},
+  {value: 333, user_id: 1, expense_type_id: 12},
+  {value: 111, user_id: 1, expense_type_id: 13},
+  {value: 222, user_id: 1, expense_type_id: 14},
+  {value: 333, user_id: 1, expense_type_id: 15},
+  {value: 111, user_id: 1, expense_type_id: 16},
+  {value: 222, user_id: 1, expense_type_id: 17},
+  {value: 333, user_id: 1, expense_type_id: 18},
+  {value: 111, user_id: 1, expense_type_id: 19},
+  {value: 222, user_id: 1, expense_type_id: 20},
+  {value: 333, user_id: 1, expense_type_id: 21},
+  {value: 111, user_id: 1, expense_type_id: 22},
+  {value: 222, user_id: 1, expense_type_id: 23},
+  {value: 333, user_id: 1, expense_type_id: 24},
+  {value: 111, user_id: 1, expense_type_id: 25},
+  {value: 222, user_id: 1, expense_type_id: 26},
+  {value: 333, user_id: 1, expense_type_id: 27},
+  {value: 111, user_id: 1, expense_type_id: 28},
+  {value: 222, user_id: 1, expense_type_id: 29},
+  {value: 333, user_id: 1, expense_type_id: 30},
+
+  {value: 10, user_id: 2, expense_type_id: 1},
+  {value: 20, user_id: 2, expense_type_id: 2},
+  {value: 30, user_id: 2, expense_type_id: 3},
+  {value: 10, user_id: 2, expense_type_id: 4},
+  {value: 20, user_id: 2, expense_type_id: 5},
+  {value: 30, user_id: 2, expense_type_id: 6},
+  {value: 10, user_id: 2, expense_type_id: 7},
+  {value: 20, user_id: 2, expense_type_id: 8},
+  {value: 30, user_id: 2, expense_type_id: 9},
+  {value: 10, user_id: 2, expense_type_id: 10},
+  {value: 20, user_id: 2, expense_type_id: 11},
+  {value: 30, user_id: 2, expense_type_id: 12},
+  {value: 10, user_id: 2, expense_type_id: 13},
+  {value: 20, user_id: 2, expense_type_id: 14},
+  {value: 30, user_id: 2, expense_type_id: 15},
+  {value: 10, user_id: 2, expense_type_id: 16},
+  {value: 20, user_id: 2, expense_type_id: 17},
+  {value: 30, user_id: 2, expense_type_id: 18},
+  {value: 10, user_id: 2, expense_type_id: 19},
+  {value: 20, user_id: 2, expense_type_id: 20},
+  {value: 30, user_id: 2, expense_type_id: 21},
+  {value: 10, user_id: 2, expense_type_id: 22},
+  {value: 20, user_id: 2, expense_type_id: 23},
+  {value: 30, user_id: 2, expense_type_id: 24},
+  {value: 10, user_id: 2, expense_type_id: 25},
+  {value: 20, user_id: 2, expense_type_id: 26},
+  {value: 30, user_id: 2, expense_type_id: 27},
+  {value: 10, user_id: 2, expense_type_id: 28},
+  {value: 20, user_id: 2, expense_type_id: 29},
+  {value: 30, user_id: 2, expense_type_id: 30},
 ];
 
-
-// 2) Have the password get hashed in the seed file, so it can be accessed later.
 
 // TODO - it would be nice to turn this into async/await if possible.
 const seed = () => {
@@ -246,6 +309,7 @@ const seed = () => {
               .then(() => Expense_Items.bulkCreate(expenseItemSeeds))
 }
 
+// run `npm run seed` to use this script from cli
 seed()
   .then(() => {
     process.exit();

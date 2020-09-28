@@ -4,14 +4,10 @@ import authHeader from './auth-header';
 const API_URL = 'http://localhost:3001/api/test/';
 
 class UserService {
-  getPublicContent() {
-    return axios
-      .get(API_URL + 'all');
-  }
 
-  getUserBoard() {
+  createNewUserItems() {
     return axios
-      .get(API_URL + 'user', { headers: authHeader() });
+      .post(API_URL + 'user/new', { headers: authHeader() });
   }
 
   getUserIncome() {

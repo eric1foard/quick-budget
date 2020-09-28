@@ -1,6 +1,12 @@
 # Roadmap
 
 ## Now
+- When new user added, add in their items as 0.
+-- OPTION 1: Have a post call that initializes the standard seeds to 0
+-- OPTION 2: Wrap budget in another component that makes API call.  Then, Budget uses props (props passed from parent OR default props).  This option sounds better to me.
+
+- Have another component, demobudget, that uses default props.  Save lets them register and save.
+
 - new branch - add in extensive code comments
 - make Readme nicer
 - DB How to seed information

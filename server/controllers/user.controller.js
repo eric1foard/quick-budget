@@ -1,18 +1,29 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const User = db.User;
-const Income = db.Income
-
-exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
-};
-
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
-};
 
 // TODO 9/23 CLB - there is a lot of repitition in these API calls.
 // ... They should probably be moved to models, and then I can make helper functions to call.
+exports.createNewUserItems = (req, res) => {
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("req: ", req.userId);
+  // console.log("=======================");
+  // console.log("=======================");
+
+  db.User.findOne({
+    where: {
+      id: req.userId
+    }
+  })
+    .then(user => {
+      
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+}
+
+
 exports.userIncome = (req, res) => {
   // console.log("=======================");
   // console.log("=======================");
@@ -94,9 +105,6 @@ exports.userIncome = (req, res) => {
       res.status(200).send({
         jsonStringResponse: JSON.stringify(categoryObj),
         total: total
-        // categories: arr
-        // category: cat
-        // category: arr
       });
 
     })
@@ -189,9 +197,6 @@ exports.userExpense = (req, res) => {
       res.status(200).send({
         jsonStringResponse: JSON.stringify(categoryObj),
         total: total
-        // categories: arr
-        // category: cat
-        // category: arr
       });
 
     })
@@ -202,11 +207,11 @@ exports.userExpense = (req, res) => {
 }
 
 exports.saveIncome = (req, res) => {
-  console.log("=======================");
-  console.log("=======================");
-  console.log("req: ", req.body.income.categories);
-  console.log("=======================");
-  console.log("=======================");
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("req: ", req.body.income.categories);
+  // console.log("=======================");
+  // console.log("=======================");
 
   let dataArray = [];
   for (let i = 0; i < req.body.income.categories.length; i++) {
@@ -217,7 +222,7 @@ exports.saveIncome = (req, res) => {
     }
   }
 
-  console.log("AFTER LOOP: ", dataArray);
+  // console.log("AFTER LOOP: ", dataArray);
 
   db.Income_Item.bulkCreate(dataArray, {
     fields: ["id", "value", "user_id", "income_type_id"],
@@ -236,11 +241,11 @@ exports.saveIncome = (req, res) => {
 }
 
 exports.saveExpense = (req, res) => {
-  console.log("=======================");
-  console.log("=======================");
-  console.log("req: ", req.body.expense.categories);
-  console.log("=======================");
-  console.log("=======================");
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("req: ", req.body.expense.categories);
+  // console.log("=======================");
+  // console.log("=======================");
 
   let dataArray = [];
   for (let i = 0; i < req.body.expense.categories.length; i++) {
@@ -251,7 +256,7 @@ exports.saveExpense = (req, res) => {
     }
   }
 
-  console.log("AFTER LOOP: ", dataArray);
+  // console.log("AFTER LOOP: ", dataArray);
 
   db.Expense_Item.bulkCreate(dataArray, {
     fields: ["id", "value", "user_id", "expense_type_id"],
@@ -268,25 +273,3 @@ exports.saveExpense = (req, res) => {
       res.status(500).send({ message: err.message });
     });
 }
-
-
-  // SAVING FOR REFERENCE
-  // Income.findOne({
-  //   where: {
-  //     user_id: req.userId
-  //   }
-  // })
-  //   .then(income => {
-  //     if (!income) {
-  //       return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
-  //     }
-
-  //     res.status(200).send({
-  //       userIncomeRes: income
-  //     });
-
-  //   })
-  //   .catch(err => {
-
-  //     res.status(500).send({ message: err.message });
-  //   });
