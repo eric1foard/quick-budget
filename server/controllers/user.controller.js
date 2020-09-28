@@ -208,6 +208,89 @@ exports.userExpense = (req, res) => {
     });
 }
 
+exports.saveIncomeNew = (req, res) => {
+
+
+
+  console.log("=======================");
+  console.log("=======================");
+  console.log("SAVING NEW RECORDS");
+  // console.log("req.body.income.categories: ", req.body.income.categories.fields[0]);
+  // console.log("req.userId: ", req.userId);
+  console.log("=======================");
+  console.log("=======================");
+
+  // console.log(req.body)
+
+  let dataArray = [];
+  for (let i = 0; i < req.body.income.categories.length; i++) {
+    // console.log("LOOPING HERE: ", req.body.income.categories[i]);
+    for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
+      // console.log("SUB LOOP: ", req.body.income.categories[i].fields[j]);
+      
+      let obj = {...req.body.income.categories[i].fields[j], user_id: req.userId}
+      dataArray.push(obj)
+
+    }
+  }
+
+  console.log("AFTER LOOP: ", dataArray);
+
+  db.Income_Item.bulkCreate(dataArray, {
+    fields: ["id", "value", "user_id", "income_type_id"],
+    // updateOnDuplicate: ["value"]
+  })
+    .then(response => {
+      // console.log("response: ", response);
+      res.status(204).send({
+        // Based on research, it appears that successful PUT requests...
+        // ...should return no content and a 204 status
+      });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+
+
+}
+
+exports.saveExpenseNew = (req, res) => {
+  // console.log("=======================");
+  // console.log("=======================");
+  // console.log("SAVING NEW RECORDS");
+  // console.log("req: ", req.body.expense.categories);
+  // console.log("=======================");
+  // console.log("=======================");
+
+  let dataArray = [];
+  for (let i = 0; i < req.body.expense.categories.length; i++) {
+    // console.log("LOOPING HERE: ", req.body.expense.categories[i]);
+    for (let j = 0; j < req.body.expense.categories[i].fields.length; j++) {
+      // console.log("SUB LOOP: ", req.body.expense.categories[i].fields[j]);
+      let obj = {...req.body.expense.categories[i].fields[j], user_id: req.userId}
+      dataArray.push(obj);
+    }
+  }
+
+  // console.log("AFTER LOOP: ", dataArray);
+
+  db.Expense_Item.bulkCreate(dataArray, {
+    fields: ["id", "value", "user_id", "expense_type_id"],
+    // updateOnDuplicate: ["value"]
+  })
+    .then(response => {
+      // console.log("response: ", response);
+      res.status(204).send({
+        // Based on research, it appears that successful PUT requests...
+        // ...should return no content and a 204 status
+      });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+
+}
+
 exports.saveIncome = (req, res) => {
   // console.log("=======================");
   // console.log("=======================");

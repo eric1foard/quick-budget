@@ -135,25 +135,28 @@ class Budget extends Component {
   }
 
   // TODO: How to handle users who have not signed up who click save (CB 9/24/20)
-  handleSave(evt) {
-    // evt.preventDefault();
-    // console.log("boop");
-    // userService.saveUserBudget(this.state.incomeData, this.state.incomeData)
-    //   .then(res =>{
-    //     console.log(res)
-    //   })
-    //   .catch(error => {
-    //     console.error(error.message)
-    //   });
-    
+  handleSave(evt) {    
     evt.preventDefault();
-    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+
+    if (this.state.newUser) {
+      console.log("handleSave has been called with a new user")
+      Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
+        this.setState({ newUser: false });
         console.log(res);
       })
       .catch(error => {
         console.error(error.message)
       });
+    } else {
+      Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+        .then(res =>{
+          console.log(res);
+        })
+        .catch(error => {
+          console.error(error.message)
+        });
+    }
   }
 
 

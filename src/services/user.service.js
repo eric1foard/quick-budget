@@ -20,6 +20,16 @@ class UserService {
       .get(API_URL + 'user/expense', { headers: authHeader() });
   }
 
+  saveIncomeNew(income) {
+    return axios
+      .post(API_URL + 'user/save/income/new', {income}, { headers: authHeader() });
+  }
+
+  saveExpenseNew(expense) {
+    return axios
+      .post(API_URL + 'user/save/expense/new', {expense}, { headers: authHeader() });
+  }
+
   saveIncome(income) {
     return axios
       .put(API_URL + 'user/save/income', {income}, { headers: authHeader() });

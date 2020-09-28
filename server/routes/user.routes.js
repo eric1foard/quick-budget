@@ -22,6 +22,18 @@ module.exports = function(app) {
     controller.userExpense
   );
 
+  app.post(
+    "/api/user/save/income/new",
+    [authJwt.verifyToken],
+    controller.saveIncomeNew
+  );
+
+  app.post(
+    "/api/user/save/expense/new",
+    [authJwt.verifyToken],
+    controller.saveExpenseNew
+  );
+
   app.put(
     "/api/user/save/income",
     [authJwt.verifyToken],
