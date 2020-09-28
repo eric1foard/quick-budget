@@ -302,9 +302,9 @@ class App extends Component {
 
         {/* Title and subtitle */}
         <Jumbotron
-        largeTitle="Calculator "
-        smallTitle="Quick Budget"
-        subtitle="A quick and easy reference tool to calculate your basic monthly budget."
+          largeTitle="Calculator "
+          smallTitle="Quick Budget"
+          subtitle="A quick and easy reference tool to calculate your basic monthly budget."
         >
 
           <div className="budget-instructions-list">
