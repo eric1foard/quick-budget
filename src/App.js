@@ -10,8 +10,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
-// import BoardUser from "./components/BoardUser";
-import Budget from"./components/Budget"
+// import Budget from"./components/Budget"
+import BudgetWrapper from "./components/BudgetWrapper";
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -42,6 +42,7 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
+    console.log("currentUser from app component: ", currentUser);
 
     return (
       <Router>
@@ -57,8 +58,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/budget" component={Budget} />
-                {/* <Route path="/user" component={BoardUser} /> */}
+                <Route exact path="/budget" component={BudgetWrapper} />
               </Switch>
             </div>
 

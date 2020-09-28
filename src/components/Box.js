@@ -71,7 +71,7 @@ class Box extends Component {
 
           {/* Footer displays the total of the income/expenses fields */}
           <div className={cardFooterClasses}>
-            Total Monthly {this.props.title}: ${this.props.total.toFixed(2)}
+            {/* Total Monthly {this.props.title}: ${this.props.total.toFixed(2)} */}
           </div>
 
         </div>
