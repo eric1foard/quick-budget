@@ -8,7 +8,7 @@ import AuthService from "../services/auth.service";
 import userService from "../services/user.service.js";
 
 
-class App extends Component {
+class Budget extends Component {
 
   // static defaultProps = {
 
@@ -370,4 +370,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Budget;

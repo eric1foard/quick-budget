@@ -3,25 +3,27 @@ const config = require("../config/auth.config");
 
 // TODO 9/23 CLB - there is a lot of repitition in these API calls.
 // ... They should probably be moved to models, and then I can make helper functions to call.
-exports.createNewUserItems = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("req: ", req.userId);
-  // console.log("=======================");
-  // console.log("=======================");
 
-  db.User.findOne({
-    where: {
-      id: req.userId
-    }
-  })
-    .then(user => {
-      
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
-    });
-}
+
+// exports.createNewUserItems = (req, res) => {
+//   // console.log("=======================");
+//   // console.log("=======================");
+//   // console.log("req: ", req.userId);
+//   // console.log("=======================");
+//   // console.log("=======================");
+
+//   db.User.findOne({
+//     where: {
+//       id: req.userId
+//     }
+//   })
+//     .then(user => {
+
+//     })
+//     .catch(err => {
+//       res.status(500).send({ message: err.message });
+//     });
+// }
 
 
 exports.userIncome = (req, res) => {

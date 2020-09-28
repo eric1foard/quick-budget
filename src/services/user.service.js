@@ -1,14 +1,14 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:3001/api/test/';
+const API_URL = 'http://localhost:3001/api/';
 
 class UserService {
 
-  createNewUserItems() {
-    return axios
-      .post(API_URL + 'user/new', { headers: authHeader() });
-  }
+  // createNewUserItems() {
+  //   return axios
+  //     .post(API_URL + 'user/new', { headers: authHeader() });
+  // }
 
   getUserIncome() {
     return axios
