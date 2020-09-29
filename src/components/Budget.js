@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 // import { v4 as uuidv4 } from "uuid";
 
 import Box from "./Box.js";
@@ -22,6 +23,7 @@ class Budget extends Component {
       apiResponse: null,
       incomeData: null,
       expenseData: null,
+      unregisteredUser: null,
       newUser: null,
 
       // Seems this is already being called from App...
@@ -33,6 +35,10 @@ class Budget extends Component {
       total: 0,
       incomeTotal: 0,
       expenseTotal: 0,
+
+      username: "",
+      email: "",
+      password: "",
     }
     this.updateValue            = this.updateValue.bind(this);
     this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
@@ -43,6 +49,9 @@ class Budget extends Component {
     this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this);
     this.saveNewField           = this.saveNewField.bind(this);
     this.handleSave             = this.handleSave.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+
   }
 
   // **********************************************
@@ -132,10 +141,22 @@ class Budget extends Component {
     this.saveNewField(obj, "expensesData", category);
   }
 
+  handleChange(evt) {
+    this.setState({[evt.target.name]: evt.target.value});
+  }
+
+
   handleSave(evt) {    
     evt.preventDefault();
 
-    if (this.state.newUser) {
+    if (this.state.unregisteredUser) {
+      // handle unregistered user flow
+      console.log("handleSave has been called with an unregistered user");
+
+
+
+
+    } else if (this.state.newUser) {
       console.log("handleSave has been called with a new user")
       Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
@@ -159,7 +180,15 @@ class Budget extends Component {
   componentDidMount() {
     if (!this.state.currentUser) {
       // TODO: Figure out how to handle user who has not logged in yet - send to demo version? (CB 9/28)
-      this.setState({ content: 'No user' })
+      console.log("Unregistered User!")
+      this.setState({ 
+        // content: 'No user',
+        unregisteredUser: true,
+        incomeData: incomeData,
+        expenseData: expenseData,
+        isLoaded: true,
+      });
+
     } else {
       Promise.all([userService.getUserIncome(), userService.getUserExpense()])
         .then(values =>{
