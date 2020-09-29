@@ -29,7 +29,6 @@ const userSeeds = [
 const incomeCategorySeeds = [
   {name: 'Net Monthly Pay'},
   {name: 'Other Monthly Income'},
-  {name: 'Miscellaneous'},
 ];
 
 const expenseCategorySeeds = [
@@ -315,3 +314,6 @@ seed()
     process.exit();
   }
 );
+
+
+export { incomeTypeSeeds, expenseTypeSeeds };

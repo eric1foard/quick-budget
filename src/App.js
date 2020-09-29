@@ -10,8 +10,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
-// import Budget from"./components/Budget"
-import BudgetTest2 from "./components/BudgetTest2";
+import Budget from"./components/Budget"
+// import BudgetTest2 from "./components/BudgetTest2";
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -58,7 +58,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/budget" component={BudgetTest2} />
+                <Route exact path="/budget" component={Budget} />
               </Switch>
             </div>
 
