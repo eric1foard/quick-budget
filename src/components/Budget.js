@@ -7,117 +7,12 @@ import Jumbotron from "./Jumbotron";
 import AuthService from "../services/auth.service";
 import userService from "../services/user.service.js";
 
-
-class App extends Component {
-
-  // static defaultProps = {
-
-  //   incomeData: {
-  //     title: 'income',
-  //     id: uuidv4(),
-  //     categories: [
-  //       {title: 'Net Monthly Pay',
-  //         fields: [
-  //           {title: 'Your Net Monthly Pay', id: uuidv4(), description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0},
-  //           {title: 'Spouse\'s Net Monthly Pay', id: uuidv4(), description: 'Same as above, but for your partner (if applicable)', value: 0}
-  //         ]
-  //       },
-  //       {
-  //         title: 'Other Monthly Income',
-  //         id: uuidv4(), 
-  //         fields: [
-  //           {title: 'Other Monthly Income', id: uuidv4(), description: 'Enter additional sources of income here, such as Social Security, child support, alimony, investments, pensions, etc.', value: 0}, 
-  //         ]
-  //       },
-  //     ]
-  //   },
-  //   expensesData: {               
-  //     title: 'expenses',
-  //     id: uuidv4(), 
-  //     categories: [
-  //       {
-  //         title: 'housing and utilities',
-  //         id: uuidv4(),
-  //         fields: [
-  //           {title: 'Rent or Mortgage', id: uuidv4(), description: 'Monthly amount due.  Add in Home or Renters Insurance if not already included', value: 0}, 
-  //           {title: 'Property Tax', id: uuidv4(), description: 'If not already included in mortgage payment', value: 0},
-  //           {title: 'Homeowner Association (HOA) Fees', id: uuidv4(), description: 'Only enter if applicable', value: 0},
-  //           {title: 'Home Repair and Maintenance', id: uuidv4(), description: 'Even if it\'s not a monthly expense, add what you estimate this costs per month', value: 0},
-  //           {title: 'Utilities', id: uuidv4(), description: 'Include electricity, gas, water, sewer, trash, etc.', value: 0},
-  //           {title: 'Electronics', id: uuidv4(), description: 'Include cable, internet, cell phone, etc.', value: 0},
-  //         ]
-  //       },
-  //       {
-  //         title: 'transportation',
-  //         id: uuidv4(),
-  //         fields: [
-  //           {title: 'Car Payment', id: uuidv4(), description: 'Include any additional car payments, if you have more than one', value: 0}, 
-  //           {title: 'Car Insurance', id: uuidv4(), description: 'Check your billing, and be sure to divide this into a monthly amount', value: 0},
-  //           {title: 'Gas', id: uuidv4(), description: 'Average monthly cost of gas', value: 0},
-  //           {title: 'Car Maintenance', id: uuidv4(), description: 'Average monthly cost of car repairs - you can assume oil changes, with a little extra just in case of additional repairs', value: 0},
-  //           {title: 'Parking and Tolls', id: uuidv4(), description: 'If applicable', value: 0},
-  //         ]
-  //       },
+// Objects containing the default income and expense data, in the event a new user
+import { incomeData } from "./shared/newUserSeed";
+import { expenseData } from "./shared/newUserSeed";
 
 
-
-  //       {
-  //         title: 'groceries and food',
-  //         id: uuidv4(),
-  //         subtotal: 0,
-  //         fields: [
-  //           {title: 'Groceries', id: uuidv4(), description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0}, 
-  //           {title: 'Meals at Restaurants', id: uuidv4(), description: 'Again, it may be helpful to take the average of a few months', value: 0}
-  //         ]
-  //       },
-  //       {
-  //         title: 'health and beauty',
-  //         id: uuidv4(),
-  //         subtotal: 0,
-  //         fields: [
-  //           {title: 'Insurance', id: uuidv4(), description: 'If not already deducted from your paycheck, include your Health Insurance and Life Insurance', value: 0}, 
-  //           {title: 'Prescriptions and Doctor Visits', id: uuidv4(), description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0}, 
-  //           {title: 'Gym Membership', id: uuidv4(), description: 'Include monthly dues, if applicable', value: 0},
-  //           {title: 'Clothes', id: uuidv4(), description: 'Average monthly amount.  Also include dry cleaning and laundry, if applicable', value: 0},
-  //           {title: 'General Beauty Haircut and Color', id: uuidv4(), description: 'Include, haircut, color, and beauty supplies', value: 0},
-  //         ]
-  //       },
-  //       {
-  //         title: 'children',
-  //         id: uuidv4(),
-  //         subtotal: 0,
-  //         fields: [
-  //           {title: 'Child Care', id: uuidv4(), description: 'If not already deducted from your paycheck', value: 0}, 
-  //           {title: 'Child Support', id: uuidv4(), description: 'Include monthly child support amounts, if applicable', value: 0}, 
-  //           {title: 'Tuition and Supplies', id: uuidv4(), description: 'Include any additional tuition or other school suppies', value: 0},
-  //         ]
-  //       },
-  //       {
-  //         title: 'debts and loans',
-  //         id: uuidv4(),
-  //         subtotal: 0,
-  //         fields: [
-  //           {title: 'Credit Cards', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-  //           {title: 'Student Loans', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0}, 
-  //           {title: 'Medical Debt', id: uuidv4(), description: 'Total minimum monthly payment due', value: 0},
-  //         ]
-  //       },
-  //       {
-  //         title: 'miscellaneous',
-  //         id: uuidv4(),
-  //         subtotal: 0,
-  //         fields: [
-  //           {title: 'Hobbies', id: uuidv4(), description: 'Include the average amount you spend on your hobbies. You can add extra fields if you prefer to break it down', value: 0}, 
-  //           {title: 'Tobacco & Alcohol', id: uuidv4(), description: 'Average monthly amounts', value: 0}, 
-  //           {title: 'Media Subscriptions', id: uuidv4(), description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0},
-  //           {title: 'Travel and Vacation', id: uuidv4(), description: 'Average amount you save toward vacations', value: 0},
-  //           {title: 'Donations', id: uuidv4(), description: 'Add your regular donations, if applicable', value: 0},
-  //           {title: 'Pet Care', id: uuidv4(), description: 'If you have pets, average your pet foot, insurance, toys, etc.', value: 0},
-  //         ]
-  //       },
-  //     ]
-  //   }
-  // }
+class Budget extends Component {
 
   // State is used to store the relevant information regarding the user's income and expenses fields,
   // ...and is used by other components to calculate inferences.
@@ -127,14 +22,13 @@ class App extends Component {
       apiResponse: null,
       incomeData: null,
       expenseData: null,
+      newUser: null,
 
-      // Seems this is already being called from 
+      // Seems this is already being called from App...
       currentUser: AuthService.getCurrentUser(),
-      visible: "Hi there!",
 
       error: null,
       isLoaded: false,
-      userIncome: "",
 
       total: 0,
       incomeTotal: 0,
@@ -238,38 +132,33 @@ class App extends Component {
     this.saveNewField(obj, "expensesData", category);
   }
 
-  // TODO: How to handle users who have not signed up who click save (CB 9/24/20)
-  handleSave(evt) {
-    // evt.preventDefault();
-    // console.log("boop");
-    // userService.saveUserBudget(this.state.incomeData, this.state.incomeData)
-    //   .then(res =>{
-    //     console.log(res)
-    //   })
-    //   .catch(error => {
-    //     console.error(error.message)
-    //   });
-    
+  handleSave(evt) {    
     evt.preventDefault();
-    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+
+    if (this.state.newUser) {
+      console.log("handleSave has been called with a new user")
+      Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
+        this.setState({ newUser: false });
         console.log(res);
       })
       .catch(error => {
         console.error(error.message)
       });
-  }
-
-
-  callAPI() {
-    fetch("http://localhost:3001/testAPI")
-    .then(res => res.text())
-    .then(res => this.setState({ apiResponse: res }));
+    } else {
+      Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+        .then(res =>{
+          console.log(res);
+        })
+        .catch(error => {
+          console.error(error.message)
+        });
+    }
   }
 
   componentDidMount() {
     if (!this.state.currentUser) {
-      // TODO: Figure out how to handle user who has not logged in yet
+      // TODO: Figure out how to handle user who has not logged in yet - send to demo version? (CB 9/28)
       this.setState({ content: 'No user' })
     } else {
       Promise.all([userService.getUserIncome(), userService.getUserExpense()])
@@ -279,16 +168,29 @@ class App extends Component {
           const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
           const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
     
-          console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-          console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
+          // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+          // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
-          this.setState({
-            incomeData: jsonParsedIncomeObject,
-            expenseData: jsonParsedExpenseObject,
-            incomeTotal: income.data.total,
-            expenseTotal: expense.data.total,
-            isLoaded: true,
-          });
+          if (jsonParsedIncomeObject.categories.length === 0 && jsonParsedExpenseObject.categories.length === 0) {
+            // console.log("New user!")
+            this.setState({
+              incomeData: incomeData,
+              expenseData: expenseData,
+              newUser: true,
+              isLoaded: true,
+            });
+          } else {
+            // console.log("Existing user!")
+            this.setState({
+              incomeData: jsonParsedIncomeObject,
+              expenseData: jsonParsedExpenseObject,
+              incomeTotal: income.data.total,
+              expenseTotal: expense.data.total,
+              newUser: false,
+              isLoaded: true,
+            });
+          }
+
         })
         .catch(error => {
           console.error(error.message)
@@ -302,9 +204,9 @@ class App extends Component {
 
         {/* Title and subtitle */}
         <Jumbotron
-        largeTitle="Calculator "
-        smallTitle="Quick Budget"
-        subtitle="A quick and easy reference tool to calculate your basic monthly budget."
+          largeTitle="Calculator "
+          smallTitle="Quick Budget"
+          subtitle="A quick and easy reference tool to calculate your basic monthly budget."
         >
 
           <div className="budget-instructions-list">
@@ -370,4 +272,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Budget;

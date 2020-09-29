@@ -10,8 +10,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
-import BoardUser from "./components/BoardUser";
 import Budget from"./components/Budget"
+// import BudgetTest2 from "./components/BudgetTest2";
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -42,11 +42,12 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
+    console.log("currentUser from app component: ", currentUser);
 
     return (
       <Router>
           
-        <Navbar currentUser={this.state.currentUser} logOut={this.logOut} />
+        <Navbar currentUser={currentUser} logOut={this.logOut} />
 
         <div className="App">
           <div className="container">
@@ -58,7 +59,6 @@ class App extends Component {
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/budget" component={Budget} />
-                <Route path="/user" component={BoardUser} />
               </Switch>
             </div>
 

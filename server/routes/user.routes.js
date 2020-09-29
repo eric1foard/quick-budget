@@ -10,34 +10,38 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
-
   app.get(
-    "/api/test/user",
-    [authJwt.verifyToken],
-    controller.userBoard
-  );
-
-  app.get(
-    "/api/test/user/income",
+    "/api/user/income",
     [authJwt.verifyToken],
     controller.userIncome
   );
 
   app.get(
-    "/api/test/user/expense",
+    "/api/user/expense",
     [authJwt.verifyToken],
     controller.userExpense
   );
 
+  app.post(
+    "/api/user/save/income/new",
+    [authJwt.verifyToken],
+    controller.saveIncomeNew
+  );
+
+  app.post(
+    "/api/user/save/expense/new",
+    [authJwt.verifyToken],
+    controller.saveExpenseNew
+  );
+
   app.put(
-    "/api/test/user/save/income",
+    "/api/user/save/income",
     [authJwt.verifyToken],
     controller.saveIncome
   );
 
   app.put(
-    "/api/test/user/save/expense",
+    "/api/user/save/expense",
     [authJwt.verifyToken],
     controller.saveExpense
   );

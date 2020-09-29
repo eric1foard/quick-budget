@@ -59,6 +59,7 @@ require("./routes/user.routes")(app);
 // =============================================================
 var PORT = process.env.PORT || 3001;
 db.sequelize.sync({ force: false }).then(function() {
+  console.log("db synced");
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });

@@ -1,18 +1,14 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:3001/api/test/';
+const API_URL = 'http://localhost:3001/api/';
 
 class UserService {
-  getPublicContent() {
-    return axios
-      .get(API_URL + 'all');
-  }
 
-  getUserBoard() {
-    return axios
-      .get(API_URL + 'user', { headers: authHeader() });
-  }
+  // createNewUserItems() {
+  //   return axios
+  //     .post(API_URL + 'user/new', { headers: authHeader() });
+  // }
 
   getUserIncome() {
     return axios
@@ -22,6 +18,16 @@ class UserService {
   getUserExpense() {
     return axios
       .get(API_URL + 'user/expense', { headers: authHeader() });
+  }
+
+  saveIncomeNew(income) {
+    return axios
+      .post(API_URL + 'user/save/income/new', {income}, { headers: authHeader() });
+  }
+
+  saveExpenseNew(expense) {
+    return axios
+      .post(API_URL + 'user/save/expense/new', {expense}, { headers: authHeader() });
   }
 
   saveIncome(income) {

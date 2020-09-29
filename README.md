@@ -1,10 +1,13 @@
 # Roadmap
 
 ## Now
+- Have another component, demobudget, that uses default props?  Save lets them register and save.
+
+- Add in id's
+
 - new branch - add in extensive code comments
 - make Readme nicer
-- DB How to seed information
-- Controller -> Models
+- Controller -> Models ?
 - Beautify dashboard.
 - (see budget section below)
 
@@ -72,6 +75,9 @@
 - ✓ Add a bottom navbar
 - ✓ Make jumbo a component
 - ✓ reduce logo font size for small screens
+- ✓ DB - add seed file
+- ✓ DB - add schema file
+- ✓ When new user added, add in their items as 0.
 
 
 
