@@ -1,22 +1,25 @@
 # Roadmap
 
 ## Now
-- Have another component, demobudget, that uses default props?  Save lets them register and save.
+#### Branch `unregistered-user-demo-version`
+- This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component - see below.
+**(note to self - next todo is to add a button for budget from home.  Then, will work just like a new user, except handling it differently when they click save.)**
+-- Have another component, demobudget, that uses default props?  Save lets them register and save.
+-- Make the save button look nicer.
+-- Add something after user saves using sweetalert
+-- Add a loading image for while the GET requests are being made.
+-- Track if user has made changes.  If they have, warn them before leaving page.
+-- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
 
 - Add in id's
 
-- new branch - add in extensive code comments
-- make Readme nicer
-- Controller -> Models ?
+- New branch: 1) add in extensive code comments, 2) Make Readme nicer
+- get logic out of controller and into models (?)
 - Beautify dashboard.
-- (see budget section below)
 
 ### Next:
-- DB
--- How to seed information
-
 - User Controller
--- get logic out of controller and into models
+-- get logic out of controller and into models (?)
 -- reduce repitition between user/expense logic
 
 - Starting App
@@ -34,13 +37,6 @@
 
 - About Me
 -- Add one, why not.  Link it from the bottom nav (and top?)
-
-- Budget
--- Make the save button look nicer.
--- Add something after user saves - sweetalert?
--- Add a loading image for while the GET requests are being made.
--- Track if user has made changes.  If they have, warn them before leaving page.
--- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
 
 - Dashboard
 -- Displays result of what user entered.
