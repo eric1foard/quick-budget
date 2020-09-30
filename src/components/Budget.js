@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Swal from 'sweetalert2';
-// import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
+import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
 
 
 // import { v4 as uuidv4 } from "uuid";
@@ -156,29 +156,28 @@ class Budget extends Component {
     // e.preventDefault();
 
     if (!this.state.username || !this.state.email || !this.state.password) {
-      this.setState({alert: false})
+      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Please fill out all forms.',
       }).then(() => this.toggleSignUp());
-    // } 
-    // else if (validateEmail(this.state.email) === false) {
-    //   this.setState({alert: false})
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops!',
-    //     text: 'Please enter a valid email address.',
-    //   }).then(() => this.toggleSignUp());
-    } else if (this.state.username.length < 3 || this.state.username.length > 20) {
-      this.setState({alert: false})
+    } else if (validateEmail(this.state.email) === false) {
+      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops!',
+        text: 'Please enter a valid email address.',
+      }).then(() => this.toggleSignUp());
+    } else if (validateUsername(this.state.username) === false) {
+      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Username must be between 3 and 20 characters long.',
       }).then(() => this.toggleSignUp());
-    } else if (this.state.password.length < 6 || this.state.password.length > 40) {
-      this.setState({alert: false})
+    } else if (validatePassword(this.state.password) === false) {
+      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
@@ -186,6 +185,7 @@ class Budget extends Component {
       }).then(() => this.toggleSignUp());
     } else {
       this.setState({
+        alert: false,
         message: "",
         successful: false
       });
@@ -270,9 +270,6 @@ class Budget extends Component {
     console.log("this.state.email: ", this.state.email)
     console.log("this.state.password: ", this.state.password)
 
-    this.setState({username: undefined, email: undefined, password: undefined});
-
-
     const getAlert = () => (
 
     // this.setState({[incOrExp]: newState}, () => {
@@ -281,7 +278,7 @@ class Budget extends Component {
 
 
     <SweetAlert
-      title="Oops!"
+      title="Hello there!"
       onConfirm={this.handleSignUp}
       confirmBtnStyle={btnStyle}
       onCancel={this.onCancel}

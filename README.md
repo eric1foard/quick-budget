@@ -4,7 +4,8 @@
 #### Branch `unregistered-user-demo-version`
 - This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component - see below.
 **(note to self - next todo is to add a button for budget from home.  Then, will work just like a new user, except handling it differently when they click save.)**
--- Have another component, demobudget, that uses default props?  Save lets them register and save.
+-- currently saves new user.  Next - save the user AND save their information.
+-- Add start now button to navbar when no user is logged in.
 -- Make the save button look nicer.
 -- Add something after user saves using sweetalert
 -- Add a loading image for while the GET requests are being made.

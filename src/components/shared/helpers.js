@@ -1,11 +1,11 @@
 import { isEmail } from "validator";
 
 export const validateUsername = username => {
-  return (username.length < 3 || username.length > 20) ? false : true;
+  if (username.length < 3 || username.length > 20) return false;
 };
 
 export const validateEmail = email => {
-  if (!isEmail(email)) return false
+  if (!isEmail(email)) return false;
 };
 
 export const validatePassword = password => {

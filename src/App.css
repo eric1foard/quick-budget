@@ -270,10 +270,3 @@ li.save:before{
 .footer-nav-link:hover a{
   color: #419bfb;;
 }
-
-
-
-
-.swal2-container {
-  z-index: Infinity;
-}
