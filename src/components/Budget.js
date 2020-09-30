@@ -197,7 +197,8 @@ class Budget extends Component {
       )
         .then( () => {
           this.setState({
-            successful: true
+            successful: true,
+            unregisteredUser: false,
           });
           Swal.fire({
             icon: 'success',
@@ -208,9 +209,9 @@ class Budget extends Component {
           })
             .then( () => {
               AuthService.login(this.state.username, this.state.password)
-              // .then( () => {
-              //   userService.createNewUserItems()
-              // })
+              .then( () => {
+                this.saveNewUserBudget();
+              })
                 .then( () => {
                   this.props.history.push("/dashboard");
                   window.location.reload();
@@ -382,24 +383,9 @@ class Budget extends Component {
   }
 
 
-
-  handleSave(evt) {    
-    evt.preventDefault();
-
-    if (this.state.unregisteredUser) {
-      // handle unregistered user flow
-      console.log("handleSave has been called with an unregistered user");
-      this.toggleSignUp();
-      // this
-
-
-      // this.setState({ unregisteredUser: false });
-
-
-
-    } else if (this.state.newUser) {
-      console.log("handleSave has been called with a new user")
-      Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
+  saveNewUserBudget() {
+    console.log("handleSave has been called with a new user")
+    Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false });
         console.log(res);
@@ -407,14 +393,32 @@ class Budget extends Component {
       .catch(error => {
         console.error(error.message)
       });
+  }
+
+  saveExistingUserBudget() {
+    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+      .then(res =>{
+        console.log(res);
+      })
+      .catch(error => {
+        console.error(error.message)
+      });
+  }
+
+
+
+  handleSave(evt) {    
+    evt.preventDefault();
+
+    if (this.state.unregisteredUser) {
+      console.log("handleSave has been called with an unregistered user");
+      this.toggleSignUp();
+    } else if (this.state.newUser) {
+      console.log("handleSave has been called with a new user")
+      this.saveNewUserBudget();
     } else {
-      Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
-        .then(res =>{
-          console.log(res);
-        })
-        .catch(error => {
-          console.error(error.message)
-        });
+      console.log("handleSave has been called with an existing user")
+      this.saveExistingUserBudget();
     }
   }
 
