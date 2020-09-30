@@ -161,6 +161,18 @@ li.save:before{
   background: rgba(0, 195, 255, 0.445);
 }
 
+.btn-save{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgb(13, 97, 72);
+  color: rgb(255, 255, 255);
+}
+
+.btn-save:hover{
+  background-color: rgb(61, 158, 129);
+  color:  rgb(0, 0, 0);
+}
+
 
 
 /* For the Box component */
@@ -269,4 +281,11 @@ li.save:before{
 
 .footer-nav-link:hover a{
   color: #419bfb;;
+}
+
+
+/* For the Loading component */
+.spinner-border{
+  width: 5rem;
+  height: 5rem;
 }

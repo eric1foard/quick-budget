@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Swal from 'sweetalert2';
-import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
-
-
 // import { v4 as uuidv4 } from "uuid";
 
 import Box from "./Box.js";
 import Summary from "./Summary.js";
 import Jumbotron from "./Jumbotron";
+import Loading from "./Loading";
 import AuthService from "../services/auth.service";
 import userService from "../services/user.service.js";
+import HelloWorld from "./ModalSignUp.js";
 
 // Objects containing the default income and expense data, in the event a new user
 import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
-import HelloWorld from "./ModalSignUp.js";
+
+// 
+import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
 
 
 class Budget extends Component {
@@ -273,20 +274,13 @@ class Budget extends Component {
 
     const getAlert = () => (
 
-    // this.setState({[incOrExp]: newState}, () => {
-    //   this.updateCategoryTotal(incOrExp, category);
-    // })
-
-
-    <SweetAlert
-      title="Hello there!"
-      onConfirm={this.handleSignUp}
-      confirmBtnStyle={btnStyle}
-      onCancel={this.onCancel}
-      type="controlled"
-      // dependencies={[this.state.username, this.state.email, this.state.password]}
+      <SweetAlert
+        title="Hello there!"
+        onConfirm={this.handleSignUp}
+        confirmBtnStyle={btnStyle}
+        onCancel={this.onCancel}
+        type="controlled"
       >
-
         <form>
           <div className="form-group">
           It seems you have not yet signed up.  In order for us to save your budget, please register below.
@@ -338,27 +332,8 @@ class Budget extends Component {
                 </div>
               </div>
             </div>
-
-            {/* <div className="row">
-              <div className="col-sm-12">
-                <button
-                  className="btn btn-signup"
-                  disabled={this.state.loading}
-                  onClick={this.handleSignUp}
-                  >
-                  {this.state.loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                    )}
-                  <span>Sign Up</span>
-                </button>
-              </div>
-            </div> */}
           </div>
         </form>
-
-
-
-        
       </SweetAlert>
 
       
@@ -424,10 +399,8 @@ class Budget extends Component {
 
   componentDidMount() {
     if (!this.state.currentUser) {
-      // TODO: Figure out how to handle user who has not logged in yet - send to demo version? (CB 9/28)
       console.log("Unregistered User!")
       this.setState({ 
-        // content: 'No user',
         unregisteredUser: true,
         incomeData: incomeData,
         expenseData: expenseData,
@@ -534,13 +507,14 @@ class Budget extends Component {
               />
 
 
-              <button onClick={this.handleSave} type="button" className="btn btn-primary">Save</button>
+              <button onClick={this.handleSave} type="button" className="btn btn-save">Save</button>
             </div>
           :
-            // TODO: 9/22 - add a loading image
-            <div>Loading</div>
+            // While API call is loading, puts a spinning loading image
+            <Loading />
         }
-
+        
+      {/* Holds the SweetAlert modal, appears when an unregistered user clicks save */}
       {this.state.alert}
 
       </div>

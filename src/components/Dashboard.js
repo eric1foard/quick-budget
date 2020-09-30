@@ -3,6 +3,7 @@ import AuthService from "../services/auth.service";
 import userService from "../services/user.service";
 
 import Jumbotron from "./Jumbotron";
+import Loading from "./Loading";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -61,17 +62,24 @@ class Dashboard extends Component {
         subtitle="Here's a quick summary of what we have on file for you:"
       >
 
-        <div>
-          Total Income: {this.state.incomeTotal}
-        </div>
+        {this.state.isLoaded 
+          ?
+            <div>
+              <div>
+                Total Income: {this.state.incomeTotal}
+              </div>
 
-        <div>
-          Total Expense: {this.state.expenseTotal}
-        </div>
+              <div>
+                Total Expense: {this.state.expenseTotal}
+              </div>
 
-        <div>
-          Go to your Budget
-        </div>
+              <div>
+                Go to your Budget
+              </div>
+            </div>
+          :
+            <Loading />
+        }
 
       </Jumbotron>
         
