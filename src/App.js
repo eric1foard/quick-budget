@@ -41,7 +41,6 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
-    console.log("currentUser from app component: ", currentUser);
 
     return (
       <Router>

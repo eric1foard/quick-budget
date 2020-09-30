@@ -41,16 +41,15 @@ export default class Home extends Component {
 
           <div className="row home-buttons">
             <div className="col-sm-12">
-            {/* TODO - style this button.  (CB 9/30) */}
-            <Link to={"/budget"} className="">
-                <button type="button" className="btn btn-demo">Start Now</button>
+              <Link to={"/budget"}>
+                <button type="button" className="btn btn-start-now">Start Now</button>
               </Link>
               <br />
-              <Link to={"/login"} className="">
+              <Link to={"/login"}>
                 <button type="button" className="btn btn-login">Sign In</button>
               </Link>
               <br />
-              <Link to={"/signup"} className="">
+              <Link to={"/signup"}>
                 <button type="button" className="btn btn-signup">Sign Up</button>
               </Link>
             </div>

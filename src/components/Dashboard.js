@@ -14,7 +14,6 @@ class Dashboard extends Component {
 
       incomeData: null,
       expenseData: null,
-
       incomeTotal: 0,
       expenseTotal: 0,
 

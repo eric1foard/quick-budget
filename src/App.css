@@ -75,12 +75,27 @@
   margin-bottom: 30px;
 }
 
+.btn-start-now{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgba(123, 250, 244, 0.472);
+  color: rgba(15, 65, 50, 0.842);
+  border-color: rgb(7, 7, 7);
+  width: 210px;
+}
+
+.btn-start-now:hover{
+  background-color: rgba(16, 157, 161, 0.623);
+  color: rgba(0, 0, 0, 0.842);
+}
+
 .btn-login{
   padding: 7px 65px;
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
   color: rgba(13, 97, 72, 0.842);
   border-color: rgb(7, 7, 7);
+  width: 210px;
 }
 
 .btn-login:hover{
@@ -93,6 +108,7 @@
   border-radius: 20px;
   background-color: rgba(13, 97, 72, 0.842);
   color: rgb(255, 255, 255);
+  width: 210px;
 }
 
 .btn-signup:hover{

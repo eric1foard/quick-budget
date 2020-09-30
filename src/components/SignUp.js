@@ -4,7 +4,6 @@ import Swal from 'sweetalert2'
 import AuthService from "../services/auth.service";
 import Jumbotron from "./Jumbotron";
 import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
-// import userService from "../services/user.service";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -77,9 +76,6 @@ export default class SignUp extends Component {
           })
             .then( () => {
               AuthService.login(this.state.username, this.state.password)
-              // .then( () => {
-              //   userService.createNewUserItems()
-              // })
                 .then( () => {
                   this.props.history.push("/dashboard");
                   window.location.reload();

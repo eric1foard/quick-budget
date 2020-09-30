@@ -1,8 +1,10 @@
+// Packages
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Swal from 'sweetalert2';
-// import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid"; - TODO Need to add in to give ID's (CB 9/30)
 
+// Project Components
 import Box from "./Box.js";
 import Summary from "./Summary.js";
 import Jumbotron from "./Jumbotron";
@@ -15,32 +17,31 @@ import HelloWorld from "./ModalSignUp.js";
 import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 
-// 
+// Helper methods used for validating new users' sign up information
 import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
 
 
 class Budget extends Component {
 
-  // State is used to store the relevant information regarding the user's income and expenses fields,
-  // ...and is used by other components to calculate inferences.
   constructor(props) {
     super(props);
     this.state = {
-      apiResponse: null,
-      incomeData: null,
-      expenseData: null,
-      unregisteredUser: null,
-      newUser: null,
+      // Budget state information
+      incomeData: null,  // Object containing the user's income information.  Obtained from API call getting user's info, or from default values for new users.
+      expenseData: null, // Object containing the user's expense information.  Obtained from API call getting user's info, or from default values for new users.
+      incomeTotal: 0, // Number appearing at bottom of income section, showing user's total income.
+      expenseTotal: 0, // Number appearing at bottom of expense section, showing user's total expense.
+      total: 0, // Number showing in bottommost card, showing user's total income minus total expense.  While it could be inferred, keeping this explicitly in state makes sure it is always rendered with current info.
+      
+      // User state information
+      currentUser: AuthService.getCurrentUser(), // Returns user's jwt accessToken, email, id, and username.
+      unregisteredUser: null, // Boolean determined in componenentDidMount. Used when user clicks save.  If true, prompts them to sign up in order to save.
+      newUser: null, // Boolean determined in componenentDidMount. If true, pulls default information from newUserSeed to populate budget.
 
-      // Seems this is already being called from App...
-      currentUser: AuthService.getCurrentUser(),
-
+      // Page status information
       error: null,
       isLoaded: false,
 
-      total: 0,
-      incomeTotal: 0,
-      expenseTotal: 0,
 
       username: undefined,
       email: undefined,
@@ -52,9 +53,9 @@ class Budget extends Component {
     this.updateFullTotal        = this.updateFullTotal.bind(this);
     this.updateIncomeHelper     = this.updateIncomeHelper.bind(this);
     this.updateExpensesHelper   = this.updateExpensesHelper.bind(this);
-    this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this);
-    this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this);
-    this.saveNewField           = this.saveNewField.bind(this);
+    // this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this); - used to add new items.  Currently disabled.
+    // this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this); - used to add new items.  Currently disabled.
+    // this.saveNewField           = this.saveNewField.bind(this); - used to add new items.  Currently disabled.
     this.handleSave             = this.handleSave.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
@@ -131,23 +132,25 @@ class Budget extends Component {
   // SAVING NEW FIELDS ****************************
   // **********************************************
   // Appends the new field object to the end of the correct part of state
-  saveNewField(obj, type, category) {
-    let newState = this.state[type]
-    const categoryToSaveIn = newState.categories.find(elem => elem.title === category);
+  // saveNewField(obj, type, category) {
+  //   let newState = this.state[type]
+  //   const categoryToSaveIn = newState.categories.find(elem => elem.title === category);
 
-    categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
-    this.setState({[type]: newState}, () => {
-      this.updateCategoryTotal(type, category);
-    });
-  }
+  //   categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
+  //   this.setState({[type]: newState}, () => {
+  //     this.updateCategoryTotal(type, category);
+  //   });
+  // }
 
-  saveNewIncomeHelper(obj, category) {
-    this.saveNewField(obj, "incomeData", category);
-  }
+  // Used to add new items.  Currently disabled.
+  // saveNewIncomeHelper(obj, category) {
+  //   this.saveNewField(obj, "incomeData", category);
+  // }
 
-  saveNewExpensesHelper(obj, category) {
-    this.saveNewField(obj, "expensesData", category);
-  }
+  // Used to add new items.  Currently disabled.
+  // saveNewExpensesHelper(obj, category) {
+  //   this.saveNewField(obj, "expensesData", category);
+  // }
 
 
   // ***********************************************
@@ -483,7 +486,7 @@ class Budget extends Component {
 
                 boxData={this.state.incomeData}
                 handleUpdate={this.updateIncomeHelper}
-                // handleSaveNew={this.saveNewIncomeHelper}
+                // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
                 total={this.state.incomeTotal}
                 // key={this.props.incomeData.id}
               />
@@ -495,7 +498,7 @@ class Budget extends Component {
 
                 boxData={this.state.expenseData} 
                 handleUpdate={this.updateExpensesHelper}
-                // handleSaveNew={this.saveNewExpensesHelper} 
+                // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
                 total={this.state.expenseTotal}
                 // key={this.props.expensesData.id}
               />
