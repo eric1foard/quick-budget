@@ -2,15 +2,16 @@
 
 ## Now
 #### Branch `unregistered-user-demo-version`
-- This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component - see below.
-**(note to self - next todo is to add a button for budget from home.  Then, will work just like a new user, except handling it differently when they click save.)**
--- currently saves new user.  Next - save the user AND save their information.
--- Add start now button to navbar when no user is logged in.
--- Make the save button look nicer.
+- This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component
+-- ✓ When a user saves for the first time, add their budget info to db.
+-- ✓ add a button for budget from home
+-- ✓ Add start now button to navbar when no user is logged in.
+-- ✓ Allow users without profiles to use, like a demo
+-- ✓ When an unregistered user clicks save, let them sign up and save info
+-- ✓ Make the save button look nicer.
+-- ✓ Add a loading image for while the GET requests are being made.
 -- Add something after user saves using sweetalert
--- Add a loading image for while the GET requests are being made.
 -- Track if user has made changes.  If they have, warn them before leaving page.
--- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
 
 - Add in id's
 
@@ -74,7 +75,8 @@
 - ✓ reduce logo font size for small screens
 - ✓ DB - add seed file
 - ✓ DB - add schema file
-- ✓ When new user added, add in their items as 0.
+- ✓ When new user goes onto budget, populate default values
+- 
 
 
 

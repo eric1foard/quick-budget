@@ -51,9 +51,10 @@ class Navbar extends Component {
 
         
         {/* RIGHT SIDE of Navbar */}
-        {/* If a user is signed in */}
+        {/* Is a user signed in? */}
         {this.props.currentUser 
         ? 
+          // If yes, then display Log Out
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <a href="/login" className="nav-link" onClick={this.props.logOut}>
@@ -62,6 +63,7 @@ class Navbar extends Component {
             </li>
           </div>
         : 
+          // If no, then display 1) Log In, and 2) Sign Up
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to={"/login"} className="nav-link">

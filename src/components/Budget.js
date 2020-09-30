@@ -517,7 +517,7 @@ class Budget extends Component {
             <Loading />
         }
         
-      {/* Holds the SweetAlert modal, appears when an unregistered user clicks save */}
+      {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save */}
       {this.state.alert}
 
       </div>
