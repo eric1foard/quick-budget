@@ -12,6 +12,7 @@ import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
 import AuthService from "../services/auth.service";
 import userService from "../services/user.service.js";
+import UnsavedChangesAlert from "./UnsavedChangesAlert.js"; // Alerts user when navigating away from the page without saving changes
 import HelloWorld from "./ModalSignUp.js";
 
 // Objects containing the default income and expense data, in the event a new user
@@ -20,7 +21,6 @@ import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
 import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
-// import UnsavedChangesAlert from "./UnsavedChangesAlert.js";
 
 
 class Budget extends Component {
@@ -465,21 +465,10 @@ class Budget extends Component {
   
   render() {
 
-
-    let hasUnsavedChanges = this.state.unsavedChanges
-    console.log("hasUnsavedChanges: ", hasUnsavedChanges);
-
-
     return (
       <div className="budget">
 
-        
-      <Prompt 
-        when={hasUnsavedChanges}
-        message="There are unsaved changes, do you wish to discard them?"
-      />
-
-      {/* <UnsavedChangesAlert unsavedChanges={this.state.unsavedChanges}> */}
+      <UnsavedChangesAlert unsavedChanges={this.state.unsavedChanges} />
 
         {/* Title and subtitle */}
         <Jumbotron
