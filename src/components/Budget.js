@@ -1,5 +1,6 @@
 // Packages
 import React, { Component } from "react";
+import { Prompt } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Swal from 'sweetalert2';
 // import { v4 as uuidv4 } from "uuid"; - TODO Need to add in to give ID's (CB 9/30)
@@ -19,6 +20,7 @@ import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
 import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
+// import UnsavedChangesAlert from "./UnsavedChangesAlert.js";
 
 
 class Budget extends Component {
@@ -41,12 +43,15 @@ class Budget extends Component {
       // Page status information
       error: null,
       isLoaded: false,
+      unsavedChanges: false,
+      
+      // If true, displays modal for user to register
+      alert: false,
 
-
+      // Used for logging in unregistered users
       username: undefined,
       email: undefined,
       password: undefined,
-      alert: false,
     }
     this.updateValue            = this.updateValue.bind(this);
     this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
@@ -61,12 +66,16 @@ class Budget extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
 
+
+    // this.usePrompt = this.usePrompt.bind(this);
   }
 
   // **********************************************
   // UPDATING VALUES & TOTALS *********************
   // **********************************************
   updateValue(incOrExp, category, name, num) {
+
+    this.setState({ unsavedChanges: true });
 
     // Makes new copy of state...
     let newState = this.state[incOrExp];
@@ -271,10 +280,6 @@ class Budget extends Component {
       color: "rgb(255, 255, 255)"
     }
 
-    console.log("this.state.username: ", this.state.username)
-    console.log("this.state.email: ", this.state.email)
-    console.log("this.state.password: ", this.state.password)
-
     const getAlert = () => (
 
       <SweetAlert
@@ -342,10 +347,6 @@ class Budget extends Component {
       
     );
 
-
-
-
-
     this.setState({
       alert: getAlert()
     });
@@ -365,8 +366,13 @@ class Budget extends Component {
     console.log("handleSave has been called with a new user")
     Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
-        this.setState({ newUser: false });
+        this.setState({ newUser: false, unsavedChanges: false });
         console.log(res);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          html: 'Your information has been saved!',
+        });
       })
       .catch(error => {
         console.error(error.message)
@@ -376,7 +382,13 @@ class Budget extends Component {
   saveExistingUserBudget() {
     Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
       .then(res =>{
+        this.setState({ unsavedChanges: false });
         console.log(res);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          html: 'Your information has been saved!',
+        });
       })
       .catch(error => {
         console.error(error.message)
@@ -448,9 +460,26 @@ class Budget extends Component {
     }
   }
 
+
+  
+  
   render() {
+
+
+    let hasUnsavedChanges = this.state.unsavedChanges
+    console.log("hasUnsavedChanges: ", hasUnsavedChanges);
+
+
     return (
       <div className="budget">
+
+        
+      <Prompt 
+        when={hasUnsavedChanges}
+        message="There are unsaved changes, do you wish to discard them?"
+      />
+
+      {/* <UnsavedChangesAlert unsavedChanges={this.state.unsavedChanges}> */}
 
         {/* Title and subtitle */}
         <Jumbotron
@@ -483,7 +512,6 @@ class Budget extends Component {
               <Box 
                 title="Income"
                 boxType="income"
-
                 boxData={this.state.incomeData}
                 handleUpdate={this.updateIncomeHelper}
                 // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
@@ -495,7 +523,6 @@ class Budget extends Component {
               <Box
                 title="Expenses"
                 boxType="expenses"
-
                 boxData={this.state.expenseData} 
                 handleUpdate={this.updateExpensesHelper}
                 // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
@@ -520,6 +547,7 @@ class Budget extends Component {
       {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save */}
       {this.state.alert}
 
+      {/* </UnsavedChangesAlert> */}
       </div>
     );
   }

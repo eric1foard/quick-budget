@@ -10,12 +10,18 @@
 -- ✓ When an unregistered user clicks save, let them sign up and save info
 -- ✓ Make the save button look nicer.
 -- ✓ Add a loading image for while the GET requests are being made.
--- Add something after user saves using sweetalert
+-- ✓ Add something after user saves using sweetalert
+-- Add a close button to the signup modal
 -- Track if user has made changes.  If they have, warn them before leaving page.
 
-- Add in id's
+- new branch:
+-- Add in id's
+-- make sure indexes are working on income and expense items
 
-- New branch: 1) add in extensive code comments, 2) Make Readme nicer
+- New branch: 
+-- 1) add in extensive code comments
+-- 2) Make Readme nicer
+
 - get logic out of controller and into models (?)
 - Beautify dashboard.
 
