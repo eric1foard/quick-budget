@@ -11,8 +11,9 @@
 -- ✓ Make the save button look nicer.
 -- ✓ Add a loading image for while the GET requests are being made.
 -- ✓ Add something after user saves using sweetalert
--- Add a close button to the signup modal
--- Track if user has made changes.  If they have, warn them before leaving page.
+-- ✓ Track if user has made changes.  If they have, warn them before leaving page.
+-- ✓ Add a close button to the signup modal
+-- Use only sweetalert react package?
 
 - new branch:
 -- Add in id's

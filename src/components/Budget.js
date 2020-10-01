@@ -65,9 +65,8 @@ class Budget extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
+    this.hideAlert = this.hideAlert.bind(this);
 
-
-    // this.usePrompt = this.usePrompt.bind(this);
   }
 
   // **********************************************
@@ -244,7 +243,7 @@ class Budget extends Component {
                     footer: 'Or, if you have not yet signed up, please do so.'
                   })
                 });
-        },
+            },
         error => {
           const resMessage =
             (error.response &&
@@ -261,11 +260,10 @@ class Budget extends Component {
             text: `${resMessage} Please try again.`, 
             footer: 'Or, if you have already signed up, please go to the Log In page.'
           });
-        }
-      );
-    })
+        });
+      })
+    }
   }
-}
 
 
   handleChange(evt) {
@@ -273,11 +271,20 @@ class Budget extends Component {
   }
 
   toggleSignUp() {
-    let btnStyle = {
+    let confirmBtnStyle = {
       padding: "7px 65px",
       borderRadius: "20px",
       backgroundColor: "rgba(13, 97, 72, 0.842)",
-      color: "rgb(255, 255, 255)"
+      color: "rgb(255, 255, 255)",
+      width: "210px"
+    }
+
+    let cancelBtnStyle = {
+      padding: "7px 65px",
+      borderRadius: "20px",
+      backgroundColor: "rgb(184, 98, 102)",
+      color: "rgb(255, 255, 255)",
+      width: "210px"
     }
 
     const getAlert = () => (
@@ -285,8 +292,10 @@ class Budget extends Component {
       <SweetAlert
         title="Hello there!"
         onConfirm={this.handleSignUp}
-        confirmBtnStyle={btnStyle}
-        onCancel={this.onCancel}
+        confirmBtnStyle={confirmBtnStyle}
+        onCancel={this.hideAlert}
+        showCancel={true}
+        cancelBtnStyle={cancelBtnStyle}
         type="controlled"
       >
         <form>
@@ -355,10 +364,7 @@ class Budget extends Component {
   // ***********************************************
 
   hideAlert() {
-    console.log('Hiding alert...');
-    this.setState({
-      alert: null
-    });
+    this.setState({ alert: false });
   }
 
 
