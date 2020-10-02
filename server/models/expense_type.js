@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
 
-    uniqueId: DataTypes.UUID,
+    typeKey: DataTypes.UUID,
 
     // The name of the Expense item - displayed next to the numerical amount
     name: DataTypes.STRING, 

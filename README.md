@@ -4,7 +4,10 @@
 #### Branch `ids-indexes-comments-readme`
 This branch will be a general sweep of the App with a few minor changes to make to the code, but mostly will be centered around adding comments and creating a real README.
 
-- add in id's so react will stop yelling at me 
+- ✓ add UUID as uniqueId in models, schema, seeds
+- add UUID when user saves new items (and add into default values)
+- complete adding in id's so react will stop yelling at me
+- control what values users can put in fields (no 0's in front, NAN)
 - make sure indexes are working on income and expense items
 - Use only sweetalert react package?
 - add in extensive code comments

@@ -437,8 +437,8 @@ class Budget extends Component {
           const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
           const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
     
-          // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-          // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
+          console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+          console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
           if (jsonParsedIncomeObject.categories.length === 0 && jsonParsedExpenseObject.categories.length === 0) {
             // console.log("New user!")

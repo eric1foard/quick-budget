@@ -55,16 +55,19 @@ class Box extends Component {
           {/* Maps through each item in income/expenses, passing this information to Form.js component */}
             <ul className="list-group list-group-flush">
               {this.props.boxData.categories.map(category =>
+              // <div>
                 <Form 
                   boxType={boxType}
                   categoryTitle={category.title}
                   subtotal={category.subtotal}
                   fields={category.fields}
                   handleUpdate={this.updateBox}
-                  key={category.uniqueId}
+                  key={category.categoryKey}
                   id={category.id}
                   handleSaveNew={this.handleSaveNew}
                 />
+                // Box Key: {category.uniqueId || category.boxUniqueId}
+              // </div>
               )}
             </ul>
 

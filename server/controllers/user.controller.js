@@ -56,13 +56,18 @@ exports.userIncome = (req, res) => {
       let arr = [];
       cat.forEach(item => {
 
+
+        // console.log("****************************")
+        // console.log("item here: ", item)
+        console.log("This should be the typeKey: ", item.Income_Type.typeKey)
+
         let itemObj = 
         {
           title: item.Income_Type.name,
           description: item.Income_Type.description,
           value: item.value,
           id: item.id,
-          uniqueId: item.uniqueId
+          typeKey: item.Income_Type.typeKey
         }
 
         let categoryIdentifier = item.Income_Type.Income_Category.id;
@@ -76,13 +81,18 @@ exports.userIncome = (req, res) => {
           }
         }
 
+        // console.log("****************************")
+        // console.log("CATEGORY here: ", item.Income_Type)
+        console.log("This should be the categoryKey: ", item.Income_Type.Income_Category.categoryKey)
+
+
         // let catNameIdx = arr.find(x => (x.title === catName));
         if (categoryIndex === false) {
           let obj = 
           {
             title: categoryName,
             categoryId: item.Income_Type.Income_Category.id,
-            uniqueId: item.Expense_Type.dataValues.uniqueId,
+            categoryKey: item.Income_Type.Income_Category.categoryKey,
             fields: [itemObj],
           }
           arr.push(obj);
@@ -155,7 +165,7 @@ exports.userExpense = (req, res) => {
           description: item.Expense_Type.description,
           value: item.value,
           id: item.id,
-          uniqueId: item.uniqueId
+          typeKey: item.Expense_Type.typeKey
         }
 
         let categoryIdentifier = item.Expense_Type.Expense_Category.id;
@@ -176,6 +186,7 @@ exports.userExpense = (req, res) => {
             title: categoryName,
             categoryId: item.Expense_Type.Expense_Category.id,
             uniqueId: item.Expense_Type.dataValues.uniqueId,
+            categoryKey: item.Expense_Type.Expense_Category.categoryKey,
             subtotal: 0.00,
             fields: [itemObj],
           }

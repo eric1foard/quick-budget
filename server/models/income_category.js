@@ -7,6 +7,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
+
+    categoryKey: DataTypes.UUID,
+
     // Here, we only store the names of the categories of expenses
     name: DataTypes.STRING,
 

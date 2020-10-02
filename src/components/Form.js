@@ -68,7 +68,7 @@ class Form extends Component {
           <hr />
           <div id={dataId} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             {this.props.fields.map(field =>
-              <form key={field.uniqueId}>
+              <form key={field.typeKey}>
                 <div className="form-group row">
                   {/* Form's title, in upper case */}
                   <div className="col-sm-9">
@@ -91,7 +91,6 @@ class Form extends Component {
                         type="number" 
                         name={field.title}
                         id={field.title}
-                        key={field.uniqueId}
                         onChange={this.handleChange}
                         className="form-control"
                         value={field.value}
