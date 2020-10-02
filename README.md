@@ -13,6 +13,7 @@
 -- ✓ Add something after user saves using sweetalert
 -- ✓ Track if user has made changes.  If they have, warn them before leaving page.
 -- ✓ Add a close button to the signup modal
+-- ✓ Don't allow users to have the same username
 -- Use only sweetalert react package?
 
 - new branch:

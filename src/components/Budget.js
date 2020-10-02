@@ -165,31 +165,30 @@ class Budget extends Component {
   // TO REFACTOR - repetition from SignUp component.
 
   handleSignUp(e) {
-    // e.preventDefault();
 
     if (!this.state.username || !this.state.email || !this.state.password) {
-      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
+      this.hideAlert();
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Please fill out all forms.',
       }).then(() => this.toggleSignUp());
     } else if (validateEmail(this.state.email) === false) {
-      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
+      this.hideAlert();
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Please enter a valid email address.',
       }).then(() => this.toggleSignUp());
     } else if (validateUsername(this.state.username) === false) {
-      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
+      this.hideAlert();
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
         text: 'Username must be between 3 and 20 characters long.',
       }).then(() => this.toggleSignUp());
     } else if (validatePassword(this.state.password) === false) {
-      this.setState({alert: false, username: undefined, email: undefined, password: undefined});
+      this.hideAlert();
       Swal.fire({
         icon: 'warning',
         title: 'Oops!',
@@ -234,7 +233,8 @@ class Budget extends Component {
                       error.response.data.message) ||
                     error.message ||
                     error.toString();
-                    
+                  
+                  // console.log("Are we here?")
                   this.setState({ loading: false });
                   Swal.fire({
                     icon: 'warning',
@@ -245,6 +245,7 @@ class Budget extends Component {
                 });
             },
         error => {
+          // console.log("Here we are")
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -364,7 +365,7 @@ class Budget extends Component {
   // ***********************************************
 
   hideAlert() {
-    this.setState({ alert: false });
+    this.setState({ alert: false, username: undefined, email: undefined, password: undefined});
   }
 
 

@@ -53,29 +53,28 @@ export default class SignUp extends Component {
         text: 'Password must be between 6 and 40 characters long.',
       });
     } else {
+
       this.setState({
         message: "",
         successful: false
       });
     
-      AuthService.signup(
-        this.state.username,
-        this.state.email,
-        this.state.password
-      )
-        .then( () => {
-          this.setState({
-            successful: true
-          });
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-            showConfirmButton: false,
-            timer: 1500
-          })
-            .then( () => {
-              AuthService.login(this.state.username, this.state.password)
+      AuthService.signup(this.state.username, this.state.email, this.state.password)
+        .then( 
+          res => {
+            this.setState({
+              successful: true
+            });
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
+              showConfirmButton: false,
+              timer: 1500
+            })
+
+
+            AuthService.login(this.state.username, this.state.password)
                 .then( () => {
                   this.props.history.push("/dashboard");
                   window.location.reload();
@@ -95,28 +94,27 @@ export default class SignUp extends Component {
                     footer: 'Or, if you have not yet signed up, please do so.'
                   })
                 });
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
 
-          this.setState({ successful: false });
-
-          Swal.fire({
-            icon: 'warning',
-            title: 'Oops!',
-            text: `${resMessage} Please try again.`, 
-            footer: 'Or, if you have already signed up, please go to the Log In page.'
-          });
-        }
-      );
-    })
+            
+          }).catch(error => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+        
+              this.setState({ successful: false });
+        
+              Swal.fire({
+                icon: 'warning',
+                title: 'Oops!',
+                text: `${resMessage} Please try again.`, 
+                footer: 'Or, if you have already signed up, please go to the Log In page.'
+              });
+          })
+    }
   }
-}
 
   render() {
     return (
