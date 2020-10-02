@@ -1,9 +1,5 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const User = db.User;
-const Income = db.Income;
-
-const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -11,23 +7,38 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   // Save User to Database
-  User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
+  db.User.findOne({
+    where: {
+      username: req.body.username
+    }
   })
     .then(user => {
-        res.send({ message: "User was registered successfully!" });
-      })
+      if (!user) {
+        db.User.create({
+          username: req.body.username,
+          email: req.body.email,
+          password: bcrypt.hashSync(req.body.password, 8),
+        })
+          .then(user => {
+              res.send({ message: "User was registered successfully!" });
+            })
+          .catch(err => {
+            res.status(500).send({ message: err.message });
+          });
+      } else {
+        return res.status(401).send({ message: "User already registered with this username." });
+      }
+    })
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
+  
 };
 
 
 exports.signin = (req, res) => {
   console.log('req.body.username: ', req.body.username);
-  User.findOne({
+  db.User.findOne({
     where: {
       username: req.body.username
     }

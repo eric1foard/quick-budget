@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { BrowserRouter as Switch, Route, Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/js/all.js";
 
+import Jumbotron from "./Jumbotron";
+
+// For Routes
+import Budget from "./Budget";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import Jumbotron from "./Jumbotron";
-import UserService from "../services/user.service";
 
 export default class Home extends Component {
   constructor(props) {
@@ -39,15 +41,20 @@ export default class Home extends Component {
 
           <div className="row home-buttons">
             <div className="col-sm-12">
-              <Link to={"/login"} className="">
+              <Link to={"/budget"}>
+                <button type="button" className="btn btn-start-now">Start Now</button>
+              </Link>
+              <br />
+              <Link to={"/login"}>
                 <button type="button" className="btn btn-login">Sign In</button>
               </Link>
               <br />
-              <Link to={"/signup"} className="">
+              <Link to={"/signup"}>
                 <button type="button" className="btn btn-signup">Sign Up</button>
               </Link>
             </div>
             <Switch>
+              <Route exact path="/budget" component={Budget} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/signup" component={SignUp} />
             </Switch>

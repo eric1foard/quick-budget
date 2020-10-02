@@ -308,7 +308,7 @@ const seed = () => {
               .then(() => Expense_Items.bulkCreate(expenseItemSeeds))
 }
 
-// run `npm run seed` to use this script from cli
+// Run `npm run seed` to use this script from cli
 seed()
   .then(() => {
     process.exit();
@@ -316,4 +316,3 @@ seed()
 );
 
 
-export { incomeTypeSeeds, expenseTypeSeeds };

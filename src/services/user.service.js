@@ -5,11 +5,6 @@ const API_URL = 'http://localhost:3001/api/';
 
 class UserService {
 
-  // createNewUserItems() {
-  //   return axios
-  //     .post(API_URL + 'user/new', { headers: authHeader() });
-  // }
-
   getUserIncome() {
     return axios
       .get(API_URL + 'user/income', { headers: authHeader() });

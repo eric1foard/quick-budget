@@ -11,7 +11,6 @@ import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import Budget from"./components/Budget"
-// import BudgetTest2 from "./components/BudgetTest2";
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -42,7 +41,6 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
-    console.log("currentUser from app component: ", currentUser);
 
     return (
       <Router>

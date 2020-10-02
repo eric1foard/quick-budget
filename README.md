@@ -1,22 +1,35 @@
 # Roadmap
 
 ## Now
-- Have another component, demobudget, that uses default props?  Save lets them register and save.
+#### Branch `unregistered-user-demo-version`
+- This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component
+-- ✓ When a user saves for the first time, add their budget info to db.
+-- ✓ add a button for budget from home
+-- ✓ Add start now button to navbar when no user is logged in.
+-- ✓ Allow users without profiles to use, like a demo
+-- ✓ When an unregistered user clicks save, let them sign up and save info
+-- ✓ Make the save button look nicer.
+-- ✓ Add a loading image for while the GET requests are being made.
+-- ✓ Add something after user saves using sweetalert
+-- ✓ Track if user has made changes.  If they have, warn them before leaving page.
+-- ✓ Add a close button to the signup modal
+-- ✓ Don't allow users to have the same username
+-- Use only sweetalert react package?
 
-- Add in id's
+- new branch:
+-- Add in id's
+-- make sure indexes are working on income and expense items
 
-- new branch - add in extensive code comments
-- make Readme nicer
-- Controller -> Models ?
+- New branch: 
+-- 1) add in extensive code comments
+-- 2) Make Readme nicer
+
+- get logic out of controller and into models (?)
 - Beautify dashboard.
-- (see budget section below)
 
 ### Next:
-- DB
--- How to seed information
-
 - User Controller
--- get logic out of controller and into models
+-- get logic out of controller and into models (?)
 -- reduce repitition between user/expense logic
 
 - Starting App
@@ -34,13 +47,6 @@
 
 - About Me
 -- Add one, why not.  Link it from the bottom nav (and top?)
-
-- Budget
--- Make the save button look nicer.
--- Add something after user saves - sweetalert?
--- Add a loading image for while the GET requests are being made.
--- Track if user has made changes.  If they have, warn them before leaving page.
--- Allow users without profiles to use, like a demo.  Then in order to save, create profile.
 
 - Dashboard
 -- Displays result of what user entered.
@@ -77,7 +83,8 @@
 - ✓ reduce logo font size for small screens
 - ✓ DB - add seed file
 - ✓ DB - add schema file
-- ✓ When new user added, add in their items as 0.
+- ✓ When new user goes onto budget, populate default values
+- 
 
 
 
