@@ -31,6 +31,7 @@ CREATE TABLE income_categories
 CREATE TABLE income_types
 (
   id int NOT NULL AUTO_INCREMENT,
+  uniqueId VARCHAR (36),
   name varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
 
@@ -44,6 +45,7 @@ CREATE TABLE income_types
 CREATE TABLE income_items
 (
   id int NOT NULL AUTO_INCREMENT,
+  uniqueId VARCHAR (36),
   value int,
 
   user_id int,
@@ -70,6 +72,7 @@ CREATE TABLE expense_categories
 CREATE TABLE expense_types
 (
   id int NOT NULL AUTO_INCREMENT,
+  uniqueId VARCHAR (36),
   name varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
   
@@ -83,6 +86,7 @@ CREATE TABLE expense_types
 CREATE TABLE expense_items
 (
   id int NOT NULL AUTO_INCREMENT,
+  uniqueId VARCHAR (36),
   value int DEFAULT 0,
   
   user_id int,

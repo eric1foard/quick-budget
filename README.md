@@ -1,56 +1,40 @@
 # Roadmap
 
 ## Now
-#### Branch `unregistered-user-demo-version`
-- This branch will mostly update the Budget component.  The primary goal is to let unregistered users try out the calculator, and have the option to save and register if they'd like.  There are also some smaller adjustments that will be made in this branch, also related to the Budget component
--- ✓ When a user saves for the first time, add their budget info to db.
--- ✓ add a button for budget from home
--- ✓ Add start now button to navbar when no user is logged in.
--- ✓ Allow users without profiles to use, like a demo
--- ✓ When an unregistered user clicks save, let them sign up and save info
--- ✓ Make the save button look nicer.
--- ✓ Add a loading image for while the GET requests are being made.
--- ✓ Add something after user saves using sweetalert
--- ✓ Track if user has made changes.  If they have, warn them before leaving page.
--- ✓ Add a close button to the signup modal
--- ✓ Don't allow users to have the same username
--- Use only sweetalert react package?
+#### Branch `ids-indexes-comments-readme`
+This branch will be a general sweep of the App with a few minor changes to make to the code, but mostly will be centered around adding comments and creating a real README.
 
-- new branch:
--- Add in id's
--- make sure indexes are working on income and expense items
+- add in id's so react will stop yelling at me 
+- make sure indexes are working on income and expense items
+- Use only sweetalert react package?
+- add in extensive code comments
+- Make Readme nicer
+- Consolidate "npm start" and "nodemon index/server"
 
-- New branch: 
--- 1) add in extensive code comments
--- 2) Make Readme nicer
 
+
+Also:
 - get logic out of controller and into models (?)
 - Beautify dashboard.
 
 ### Next:
 - User Controller
--- get logic out of controller and into models (?)
 -- reduce repitition between user/expense logic
-
-- Starting App
--- Consolidate "npm start" and "nodemon index/server"
-
-- README
--- Improve it for others to read!
 
 - Dashboard
 -- Finish making it look nice
 -- Add some other insights or tools (saving goals, loan calculator, etc)
+-- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
+-- show percentages of income/expenses - in pie chart?
+
+- DB
+-- Let user save multiple versions of their budget.  For example, they can have one version where they have x rent or y rent.
 
 - To Turn into Components
 -- (none at the moment)
 
 - About Me
 -- Add one, why not.  Link it from the bottom nav (and top?)
-
-- Dashboard
--- Displays result of what user entered.
--- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
 
 
 
@@ -69,7 +53,6 @@
 - On dashboard - have loan calculator - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
 - When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
 - scrollspy on the budget page?
-- demo version without need to sign in
 
 ### Done!
 - ✓ Figure out how to structure DB.
@@ -84,7 +67,17 @@
 - ✓ DB - add seed file
 - ✓ DB - add schema file
 - ✓ When new user goes onto budget, populate default values
-- 
+ When a new and already registered user saves for the first time, their budget info is posted to db.
+- ✓ Adds a button to "start now" from the Home component, which takes user to Budget and populates it with default data.
+- ✓ Adds "start now" button to navbar that appears when no user is logged in.
+- ✓ Allow users without profiles to use budget, like a demo
+- ✓ When an unregistered user clicks save, lets them sign up and save info
+- ✓ Adds a close button to the signup modal
+- ✓ Makes the save button look nicer on Budget component.
+- ✓ Adds a reusable loading image component for while requests are being made.
+- ✓ Adds modal after user saves using sweetalert
+- ✓ Adds reusable component UnsavedChangesAlert that tracks if user has made changes. If they have, it warns them before leaving page (both for browser and react-router-dom).
+- ✓ Doesn't allow users to have the same username when signing up
 
 
 

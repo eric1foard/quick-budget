@@ -6,6 +6,8 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
 
+    uniqueId: DataTypes.UUID,
+
     // *** Stores the value of the item, the dollar amount the user enters ***
     value: DataTypes.INTEGER,
 

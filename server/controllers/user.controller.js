@@ -61,7 +61,8 @@ exports.userIncome = (req, res) => {
           title: item.Income_Type.name,
           description: item.Income_Type.description,
           value: item.value,
-          id: item.id
+          id: item.id,
+          uniqueId: item.uniqueId
         }
 
         let categoryIdentifier = item.Income_Type.Income_Category.id;
@@ -81,6 +82,7 @@ exports.userIncome = (req, res) => {
           {
             title: categoryName,
             categoryId: item.Income_Type.Income_Category.id,
+            uniqueId: item.Expense_Type.dataValues.uniqueId,
             fields: [itemObj],
           }
           arr.push(obj);
@@ -146,13 +148,14 @@ exports.userExpense = (req, res) => {
 
       let arr = [];
       cat.forEach(item => {
-
+        
         let itemObj = 
         {
           title: item.Expense_Type.name,
           description: item.Expense_Type.description,
           value: item.value,
-          id: item.id
+          id: item.id,
+          uniqueId: item.uniqueId
         }
 
         let categoryIdentifier = item.Expense_Type.Expense_Category.id;
@@ -172,6 +175,7 @@ exports.userExpense = (req, res) => {
           {
             title: categoryName,
             categoryId: item.Expense_Type.Expense_Category.id,
+            uniqueId: item.Expense_Type.dataValues.uniqueId,
             subtotal: 0.00,
             fields: [itemObj],
           }

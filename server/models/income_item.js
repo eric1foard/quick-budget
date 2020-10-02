@@ -1,4 +1,6 @@
 // const db = require("../models");
+const { v4: uuidv4 } = require('uuid');
+
 
 module.exports = function(sequelize, DataTypes) {
   var Income_Item = sequelize.define("Income_Item", {
@@ -7,6 +9,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
+
+    uniqueId: DataTypes.UUID,
 
     // *** Stores the value of the item, the dollar amount the user enters ***
     value: DataTypes.INTEGER,
