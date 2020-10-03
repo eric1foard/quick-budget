@@ -1,8 +1,6 @@
 // Packages
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
-import Swal from 'sweetalert2';
-// import { v4 as uuidv4 } from "uuid"; - TODO Need to add in to give ID's (CB 9/30)
 
 // Project Components
 import Box from "./Box.js";

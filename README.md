@@ -10,10 +10,10 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ complete adding in id's so react will stop yelling at me
 - ✓ control what values users can put in fields (no 0's in front, NAN)
 - ✓ make sure indexes are working on income and expense items (update - turns out foreign keys are automatically indexed, which includes what we need.)
-- Use only sweetalert react package? (add note in app)
-- turn the rest of sweet alert messages into helpers
-- Make sure changes from yesterday are OK
-- try onblur again
+- ✓ add note in app as to why using two sweetalert packages
+- ✓ turn the rest of sweet alert messages into helpers
+- ✓ Make sure changes from yesterday are OK (try/catch, helpers)
+- ✓ Use onBlur to clean user input - change to numbers with no 0's to left, and limit to 2 decimal places.  This also allows the app to re-render less often (it used to do so onChange)
 - add in extensive code comments
 - Make Readme nicer
 - Consolidate "npm start" and "nodemon index/server"
@@ -49,7 +49,6 @@ Also:
 - To do's - minor
 -- get rid of extra line when collapse sections on budget
 -- More things that can be turned into components?
--- In field, have the numbers display as "xx.xx" properly.  onBlur?
 - To do's - major
 -- Improve variable naming.
 -- User can delete fields (will this be possible?)
