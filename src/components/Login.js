@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
-import Swal from "sweetalert2"
 
 import Jumbotron from "./Jumbotron";
 import "../App.css";
+import { verifyLogin, errorAlert } from "./shared/helpers";
 
 export default class LogIn extends Component {
   constructor(props) {
@@ -23,66 +23,29 @@ export default class LogIn extends Component {
     this.setState({[evt.target.name]: evt.target.value});
   }
 
-  handleLogIn(e) {
+  async handleLogIn(e) {
     e.preventDefault();
+    this.setState({ loading: true });
 
-    if (!this.state.username && !this.state.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a username and password.',
-      });
-    } else if (!this.state.username) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a username.',
-      });
-    } else  if (!this.state.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a password.',
-      });
+    let [alert, result] = verifyLogin(this.state.username, this.state.password);
+
+    if (result === false) {
+      await alert;
+      this.setState({ loading: false });
     } else {
-      this.setState({
-        message: "",
-        loading: true
-      });
 
-      AuthService.login(this.state.username, this.state.password)
-        .then(
-          res => {
-            console.log("success res: ", res);
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              html: 'You are now logged in!<br><br>Redirecting you to your dashboard...',
-              showConfirmButton: false,
-              timer: 1500
-            })
-              .then( () => {
-                this.props.history.push("/dashboard");
-                window.location.reload();
-              })
-          }
-        ).catch(error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-            
-          this.setState({ loading: false });
-          Swal.fire({
-            icon: 'warning',
-            title: 'Oops!',
-            text: `${resMessage} Please try again.`, 
-            footer: 'Or, if you have not yet signed up, please do so.'
-          })
-        });
-    };
+      try {
+        await AuthService.login(this.state.username, this.state.password)
+        await alert;
+        this.props.history.push("/dashboard");
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+        errorAlert(error);
+        this.setState({ loading: false });
+      }
+
+    }
   }
 
   render() {

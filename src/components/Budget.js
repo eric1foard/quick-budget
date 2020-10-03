@@ -18,7 +18,7 @@ import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
-import { verifySignUp, errorAlert } from "./shared/helpers"
+import { verifySignUp, errorAlert, successfulSaveAlert } from "./shared/helpers"
 
 class Budget extends Component {
 
@@ -192,7 +192,7 @@ class Budget extends Component {
 
         try {
           await alert;
-          
+
           await AuthService.login(this.state.username, this.state.password)
           await this.setState({ unregisteredUser: false, unsavedChanges: false });
           await this.saveNewUserBudget();
@@ -318,16 +318,12 @@ class Budget extends Component {
 
 
   saveNewUserBudget() {
-    console.log("handleSave has been called with a new user")
+    // console.log("handleSave has been called with a new user")
     Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
-        console.log(res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          html: 'Your information has been saved!',
-        });
+        // console.log(res);
+        successfulSaveAlert();
       })
       .catch(error => {
         console.error(error.message)
@@ -338,12 +334,8 @@ class Budget extends Component {
     Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
       .then(res =>{
         this.setState({ unsavedChanges: false });
-        console.log(res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          html: 'Your information has been saved!',
-        });
+        // console.log(res);
+        successfulSaveAlert();
       })
       .catch(error => {
         console.error(error.message)
