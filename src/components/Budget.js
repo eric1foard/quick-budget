@@ -12,14 +12,13 @@ import Loading from "./Loading";
 import AuthService from "../services/auth.service";
 import userService from "../services/user.service.js";
 import UnsavedChangesAlert from "./UnsavedChangesAlert.js"; // Alerts user when navigating away from the page without saving changes
-import HelloWorld from "./ModalSignUp.js";
 
 // Objects containing the default income and expense data, in the event a new user
 import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
-import { verifySignUp } from "./shared/helpers"
+import { verifySignUp, errorAlert } from "./shared/helpers"
 
 class Budget extends Component {
 
@@ -175,8 +174,13 @@ class Budget extends Component {
     
     if (result === false) {
       await alert;
-      await this.setState({ username: undefined, email: undefined, password: undefined });
+      await this.setState({ 
+        username: undefined, 
+        email: undefined, 
+        password: undefined 
+      });
       this.toggleSignUp();
+    
     } else {
     
       try {
@@ -186,52 +190,26 @@ class Budget extends Component {
           this.state.password
         );
 
-        await this.setState({
-          successful: true,
-          unregisteredUser: false,
-          unsavedChanges: false
-        });
-
         try {
           await alert;
+          
           await AuthService.login(this.state.username, this.state.password)
+          await this.setState({ unregisteredUser: false, unsavedChanges: false });
           await this.saveNewUserBudget();
+
           await this.props.history.push("/dashboard");
           window.location.reload();
         } catch(error) {
-
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          
-          this.setState({ loading: false });
-          
-          Swal.fire({
-            icon: 'warning',
-            title: 'Oops!',
-            text: `${resMessage} Please try again.`, 
-            footer: 'Or, if you have not yet signed up, please do so.'
-          });
+          // TODO - it seems nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+          console.log(error);
+          errorAlert(error);
+          this.setState({ username: undefined, email: undefined, password: undefined });
         }
       } catch(error) {
-        const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-        this.setState({ successful: false });
-
-        Swal.fire({
-          icon: 'warning',
-          title: 'Oops!',
-          text: `${resMessage} Please try again.`, 
-          footer: 'Or, if you have already signed up, please go to the Log In page.'
-        });
+        // TODO - it seems nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+        console.log(error);
+        errorAlert(error);
+        this.setState({ username: undefined, email: undefined, password: undefined });
       }
     }
   }

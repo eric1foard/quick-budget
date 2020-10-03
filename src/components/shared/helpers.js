@@ -1,5 +1,15 @@
 import { isEmail } from "validator";
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'; // Using this SweetAlert package as well because it's easier to use in functions, requires less state management
+
+export const successfulSignUpAlert = async () => {
+  await Swal.fire({
+    icon: 'success',
+    title: 'Success!',
+    html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
 
 export const verifySignUp = (username, email, password) => {
   let status = null;
@@ -35,13 +45,23 @@ export const verifySignUp = (username, email, password) => {
     });
   } else {
     status = true;
-    alert =  Swal.fire({
-      icon: 'success',
-      title: 'Success!',
-      html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-      showConfirmButton: false,
-      timer: 1500
-    })
+    alert =  successfulSignUpAlert();
   }
   return [alert, status]
 };
+
+export const errorAlert = (error) => {
+  const resMessage =
+    (error.response &&
+      error.response.data &&
+      error.response.data.message) ||
+    error.message ||
+    error.toString();
+
+  return Swal.fire({
+    icon: 'warning',
+    title: 'Oops!',
+    text: `${resMessage} Please try again.`, 
+    footer: 'Or, if you have not yet signed up, please do so.'
+  });
+}

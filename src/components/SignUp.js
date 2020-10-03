@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 
 import AuthService from "../services/auth.service";
 import Jumbotron from "./Jumbotron";
-import { verifySignUp } from "./shared/helpers";
+import { verifySignUp, errorAlert, successfulSignUpAlert } from "./shared/helpers";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -15,8 +15,7 @@ export default class SignUp extends Component {
       username: "",
       email: "",
       password: "",
-      successful: false,
-      message: ""
+      loading: false
     };
   }
 
@@ -29,99 +28,34 @@ export default class SignUp extends Component {
     e.preventDefault();
 
     let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
+    this.setState({ loading: true });
     
     if (result === false) {
       await alert;
     } else {
+      try {
+        await AuthService.signup(this.state.username, this.state.email, this.state.password)
+        await successfulSignUpAlert();
 
+        try {
+          await AuthService.login(this.state.username, this.state.password);
+          this.props.history.push("/dashboard");
+          window.location.reload();
+        } catch (error) {
+          // TODO - MDN docs imply nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+          console.log(error);
+          errorAlert(error);
+          this.setState({ loading: false });
+        }
 
-    // if (!this.state.username || !this.state.email || !this.state.password) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops!',
-    //     text: 'Please fill out all forms.',
-    //   });
-    // } else if (validateEmail(this.state.email) === false) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops!',
-    //     text: 'Please enter a valid email address.',
-    //   });
-    // } else  if (validateUsername(this.state.username) === false) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops!',
-    //     text: 'Username must be between 3 and 20 characters long.',
-    //   });
-    // } else if (validatePassword(this.state.password) === false) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops!',
-    //     text: 'Password must be between 6 and 40 characters long.',
-    //   });
-    // } else {
-
-      this.setState({
-        message: "",
-        successful: false
-      });
-    
-      AuthService.signup(this.state.username, this.state.email, this.state.password)
-        .then( 
-          res => {
-            this.setState({
-              successful: true
-            });
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-              showConfirmButton: false,
-              timer: 1500
-            })
-
-
-            AuthService.login(this.state.username, this.state.password)
-                .then( () => {
-                  this.props.history.push("/dashboard");
-                  window.location.reload();
-                }).catch(error => {
-                  const resMessage =
-                    (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                    
-                  this.setState({ loading: false });
-                  Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops!',
-                    text: `${resMessage} Please try again.`, 
-                    footer: 'Or, if you have not yet signed up, please do so.'
-                  })
-                });
-
-            
-          }).catch(error => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();
-        
-              this.setState({ successful: false });
-        
-              Swal.fire({
-                icon: 'warning',
-                title: 'Oops!',
-                text: `${resMessage} Please try again.`, 
-                footer: 'Or, if you have already signed up, please go to the Log In page.'
-              });
-          })
+      } catch (error) {
+        console.log(error);
+        errorAlert(error);
+        this.setState({ loading: false });
+      }
     }
   }
+  
 
   render() {
     return (

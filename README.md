@@ -10,7 +10,10 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ complete adding in id's so react will stop yelling at me
 - ✓ control what values users can put in fields (no 0's in front, NAN)
 - ✓ make sure indexes are working on income and expense items (update - turns out foreign keys are automatically indexed, which includes what we need.)
-- Use only sweetalert react package?
+- Use only sweetalert react package? (add note in app)
+- turn the rest of sweet alert messages into helpers
+- Make sure changes from yesterday are OK
+- try onblur again
 - add in extensive code comments
 - Make Readme nicer
 - Consolidate "npm start" and "nodemon index/server"
