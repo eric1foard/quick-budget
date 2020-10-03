@@ -55,7 +55,6 @@ class Box extends Component {
           {/* Maps through each item in income/expenses, passing this information to Form.js component */}
             <ul className="list-group list-group-flush">
               {this.props.boxData.categories.map(category =>
-              // <div>
                 <Form 
                   boxType={boxType}
                   categoryTitle={category.title}
@@ -66,15 +65,13 @@ class Box extends Component {
                   id={category.id}
                   handleSaveNew={this.handleSaveNew}
                 />
-                // Box Key: {category.uniqueId || category.boxUniqueId}
-              // </div>
               )}
             </ul>
 
 
           {/* Footer displays the total of the income/expenses fields */}
           <div className={cardFooterClasses}>
-            Total Monthly {this.props.title}: ${this.props.total.toFixed(2)}
+            Total Monthly {this.props.title}: ${parseFloat(this.props.total).toFixed(2)}
           </div>
 
         </div>

@@ -106,15 +106,16 @@ exports.userIncome = (req, res) => {
       categoryObj.categories.forEach(catElem => {
         let sub = 0;
         catElem.fields.forEach(typeElem => {
-          sub += typeElem.value;
+          sub += parseFloat(typeElem.value);
         })
-        catElem["subtotal"] = sub
+        catElem["subtotal"] = sub.toFixed(2);
       });
 
       let total = 0;
       categoryObj.categories.forEach(catElem => {
-        total += catElem.subtotal;
+        total += parseFloat(catElem.subtotal);
       });
+      total = total.toFixed(2);
 
       res.status(200).send({
         jsonStringResponse: JSON.stringify(categoryObj),
@@ -201,15 +202,16 @@ exports.userExpense = (req, res) => {
       categoryObj.categories.forEach(catElem => {
         let sub = 0;
         catElem.fields.forEach(typeElem => {
-          sub += typeElem.value;
+          sub += parseFloat(typeElem.value);
         })
-        catElem["subtotal"] = sub
+        catElem["subtotal"] = sub.toFixed(2);
       })
 
       let total = 0;
       categoryObj.categories.forEach(catElem => {
-        total += catElem.subtotal;
+        total += parseFloat(catElem.subtotal);
       })
+      total = total.toFixed(2);
 
       res.status(200).send({
         jsonStringResponse: JSON.stringify(categoryObj),

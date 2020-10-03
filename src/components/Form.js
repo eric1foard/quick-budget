@@ -18,6 +18,7 @@ class Form extends Component {
   //  ...which then passes the info to App. The field's value is updated in state,
   //  ...and the totals and summary are updated.
   handleChange(evt) {
+    if (evt.target.value === "") evt.target.value = 0; // If empty string, turns it to $0
     this.props.handleUpdate(evt.target.name, evt.target.value, this.props.categoryTitle);
   }
 
@@ -59,7 +60,7 @@ class Form extends Component {
               {/* Displays subtotal for this category */}
               <div className="col-sm-3">
                 <div className="subtotal">
-                  ${this.props.subtotal.toFixed(2)}
+                  ${parseFloat(this.props.subtotal).toFixed(2)}
                 </div>
               </div>
             
@@ -93,7 +94,9 @@ class Form extends Component {
                         id={field.title}
                         onChange={this.handleChange}
                         className="form-control"
-                        value={field.value}
+                        // Regarding value - this approach does not allow 0's from the left of number, which is good. Handling this elsewhere allowed input to show the 0's, hence doing it here.
+                        // TODO: However, this approach allows the user to enter long decimals, and populates decimals with 10's place only without a 0 to follow. (CB 10/2)
+                        value={Number(field.value).toString()} 
                       />
                     </div>
                   </div>

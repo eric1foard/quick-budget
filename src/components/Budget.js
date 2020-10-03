@@ -97,11 +97,14 @@ class Budget extends Component {
     let newState = this.state[incOrExp];
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
 
+    // console.log("BEFORE: newSubTotal", newSubTotal);
     let newSubTotal = categoryToUpdate.fields.reduce(
-      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+      (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.value)
       , 0
     );
     categoryToUpdate.subtotal = newSubTotal;
+    console.log("AFTER: newSubTotal", newSubTotal);
+
 
     this.setState({[incOrExp]: newState}, () => {
       this.updateFullTotal(incOrExp);
@@ -117,9 +120,11 @@ class Budget extends Component {
 
     // Reduces array of fields to find total of values
     let newTotal = dataCopy.categories.reduce(
-      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.subtotal)
+      (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.subtotal)
       , 0
     );
+
+    console.log("updateFullTotal - newTotal: ", newTotal)
 
     // ...and sets state with that updated value.
     this.setState({[totalToUpdate]: newTotal});
@@ -210,6 +215,7 @@ class Budget extends Component {
           this.setState({
             successful: true,
             unregisteredUser: false,
+            unsavedChanges: false
           });
           Swal.fire({
             icon: 'success',

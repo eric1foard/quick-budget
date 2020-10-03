@@ -46,7 +46,7 @@ CREATE TABLE income_types
 CREATE TABLE income_items
 (
   id int NOT NULL AUTO_INCREMENT,
-  value int,
+  value DECIMAL(20,2),
 
   user_id int,
   income_type_id int,
@@ -87,7 +87,8 @@ CREATE TABLE expense_types
 CREATE TABLE expense_items
 (
   id int NOT NULL AUTO_INCREMENT,
-  value int DEFAULT 0,
+  value DECIMAL(20,2),
+
   
   user_id int,
   expense_type_id int,
