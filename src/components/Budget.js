@@ -1,6 +1,5 @@
 // Packages
 import React, { Component } from "react";
-import { Prompt } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import Swal from 'sweetalert2';
 // import { v4 as uuidv4 } from "uuid"; - TODO Need to add in to give ID's (CB 9/30)
@@ -20,8 +19,7 @@ import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
-import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
-
+import { verifySignUp } from "./shared/helpers"
 
 class Budget extends Component {
 
@@ -169,106 +167,72 @@ class Budget extends Component {
   // ***********************************************
   // TO REFACTOR - repetition from SignUp component.
 
-  handleSignUp(e) {
+  async handleSignUp(e) {
 
-    if (!this.state.username || !this.state.email || !this.state.password) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please fill out all forms.',
-      }).then(() => this.toggleSignUp());
-    } else if (validateEmail(this.state.email) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a valid email address.',
-      }).then(() => this.toggleSignUp());
-    } else if (validateUsername(this.state.username) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Username must be between 3 and 20 characters long.',
-      }).then(() => this.toggleSignUp());
-    } else if (validatePassword(this.state.password) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Password must be between 6 and 40 characters long.',
-      }).then(() => this.toggleSignUp());
-    } else {
-      this.setState({
-        alert: false,
-        message: "",
-        successful: false
-      });
+    let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
     
-      AuthService.signup(
-        this.state.username,
-        this.state.email,
-        this.state.password
-      )
-        .then( () => {
-          this.setState({
-            successful: true,
-            unregisteredUser: false,
-            unsavedChanges: false
-          });
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-            showConfirmButton: false,
-            timer: 1500
-          })
-            .then( () => {
-              AuthService.login(this.state.username, this.state.password)
-              .then( () => {
-                this.saveNewUserBudget();
-              })
-                .then( () => {
-                  this.props.history.push("/dashboard");
-                  window.location.reload();
-                }).catch(error => {
-                  const resMessage =
-                    (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                  
-                  // console.log("Are we here?")
-                  this.setState({ loading: false });
-                  Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops!',
-                    text: `${resMessage} Please try again.`, 
-                    footer: 'Or, if you have not yet signed up, please do so.'
-                  })
-                });
-            },
-        error => {
-          // console.log("Here we are")
+    this.hideAlert();
+    
+    if (result === false) {
+      await alert;
+      await this.setState({ username: undefined, email: undefined, password: undefined });
+      this.toggleSignUp();
+    } else {
+    
+      try {
+        await AuthService.signup(
+          this.state.username, 
+          this.state.email, 
+          this.state.password
+        );
+
+        await this.setState({
+          successful: true,
+          unregisteredUser: false,
+          unsavedChanges: false
+        });
+
+        try {
+          await alert;
+          await AuthService.login(this.state.username, this.state.password)
+          await this.saveNewUserBudget();
+          await this.props.history.push("/dashboard");
+          window.location.reload();
+        } catch(error) {
+
           const resMessage =
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
             error.toString();
-
-          this.setState({ successful: false });
-
+          
+          this.setState({ loading: false });
+          
           Swal.fire({
             icon: 'warning',
             title: 'Oops!',
             text: `${resMessage} Please try again.`, 
-            footer: 'Or, if you have already signed up, please go to the Log In page.'
+            footer: 'Or, if you have not yet signed up, please do so.'
           });
+        }
+      } catch(error) {
+        const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+        this.setState({ successful: false });
+
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops!',
+          text: `${resMessage} Please try again.`, 
+          footer: 'Or, if you have already signed up, please go to the Log In page.'
         });
-      })
+      }
     }
   }
 
@@ -371,7 +335,7 @@ class Budget extends Component {
   // ***********************************************
 
   hideAlert() {
-    this.setState({ alert: false, username: undefined, email: undefined, password: undefined});
+    this.setState({ alert: false });
   }
 
 

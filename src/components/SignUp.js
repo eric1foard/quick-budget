@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 
 import AuthService from "../services/auth.service";
 import Jumbotron from "./Jumbotron";
-import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
+import { verifySignUp } from "./shared/helpers";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -25,34 +25,41 @@ export default class SignUp extends Component {
   }
 
   // TODO: There's too much logic here.  Should abstract this away from the component and make async. (CB 9/25)
-  handleSignUp(e) {
+  async handleSignUp(e) {
     e.preventDefault();
 
-    if (!this.state.username || !this.state.email || !this.state.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please fill out all forms.',
-      });
-    } else if (validateEmail(this.state.email) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a valid email address.',
-      });
-    } else  if (validateUsername(this.state.username) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Username must be between 3 and 20 characters long.',
-      });
-    } else if (validatePassword(this.state.password) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Password must be between 6 and 40 characters long.',
-      });
+    let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
+    
+    if (result === false) {
+      await alert;
     } else {
+
+
+    // if (!this.state.username || !this.state.email || !this.state.password) {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'Oops!',
+    //     text: 'Please fill out all forms.',
+    //   });
+    // } else if (validateEmail(this.state.email) === false) {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'Oops!',
+    //     text: 'Please enter a valid email address.',
+    //   });
+    // } else  if (validateUsername(this.state.username) === false) {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'Oops!',
+    //     text: 'Username must be between 3 and 20 characters long.',
+    //   });
+    // } else if (validatePassword(this.state.password) === false) {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'Oops!',
+    //     text: 'Password must be between 6 and 40 characters long.',
+    //   });
+    // } else {
 
       this.setState({
         message: "",

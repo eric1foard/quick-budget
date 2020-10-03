@@ -8,8 +8,8 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ add UUID for new users, by modifying newUserSeed's default values
 - ✓ modify Budget, Box, and Form to accept the unique keys correctly
 - ✓ complete adding in id's so react will stop yelling at me
-- control what values users can put in fields (no 0's in front, NAN)
-- make sure indexes are working on income and expense items
+- ✓ control what values users can put in fields (no 0's in front, NAN)
+- ✓ make sure indexes are working on income and expense items (update - turns out foreign keys are automatically indexed, which includes what we need.)
 - Use only sweetalert react package?
 - add in extensive code comments
 - Make Readme nicer
@@ -46,6 +46,7 @@ Also:
 - To do's - minor
 -- get rid of extra line when collapse sections on budget
 -- More things that can be turned into components?
+-- In field, have the numbers display as "xx.xx" properly.  onBlur?
 - To do's - major
 -- Improve variable naming.
 -- User can delete fields (will this be possible?)
