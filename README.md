@@ -27,6 +27,9 @@ Also:
 - User Controller
 -- reduce repitition between user/expense logic
 
+- REST API
+-- Seems that I'm likely missing a few protocols.  Have someone look things over.
+
 - Dashboard
 -- Finish making it look nice
 -- Add some other insights or tools (saving goals, loan calculator, etc)
