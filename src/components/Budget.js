@@ -8,7 +8,7 @@ import Summary from "./Summary.js";
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
 import AuthService from "../services/auth.service";
-import userService from "../services/user.service.js";
+import UserService from "../services/user.service.js";
 import UnsavedChangesAlert from "./UnsavedChangesAlert.js"; // Alerts user when navigating away from the page without saving changes
 
 // Objects containing the default income and expense data, in the event a new user
@@ -317,7 +317,7 @@ class Budget extends Component {
 
   saveNewUserBudget() {
     // console.log("handleSave has been called with a new user")
-    Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
+    Promise.all([UserService.saveIncomeNew(this.state.incomeData), UserService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
         // console.log(res);
@@ -329,7 +329,7 @@ class Budget extends Component {
   }
 
   saveExistingUserBudget() {
-    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+    Promise.all([UserService.saveIncome(this.state.incomeData), UserService.saveExpense(this.state.expenseData)])
       .then(res =>{
         this.setState({ unsavedChanges: false });
         // console.log(res);
@@ -368,7 +368,7 @@ class Budget extends Component {
       });
 
     } else {
-      Promise.all([userService.getUserIncome(), userService.getUserExpense()])
+      Promise.all([UserService.getUserIncome(), UserService.getUserExpense()])
         .then(values =>{
           const [income, expense] = [values[0], values[1]];
 

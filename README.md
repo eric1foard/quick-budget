@@ -8,12 +8,11 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ add UUID for new users, by modifying newUserSeed's default values
 - ✓ modify Budget, Box, and Form to accept the unique keys correctly
 - ✓ complete adding in id's so react will stop yelling at me
-- ✓ control what values users can put in fields (no 0's in front, NAN)
 - ✓ make sure indexes are working on income and expense items (update - turns out foreign keys are automatically indexed, which includes what we need.)
 - ✓ add note in app as to why using two sweetalert packages
 - ✓ turn the rest of sweet alert messages into helpers
 - ✓ Make sure changes from yesterday are OK (try/catch, helpers)
-- ✓ Use onBlur to clean user input - change to numbers with no 0's to left, and limit to 2 decimal places.  This also allows the app to re-render less often (it used to do so onChange)
+- ✓ Use onBlur to clean user input - change to numbers with no 0's to left, prevents empty NAN strings, and limits to 2 decimal places.  This also allows the app to re-render less often (it used to do so onChange)
 - add in extensive code comments
 - Make Readme nicer
 - Consolidate "npm start" and "nodemon index/server"

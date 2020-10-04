@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
-import userService from "../services/user.service";
+import UserService from "../services/user.service";
 
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
@@ -26,7 +26,7 @@ class Dashboard extends Component {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      Promise.all([userService.getUserIncome(), userService.getUserExpense()])
+      Promise.all([UserService.getUserIncome(), UserService.getUserExpense()])
         .then(values =>{
           const [income, expense] = [values[0], values[1]];
 
