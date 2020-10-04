@@ -320,7 +320,7 @@ class Budget extends Component {
     Promise.all([UserService.saveIncomeNew(this.state.incomeData), UserService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
-        // console.log(res);
+        console.log(res);
         successfulSaveAlert();
       })
       .catch(error => {

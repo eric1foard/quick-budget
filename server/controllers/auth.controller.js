@@ -73,7 +73,13 @@ exports.signin = (req, res) => {
 
       // Return status 200, with jwt token.  Controller will set it in localstorage.
       res.status(200).send({
-        accessToken: token
+        accessToken: token,
+        username: user.username, // Used to put username in navbar
+
+        // id: user.id,
+        // username: user.username,
+        // email: user.email,
+        // accessToken: token
       });
 
     })
