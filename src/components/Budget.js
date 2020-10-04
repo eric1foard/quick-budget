@@ -1,4 +1,4 @@
-// Packages
+// Dependencies
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
 
@@ -11,7 +11,7 @@ import AuthService from "../services/auth.service";
 import UserService from "../services/user.service.js";
 import UnsavedChangesAlert from "./UnsavedChangesAlert.js"; // Alerts user when navigating away from the page without saving changes
 
-// Objects containing the default income and expense data, in the event a new user
+// Objects containing the default income and expense data, used in the event a new user
 import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 

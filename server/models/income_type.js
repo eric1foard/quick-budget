@@ -20,9 +20,8 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Income_Type.associate = function(models) {
-    Income_Type.belongsTo(models.Income_Category, { foreignKey: 'income_category_id' } ); // updated
-    Income_Type.hasMany(models.Income_Item, { foreignKey: 'income_type_id' } ); // updated
-    // Income_Type.belongsToMany(models.User, { through: 'User_Budget', foreignKey: 'income_type_id' } );  - this may later be useful
+    Income_Type.belongsTo(models.Income_Category, { foreignKey: 'income_category_id' } );
+    Income_Type.hasMany(models.Income_Item, { foreignKey: 'income_type_id' } );
   }
 
 

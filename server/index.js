@@ -50,7 +50,6 @@ app.get("/", (req, res) => {
 
 // Routes
 // =============================================================
-require("./routes/api-routes.js")(app);
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 

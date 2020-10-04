@@ -331,22 +331,16 @@ const expenseItemSeeds = [
 ];
 
 
-// TODO - it would be nice to turn this into async/await if possible.
-const seed = () => {
-  return Users.bulkCreate(userSeeds)
-    .then(() => Income_Categories.bulkCreate(incomeCategorySeeds))
-      .then(() => Expense_Categories.bulkCreate(expenseCategorySeeds))
-        .then(() => Income_Types.bulkCreate(incomeTypeSeeds))
-          .then(() => Income_Items.bulkCreate(incomeItemSeeds))
-            .then(() => Expense_Types.bulkCreate(expenseTypeSeeds))
-              .then(() => Expense_Items.bulkCreate(expenseItemSeeds))
+const seed = async () => {
+  await Users.bulkCreate(userSeeds);
+  await Income_Categories.bulkCreate(incomeCategorySeeds);
+  await Expense_Categories.bulkCreate(expenseCategorySeeds);
+  await Income_Types.bulkCreate(incomeTypeSeeds);
+  await Income_Items.bulkCreate(incomeItemSeeds);
+  await Expense_Types.bulkCreate(expenseTypeSeeds);
+  await Expense_Items.bulkCreate(expenseItemSeeds);
+  process.exit();
 }
 
 // Run `npm run seed` to use this script from cli
-seed()
-  .then(() => {
-    process.exit();
-  }
-);
-
-
+seed();

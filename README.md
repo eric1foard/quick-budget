@@ -4,7 +4,7 @@
 #### Branch `ids-indexes-comments-readme`
 This branch will be a general sweep of the App with a few minor changes to make to the code, but mostly will be centered around adding comments and creating a real README.
 
-- ✓ add UUID as uniqueId in models, schema, seeds
+- ✓ add UUID as typeKey in models, schema, seeds
 - ✓ add UUID for new users, by modifying newUserSeed's default values
 - ✓ modify Budget, Box, and Form to accept the unique keys correctly
 - ✓ complete adding in id's so react will stop yelling at me

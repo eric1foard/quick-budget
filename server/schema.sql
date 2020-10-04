@@ -51,7 +51,6 @@ CREATE TABLE income_items
   user_id int,
   income_type_id int,
   
-  INDEX user_index (user_id),
   PRIMARY KEY (id),
   
   FOREIGN KEY (user_id) REFERENCES users(id),
@@ -89,11 +88,9 @@ CREATE TABLE expense_items
   id int NOT NULL AUTO_INCREMENT,
   value DECIMAL(20,2),
 
-  
   user_id int,
   expense_type_id int,
   
-  INDEX user_index (user_id),
   PRIMARY KEY (id),
     
   FOREIGN KEY (user_id) REFERENCES users(id),
@@ -102,39 +99,39 @@ CREATE TABLE expense_items
 
 
 
--- ### CUSTOM INCOME table
-CREATE TABLE custom_income_items
-(
-	id int NOT NULL AUTO_INCREMENT,
-  type_name varchar(255) NOT NULL,
-  type_description varchar(255) NOT NULL,
-  value int,
+-- -- ### CUSTOM INCOME table
+-- CREATE TABLE custom_income_items
+-- (
+-- 	id int NOT NULL AUTO_INCREMENT,
+--   type_name varchar(255) NOT NULL,
+--   type_description varchar(255) NOT NULL,
+--   value int,
   
-  category_id int,
-  user_id int,
+--   category_id int,
+--   user_id int,
     
-	INDEX user_index (user_id),
-  PRIMARY KEY (id),
+-- 	INDEX user_index (user_id),
+--   PRIMARY KEY (id),
     
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES income_categories(id)
-) ENGINE=InnoDB;
+--     FOREIGN KEY (user_id) REFERENCES users(id),
+--     FOREIGN KEY (category_id) REFERENCES income_categories(id)
+-- ) ENGINE=InnoDB;
 
 
--- ### CUSTOM EXPENSE table
-CREATE TABLE custom_expense_items
-(
-	id int NOT NULL AUTO_INCREMENT,
-  type_name varchar(255) NOT NULL,
-  type_description varchar(255) NOT NULL,
-  value int,
+-- -- ### CUSTOM EXPENSE table
+-- CREATE TABLE custom_expense_items
+-- (
+-- 	id int NOT NULL AUTO_INCREMENT,
+--   type_name varchar(255) NOT NULL,
+--   type_description varchar(255) NOT NULL,
+--   value int,
   
-  category_id int,
-  user_id int,
+--   category_id int,
+--   user_id int,
     
-	INDEX user_index (user_id),
-  PRIMARY KEY (id),
+-- 	INDEX user_index (user_id),
+--   PRIMARY KEY (id),
   
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (category_id) REFERENCES expense_categories(id)
-) ENGINE=InnoDB;
+--   FOREIGN KEY (user_id) REFERENCES users(id),
+--   FOREIGN KEY (category_id) REFERENCES expense_categories(id)
+-- ) ENGINE=InnoDB;
