@@ -10,8 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     // Stores the value of the item, the dollar amount the user enters
     value: DataTypes.DECIMAL(10,2),
 
-  }, 
-  {
+  }, {
     timestamps: false,
   });
 
