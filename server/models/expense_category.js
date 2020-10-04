@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes) {
 
     categoryKey: DataTypes.UUID,
     
-    // Here, we only store the names of the categories of expenses
     name: DataTypes.STRING,
 
   }, {
@@ -15,8 +14,8 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Expense_Category.associate = function(models) {
-    Expense_Category.hasMany(models.Expense_Type, { foreignKey: 'expense_category_id' } ); // updated
-    Expense_Category.belongsToMany(models.User, { through: 'user_categories' } ); // updated?
+    Expense_Category.hasMany(models.Expense_Type, { foreignKey: 'expense_category_id' } );
+    Expense_Category.belongsToMany(models.User, { through: 'user_categories' } );
   }
 
   return Expense_Category;
