@@ -1,5 +1,5 @@
 // ***************************************************************************
-// Field.js - Displays the Types' titles and values.  Category is parent.
+// Type.js - Displays the Types' titles and values.  Category is parent.
 // ***************************************************************************
 
 // Dependencies

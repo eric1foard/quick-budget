@@ -1,3 +1,8 @@
+// ******************************************************************************************************
+// Jumbotron.js - Reusable component that keeps Jumbotron styles consistent accross site with "branding."
+// ******************************************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
 
 class Jumbotron extends Component {

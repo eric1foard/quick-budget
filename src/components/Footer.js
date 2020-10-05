@@ -1,3 +1,7 @@
+// **************************************************************************************************
+// Footer.js - Appears at the bottom of all pages.  Gives links to my GitHub, LinkedIn, etc.
+// **************************************************************************************************
+
 import React, { Component } from 'react';
 
 class Footer extends Component {

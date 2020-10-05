@@ -1,11 +1,14 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+// *************************************************************************************************************
+// App.js - Main component, holding all others.
+// *************************************************************************************************************
 
+// Dependencies
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthService from "./services/auth.service";
-
+// Project Components
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -15,32 +18,31 @@ import Budget from"./components/Budget"
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+import AuthService from "./services/auth.service";
+
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.logOut = this.logOut.bind(this);
-
     this.state = {
-      currentUser: undefined,
+      currentUser: undefined
     };
-  }
-
-  componentDidMount() {
-    const user = AuthService.getCurrentUser();
-
-    if (user) {
-      this.setState({
-        currentUser: user,
-      });
-    }
+    this.logOut = this.logOut.bind(this);
   }
 
   logOut() {
     AuthService.logout();
   }
 
+  componentDidMount() {
+    const user = AuthService.getCurrentUser();
+    if (user) this.setState({ currentUser: user });
+  }
+
+
   render() {
     const { currentUser } = this.state;
+    console.log(currentUser);
 
     return (
       <Router>

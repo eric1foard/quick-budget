@@ -1,8 +1,13 @@
+// *************************************************************************************************************
+// Login.js - Component with forms for user to login.  Validates user input, makes API call to log user in.
+// *************************************************************************************************************
+
+// Dependencies
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
 
+// Project Components
 import Jumbotron from "./Jumbotron";
-import "../App.css";
 import { verifyLogin, errorAlert } from "./shared/helpers";
 
 export default class LogIn extends Component {
@@ -112,11 +117,7 @@ export default class LogIn extends Component {
           </div>
         </form>
 
-
       </Jumbotron>
-
-
-
 
     );
   }

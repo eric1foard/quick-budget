@@ -2,7 +2,8 @@
 // newUserSeed.js - Budget component uses this as default values for new/unregistered users' budgets.  
 // *************************************************************************************************************
 
-const { v4: uuidv4 } = require('uuid');
+// Dependencies
+const { v4: uuidv4 } = require('uuid'); // Used to make unique keys.
 
 
 // TODO: It would be nice to have this info feed from seed.js, so there's only one place to update when needed (CB 9/28)

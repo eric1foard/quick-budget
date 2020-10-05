@@ -1,3 +1,8 @@
+// ******************************************************************************************************
+// Loading.js - Reusable component for displaying loading spinner while a page is retrieving data
+// ******************************************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
 
 class Loading extends Component {

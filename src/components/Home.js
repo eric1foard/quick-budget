@@ -1,22 +1,21 @@
+// *************************************************************************************************************
+// Home.js - Main landing page for site.  Explains what Quick Budget is, and gives links to get started.
+// *************************************************************************************************************
+
+// Dependencies
 import React, { Component } from "react";
 import { BrowserRouter as Switch, Route, Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/js/all.js";
 
+// Project Components
 import Jumbotron from "./Jumbotron";
 
-// For Routes
+// Routes
 import Budget from "./Budget";
 import Login from "./Login";
 import SignUp from "./SignUp";
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      content: ""
-    };
-  }
 
   render() {
     return (

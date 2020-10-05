@@ -1,9 +1,15 @@
-import React, { Component } from "react";
-import Swal from 'sweetalert2'
+// ***************************************************************************************************************************
+// SignUp.js - Component with forms for user to register.  Validates user input, makes API call to create user and log them in.
+// ***************************************************************************************************************************
 
-import AuthService from "../services/auth.service";
+// Dependencies
+import React, { Component } from "react";
+
+// Project Components
 import Jumbotron from "./Jumbotron";
 import { verifySignUp, errorAlert, successfulSignUpAlert } from "./shared/helpers";
+import AuthService from "../services/auth.service";
+
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -23,7 +29,7 @@ export default class SignUp extends Component {
     this.setState({[evt.target.name]: evt.target.value});
   }
 
-  // TODO: There's too much logic here.  Should abstract this away from the component and make async. (CB 9/25)
+  // TODO: There's too much logic here.  Should abstract this away from the component. (CB 9/25)
   async handleSignUp(e) {
     e.preventDefault();
 
@@ -42,7 +48,7 @@ export default class SignUp extends Component {
           this.props.history.push("/dashboard");
           window.location.reload();
         } catch (error) {
-          // TODO - MDN docs imply nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+          // TODO (CB 10/5) - MDN docs imply nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
           console.log(error);
           errorAlert(error);
           this.setState({ loading: false });
@@ -59,7 +65,6 @@ export default class SignUp extends Component {
 
   render() {
     return (
-
 
       <Jumbotron
         largeTitle="Sign Up "
@@ -132,6 +137,7 @@ export default class SignUp extends Component {
                 </button>
               </div>
             </div>
+          
           </div>
         </form>
 
