@@ -1,10 +1,12 @@
+// ***************************************************************************
+// Field.js - Displays the Types' titles and values.  Category is parent.
+// ***************************************************************************
 
-
-
+// Dependencies
 import React, { Component } from 'react';
 
 
-class Field extends Component {
+class Type extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +18,13 @@ class Field extends Component {
     this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
-  // Passes the field's value up the chain of components, ultimately to Budget where the subtotals and total are also updated
+  // Passes the Type's value up the chain of components, ultimately to Budget where the subtotals and total are also updated
   handleChange(evt) {    
     this.setState({value: evt.target.value});
   }
 
-  // When a user clicks out of the field they were editing, this cleans their value to look like "financial"
-  // ... by removing 0's to the left, and rounding to 2 decimal places. Then, it triggers handleChange
+  // When a user clicks out of the Value form they were editing, this cleans their value to look "financial"
+  // ... by removing 0's to the left, and rounding to 2 decimal places. Then, it triggers handleChange, passing values to Budget
   handleOnBlur() {
     let cleanValue = this.state.value;
     if (cleanValue === "") cleanValue = 0;
@@ -45,11 +47,11 @@ class Field extends Component {
   render() {
     return(
 
-      
       <form key={this.key}>
         <hr />
         <div className="form-group row">
-          {/* Form's title, in upper case */}
+
+          {/* Type's title, in upper case */}
           <div className="col-sm-9">
             <label htmlFor={this.props.title} className="col-form-label label-title">
               {this.props.title}
@@ -66,6 +68,9 @@ class Field extends Component {
               <div className="input-group-prepend">
                 <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
               </div>
+              
+              
+              {/* Value goes here. (TODO (CB 10/5) - should Value be abstracted to a separate component for clarity?) */}
               <input
                 type="number" 
                 name={this.props.title}
@@ -75,16 +80,15 @@ class Field extends Component {
                 value={this.state.value}
                 onBlur={this.handleOnBlur}
               />
+
             </div>
           </div>
 
         </div>
-        {/* <hr /> */}
       </form>
-
 
     )
   }
 }
 
-export default Field;
+export default Type;

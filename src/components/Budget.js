@@ -1,3 +1,10 @@
+// *************************************************************************************************************
+// Budget.js - Holds logic for users interacting with their budgets. 
+// - Can be used by registered users (makes API call for their corresponding budget), or as a "demo" for unregistered users.
+// - App is parent, Box are children.
+// *************************************************************************************************************
+
+
 // Dependencies
 import React, { Component } from "react";
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -23,14 +30,15 @@ class Budget extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Budget state information
+
+      // Budget information
       incomeData: null,  // Object containing the user's income information.  Obtained from API call getting user's info, or from default values for new users.
       expenseData: null, // Object containing the user's expense information.  Obtained from API call getting user's info, or from default values for new users.
       incomeTotal: 0, // Number appearing at bottom of income section, showing user's total income.
       expenseTotal: 0, // Number appearing at bottom of expense section, showing user's total expense.
       total: 0, // Number showing in bottommost card, showing user's total income minus total expense.  While it could be inferred, keeping this explicitly in state makes sure it is always rendered with current info.
       
-      // User state information
+      // User information
       currentUser: AuthService.getCurrentUser(), // Returns user's jwt accessToken, email, id, and username.
       unregisteredUser: null, // Boolean determined in componenentDidMount. Used when user clicks save.  If true, prompts them to sign up in order to save.
       newUser: null, // Boolean determined in componenentDidMount. If true, pulls default information from newUserSeed to populate budget.
@@ -48,27 +56,30 @@ class Budget extends Component {
       email: undefined,
       password: undefined,
     }
-    this.updateValue            = this.updateValue.bind(this);
-    this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
-    this.updateFullTotal        = this.updateFullTotal.bind(this);
-    this.updateIncomeHelper     = this.updateIncomeHelper.bind(this);
-    this.updateExpensesHelper   = this.updateExpensesHelper.bind(this);
+    this.updateValue              = this.updateValue.bind(this);
+    this.updateCategorySubtotal   = this.updateCategorySubtotal.bind(this);
+    this.updateFullTotal          = this.updateFullTotal.bind(this);
+    this.updateIncomeHelper       = this.updateIncomeHelper.bind(this);
+    this.updateExpensesHelper     = this.updateExpensesHelper.bind(this);
     // this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this); - used to add new items.  Currently disabled.
     // this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this); - used to add new items.  Currently disabled.
     // this.saveNewField           = this.saveNewField.bind(this); - used to add new items.  Currently disabled.
-    this.handleSave             = this.handleSave.bind(this);
+    this.handleSave               = this.handleSave.bind(this);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.hideAlert = this.hideAlert.bind(this);
+    this.handleChange             = this.handleChange.bind(this);
+    this.handleSignUp             = this.handleSignUp.bind(this);
+    this.hideAlert                = this.hideAlert.bind(this);
 
   }
 
   // **********************************************
   // UPDATING VALUES & TOTALS *********************
   // **********************************************
+
+  // Updates individual Type's values in state, then triggers updating category subtotals
   updateValue(incOrExp, category, name, num) {
 
+    // If user navigates away from page without saving, they will be alerted
     this.setState({ unsavedChanges: true });
 
     // Makes new copy of state...
@@ -76,36 +87,41 @@ class Budget extends Component {
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
-
     const fieldToUpdate = categoryToUpdate.fields.find(elem => elem.title === name);
 
-    // ...and sets that field's value to the variable "num".
+    // ...and sets that field's value to the updated variable "num".
     fieldToUpdate.value = num;
 
     // Sets relevant state with updated numbers, starts callback to update totals
     this.setState({[incOrExp]: newState}, () => {
-      this.updateCategoryTotal(incOrExp, category);
+      this.updateCategorySubtotal(incOrExp, category);
     })
+
   }
 
-  updateCategoryTotal(incOrExp, category) {
+  // Updates the category subtotal, then triggers the income/expense total to update
+  updateCategorySubtotal(incOrExp, category) {
+
+    // Makes new copy of state
     let newState = this.state[incOrExp];
+
+    // Determines which category needs to be updated
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
 
-    // console.log("BEFORE: newSubTotal", newSubTotal);
-    let newSubTotal = categoryToUpdate.fields.reduce(
+    // Reduces the fields' values to find the category's subtotal
+    let newSubtotal = categoryToUpdate.fields.reduce(
       (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.value)
       , 0
     );
-    categoryToUpdate.subtotal = newSubTotal;
-    console.log("AFTER: newSubTotal", newSubTotal);
+    categoryToUpdate.subtotal = newSubtotal;
 
-
+    // Updates state, then triggers the income/expense total to update
     this.setState({[incOrExp]: newState}, () => {
       this.updateFullTotal(incOrExp);
     });
   }
 
+  // Updates the income/expense total, then triggers the overall monthly total to update
   updateFullTotal(incOrExp) {
     // Based on incOrExp, determines which total to update
     let totalToUpdate = (incOrExp === "incomeData" ? "incomeTotal" : "expenseTotal")
@@ -113,13 +129,11 @@ class Budget extends Component {
     // Makes new copy of state
     let dataCopy = this.state[incOrExp];
 
-    // Reduces array of fields to find total of values
+    // Reduces array of category subtotals to find total of values
     let newTotal = dataCopy.categories.reduce(
       (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.subtotal)
       , 0
     );
-
-    console.log("updateFullTotal - newTotal: ", newTotal)
 
     // ...and sets state with that updated value.
     this.setState({[totalToUpdate]: newTotal});
@@ -136,6 +150,7 @@ class Budget extends Component {
   }
 
 
+  // This section will be added back in later, once the app is ready to have users add their own Types
   // **********************************************
   // SAVING NEW FIELDS ****************************
   // **********************************************
@@ -146,7 +161,7 @@ class Budget extends Component {
 
   //   categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
   //   this.setState({[type]: newState}, () => {
-  //     this.updateCategoryTotal(type, category);
+  //     this.updateCategorySubtotal(type, category);
   //   });
   // }
 
@@ -162,8 +177,9 @@ class Budget extends Component {
 
 
   // ***********************************************
-  // TO REFACTOR - repetition from SignUp component.
-
+  // TO REFACTOR 
+    // 1) There's lots of repetition from SignUp component.
+    // 2) This should live in a separate component
   async handleSignUp(e) {
 
     let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
@@ -211,7 +227,6 @@ class Budget extends Component {
       }
     }
   }
-
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value});
@@ -307,7 +322,6 @@ class Budget extends Component {
       alert: getAlert()
     });
   }
-  // TO REFACTOR - repetition from SignUp component.
   // ***********************************************
 
   hideAlert() {
@@ -315,8 +329,9 @@ class Budget extends Component {
   }
 
 
+  // Used when a new or unregistered user saves their budget.  POST their entries in db.
   saveNewUserBudget() {
-    // console.log("handleSave has been called with a new user")
+    // TODO (CB 10/5) - turn this into async/await?
     Promise.all([UserService.saveIncomeNew(this.state.incomeData), UserService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
@@ -328,11 +343,13 @@ class Budget extends Component {
       });
   }
 
+  // Used when an existing user saves their budget.  PUT their entries updated in db.
   saveExistingUserBudget() {
+    // TODO (CB 10/5) - turn this into async/await?
     Promise.all([UserService.saveIncome(this.state.incomeData), UserService.saveExpense(this.state.expenseData)])
       .then(res =>{
         this.setState({ unsavedChanges: false });
-        // console.log(res);
+        console.log(res);
         successfulSaveAlert();
       })
       .catch(error => {
@@ -340,23 +357,24 @@ class Budget extends Component {
       });
   }
 
-
-
+ // Triggered when user clicks save. Calls the correct method based on user's status. 
   handleSave(evt) {    
     evt.preventDefault();
 
     if (this.state.unregisteredUser) {
-      console.log("handleSave has been called with an unregistered user");
+      // console.log("handleSave has been called with an unregistered user");
       this.toggleSignUp();
     } else if (this.state.newUser) {
-      console.log("handleSave has been called with a new user")
+      // console.log("handleSave has been called with a new user")
       this.saveNewUserBudget();
     } else {
-      console.log("handleSave has been called with an existing user")
+      // console.log("handleSave has been called with an existing user")
       this.saveExistingUserBudget();
     }
   }
 
+
+  // Based on user's status, makes API call for the user's budget information or seeds default values
   componentDidMount() {
     if (!this.state.currentUser) {
       console.log("Unregistered User!")
@@ -375,11 +393,10 @@ class Budget extends Component {
           const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
           const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
     
-          console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-          console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
+          // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+          // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
           if (jsonParsedIncomeObject.categories.length === 0 && jsonParsedExpenseObject.categories.length === 0) {
-            // console.log("New user!")
             this.setState({
               incomeData: incomeData,
               expenseData: expenseData,
@@ -387,7 +404,6 @@ class Budget extends Component {
               isLoaded: true,
             });
           } else {
-            // console.log("Existing user!")
             this.setState({
               incomeData: jsonParsedIncomeObject,
               expenseData: jsonParsedExpenseObject,
@@ -406,22 +422,22 @@ class Budget extends Component {
   }
 
 
-  
-  
+
   render() {
 
     return (
+
       <div className="budget">
 
+      {/* If user has made changes without saving and tries to leave page, alerts the user */}
       <UnsavedChangesAlert unsavedChanges={this.state.unsavedChanges} />
 
-        {/* Title and subtitle */}
+        {/* Title and subtitle, with instructions for user */}
         <Jumbotron
           largeTitle="Calculator "
           smallTitle="Quick Budget"
           subtitle="A quick and easy reference tool to calculate your basic monthly budget."
         >
-
           <div className="budget-instructions-list">
             <ol className="budget-list-text">
               <li className="budget-list-text income">
@@ -435,10 +451,9 @@ class Budget extends Component {
               </li>
             </ol>
           </div>
-
         </Jumbotron>
 
-        
+        {/* Renders loading image until API calls finish.  Then, renders the Boxes with budget information */}
         {this.state.isLoaded 
           ?
             <div>
@@ -448,20 +463,18 @@ class Budget extends Component {
                 boxType="income"
                 boxData={this.state.incomeData}
                 handleUpdate={this.updateIncomeHelper}
-                // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
                 total={this.state.incomeTotal}
-                // key={this.props.incomeData.id}
+                // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
               />
 
-              {/* Box with expenses information */}
+              {/* Box with expense information */}
               <Box
                 title="Expenses"
                 boxType="expenses"
                 boxData={this.state.expenseData} 
                 handleUpdate={this.updateExpensesHelper}
-                // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
                 total={this.state.expenseTotal}
-                // key={this.props.expensesData.id}
+                // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
               />
 
               {/* Summary displays the final total monthly amount */}
@@ -470,7 +483,7 @@ class Budget extends Component {
                 totalExpenses={this.state.expenseTotal}
               />
 
-
+              {/* Save button */}
               <button onClick={this.handleSave} type="button" className="btn btn-save">Save</button>
             </div>
           :
@@ -478,10 +491,9 @@ class Budget extends Component {
             <Loading />
         }
         
-      {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save */}
+      {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save, prompting them to register */}
       {this.state.alert}
 
-      {/* </UnsavedChangesAlert> */}
       </div>
     );
   }
