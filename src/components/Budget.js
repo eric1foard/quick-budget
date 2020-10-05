@@ -377,7 +377,7 @@ class Budget extends Component {
   // Based on user's status, makes API call for the user's budget information or seeds default values
   componentDidMount() {
     if (!this.state.currentUser) {
-      console.log("Unregistered User!")
+      // console.log("Unregistered User!")
       this.setState({ 
         unregisteredUser: true,
         incomeData: incomeData,

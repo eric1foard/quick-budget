@@ -29,7 +29,7 @@ class NewField extends Component {
   }
 
   handleSaveNew(evt) {
-    console.log("Does this fire?")
+    // console.log("Does this fire?")
     evt.preventDefault();
     let newFieldInfo =  {
       title: this.state.name, 
