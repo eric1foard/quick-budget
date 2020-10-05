@@ -87,7 +87,7 @@ class Budget extends Component {
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
-    const fieldToUpdate = categoryToUpdate.fields.find(elem => elem.title === name);
+    const fieldToUpdate = categoryToUpdate.types.find(elem => elem.title === name);
 
     // ...and sets that field's value to the updated variable "num".
     fieldToUpdate.value = num;
@@ -108,8 +108,8 @@ class Budget extends Component {
     // Determines which category needs to be updated
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
 
-    // Reduces the fields' values to find the category's subtotal
-    let newSubtotal = categoryToUpdate.fields.reduce(
+    // Reduces the types' values to find the category's subtotal
+    let newSubtotal = categoryToUpdate.types.reduce(
       (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.value)
       , 0
     );
@@ -139,12 +139,12 @@ class Budget extends Component {
     this.setState({[totalToUpdate]: newTotal});
   }
 
-  // For changes to income fields, sends relevant info to updateTotal
+  // For changes to income types, sends relevant info to updateTotal
   updateIncomeHelper(name, num, category) {
     this.updateValue("incomeData", category, name, num);
   }
 
-  // For changes to expenses fields, sends relevant info to updateTotal
+  // For changes to expenses types, sends relevant info to updateTotal
   updateExpensesHelper(name, num, category) {
     this.updateValue("expenseData", category, name, num);
   }
@@ -152,14 +152,14 @@ class Budget extends Component {
 
   // This section will be added back in later, once the app is ready to have users add their own Types
   // **********************************************
-  // SAVING NEW FIELDS ****************************
+  // SAVING NEW types ****************************
   // **********************************************
   // Appends the new field object to the end of the correct part of state
   // saveNewField(obj, type, category) {
   //   let newState = this.state[type]
   //   const categoryToSaveIn = newState.categories.find(elem => elem.title === category);
 
-  //   categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
+  //   categoryToSaveIn.types = [...categoryToSaveIn.types, obj];
   //   this.setState({[type]: newState}, () => {
   //     this.updateCategorySubtotal(type, category);
   //   });

@@ -72,7 +72,7 @@ class Category extends Component {
         
           {/* Under each Category, we now map through all Types and their Values */}
           <div id={dataId} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            {this.props.fields.map(field =>
+            {this.props.types.map(field =>
               <Type 
                 key={field.typeKey}
                 title={field.title}

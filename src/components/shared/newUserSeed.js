@@ -1,6 +1,7 @@
-// incomeData and expenseData are used in the event of a new user
-// ... these default values are imported into the Budget component,
-// ... instead of making an API call like we do for an existing user.
+// *************************************************************************************************************
+// newUserSeed.js - Budget component uses this as default values for new/unregistered users' budgets.  
+// *************************************************************************************************************
+
 const { v4: uuidv4 } = require('uuid');
 
 
@@ -12,7 +13,7 @@ export const incomeData = {
       subtotal: 0,
       title: 'Net Monthly Pay',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Your Net Monthly Pay', description: 'Also known as "take-home pay," this is the final amount on your paycheck - your wages, minus federal taxes, state taxes, Social Security, health insurance, etc.', value: 0.00, income_type_id: 1, typeKey: uuidv4()},
         {title: 'Spouse\'s Net Monthly Pay', description: 'Same as above, but for your partner (if applicable)', value: 0.00, income_type_id: 2, typeKey: uuidv4()}
       ]
@@ -22,7 +23,7 @@ export const incomeData = {
       subtotal: 0,
       title: 'Other Monthly Income',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Other Monthly Income', description: 'Enter additional sources of income here, such as Social Security, child support, alimony, investments, pensions, etc.', value: 0.00, income_type_id: 3, typeKey: uuidv4()}, 
       ]
     },
@@ -37,7 +38,7 @@ export const expenseData = {
       subtotal: 0,      
       title: 'Housing and Utilities',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Rent or Mortgage', description: 'Monthly amount due.  Add in Home or Renters Insurance if not already included', value: 0.00, expense_type_id: 1, typeKey: uuidv4()}, 
         {title: 'Property Tax', description: 'If not already included in mortgage payment', value: 0.00, expense_type_id: 2, typeKey: uuidv4()},
         {title: 'Homeowner Association (HOA) Fees', description: 'Only enter if applicable', value: 0.00, expense_type_id: 3, typeKey: uuidv4()},
@@ -51,7 +52,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Transportation',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Car Payment', description: 'Include any additional car payments, if you have more than one', value: 0.00, expense_type_id: 7, typeKey: uuidv4()}, 
         {title: 'Car Insurance', description: 'Check your billing, and be sure to divide this into a monthly amount', value: 0.00, expense_type_id: 8, typeKey: uuidv4()},
         {title: 'Gas', description: 'Average monthly cost of gas', value: 0.00, expense_type_id: 9, typeKey: uuidv4()},
@@ -64,7 +65,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Grocieries and Food',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Groceries', description: 'Average the monthly cost of your groceries.  It may be helpful to tally up a few months\' worth to get a better average', value: 0.00, expense_type_id: 12, typeKey: uuidv4()},
         {title: 'Meals at Restaurants', description: 'Again, it may be helpful to take the average of a few months', value: 0.00, expense_type_id: 13, typeKey: uuidv4()},
       ]
@@ -74,7 +75,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Health and Beauty',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Insurance', description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0.00, expense_type_id: 14, typeKey: uuidv4()},
         {title: 'Prescriptions and Doctor Visits', description: 'Include your monthly prescription costs and any regular co-pays for doctor visits', value: 0.00, expense_type_id: 15, typeKey: uuidv4()},
         {title: 'Gym Membership', description: 'Include monthly dues, if applicable', value: 0.00, expense_type_id: 16, typeKey: uuidv4()},
@@ -87,7 +88,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Children',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Child Care', description: 'If not already deducted from your paycheck', value: 0.00, expense_type_id: 19, typeKey: uuidv4()},
         {title: 'Child Support', description: 'Include monthly child support amounts, if applicable', value: 0.00, expense_type_id: 20, typeKey: uuidv4()},
         {title: 'Tuition and Supplies', description: 'Include any additional tuition or other school suppies', value: 0.00, expense_type_id: 21, typeKey: uuidv4()},
@@ -98,7 +99,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Debts and Loans',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Credit Cards', description: 'Total minimum monthly payment due or if you are paying extra, enter the amount you pay monthly', value: 0.00, expense_type_id: 22, typeKey: uuidv4()},
         {title: 'Student Loans', description: 'Total minimum monthly payment due or if you are paying extra, enter the amount you pay monthly', value: 0.00, expense_type_id: 23, typeKey: uuidv4()},
         {title: 'Medical Debt', description: 'Total minimum monthly payment due or if you are paying extra, enter the amount you pay monthly', value: 0.00, expense_type_id: 24, typeKey: uuidv4()},
@@ -109,7 +110,7 @@ export const expenseData = {
       subtotal: 0,
       title: 'Miscellaneous',
       categoryKey: uuidv4(),
-      fields: [
+      types: [
         {title: 'Hobbies', description: 'Include the average amount you spend on your hobbies - sporting equipment, music lessons, gardening supplies, etc.', value: 0.00, expense_type_id: 25, typeKey: uuidv4()},
         {title: 'Tobacco & Alcohol', description: 'Average monthly amounts', value: 0.00, expense_type_id: 26, typeKey: uuidv4()},
         {title: 'Media Subscriptions', description: 'Include newspapers, magazines, and any other media subscriptions (Netflix, etc.)', value: 0.00, expense_type_id: 27, typeKey: uuidv4()},

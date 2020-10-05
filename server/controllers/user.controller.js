@@ -60,13 +60,13 @@ exports.userIncome = async (req, res) => {
             title: Income_Category.name,
             categoryId: Income_Category.id,
             categoryKey: Income_Category.categoryKey,
-            fields: [],
+            types: [],
           }
         );
       }
       
-      // Push itemObj into arr within the fields of the correct Category object
-      itemsArr[arrayCategoryIdx].fields.push(itemObj);
+      // Push itemObj into arr within the types of the correct Category object
+      itemsArr[arrayCategoryIdx].types.push(itemObj);
       
     });
 
@@ -75,7 +75,7 @@ exports.userIncome = async (req, res) => {
     // Find each Category's subtotal by adding all Type's Item's values
     categoryObj.categories.forEach(category => {
       let subtotal = 0;
-      category.fields.forEach(type => subtotal += parseFloat(type.value));
+      category.types.forEach(type => subtotal += parseFloat(type.value));
       category["subtotal"] = subtotal.toFixed(2);
     });
 
@@ -153,13 +153,13 @@ exports.userExpense = async (req, res) => {
             title: Expense_Category.name,
             categoryId: Expense_Category.id,
             categoryKey: Expense_Category.categoryKey,
-            fields: [],
+            types: [],
           }
         );
       }
       
-      // Push itemObj into arr within the fields of the correct Category object
-      itemsArr[arrayCategoryIdx].fields.push(itemObj);
+      // Push itemObj into arr within the types of the correct Category object
+      itemsArr[arrayCategoryIdx].types.push(itemObj);
       
     });
 
@@ -168,7 +168,7 @@ exports.userExpense = async (req, res) => {
     // Find each Category's subtotal by adding all Type's Item's values
     categoryObj.categories.forEach(category => {
       let subtotal = 0;
-      category.fields.forEach(type => subtotal += parseFloat(type.value));
+      category.types.forEach(type => subtotal += parseFloat(type.value));
       category["subtotal"] = subtotal.toFixed(2);
     });
 
@@ -195,9 +195,9 @@ exports.saveIncomeNew = async (req, res) => {
   // First, turns all Item info into an array of objects, and adds user_id into each object
   let dataArray = [];
   for (let i = 0; i < req.body.income.categories.length; i++) {
-    for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
+    for (let j = 0; j < req.body.income.categories[i].types.length; j++) {
       
-      let obj = {...req.body.income.categories[i].fields[j], user_id: req.userId}
+      let obj = {...req.body.income.categories[i].types[j], user_id: req.userId}
       dataArray.push(obj)
 
     }
@@ -222,9 +222,9 @@ exports.saveExpenseNew = async (req, res) => {
   // First, turns all Item info into an array of objects, and adds user_id into each object
   let dataArray = [];
   for (let i = 0; i < req.body.expense.categories.length; i++) {
-    for (let j = 0; j < req.body.expense.categories[i].fields.length; j++) {
+    for (let j = 0; j < req.body.expense.categories[i].types.length; j++) {
 
-      let obj = {...req.body.expense.categories[i].fields[j], user_id: req.userId}
+      let obj = {...req.body.expense.categories[i].types[j], user_id: req.userId}
       dataArray.push(obj);
 
     }
@@ -251,8 +251,8 @@ exports.saveIncome = async (req, res) => {
   const {categories} = req.body.income;
   let dataArray = [];
   for (let i = 0; i < categories.length; i++) {
-    for (let j = 0; j < categories[i].fields.length; j++) {
-      dataArray.push(categories[i].fields[j]);
+    for (let j = 0; j < categories[i].types.length; j++) {
+      dataArray.push(categories[i].types[j]);
     }
   }
 
@@ -278,8 +278,8 @@ exports.saveExpense = async (req, res) => {
   const {categories} = req.body.expense;
   let dataArray = [];
   for (let i = 0; i < categories.length; i++) {
-    for (let j = 0; j < categories[i].fields.length; j++) {
-      dataArray.push(categories[i].fields[j]);
+    for (let j = 0; j < categories[i].types.length; j++) {
+      dataArray.push(categories[i].types[j]);
     }
   }
 

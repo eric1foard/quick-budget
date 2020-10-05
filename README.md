@@ -54,8 +54,8 @@ Also:
 -- More things that can be turned into components?
 - To do's - major
 -- Improve variable naming.
--- User can delete fields (will this be possible?)
--- User can edit fields (will this be possible?)
+-- User can delete types (will this be possible?)
+-- User can edit types (will this be possible?)
 
 
 

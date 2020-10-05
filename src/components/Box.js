@@ -52,7 +52,7 @@ class Box extends Component {
                   boxType={boxType}
                   categoryTitle={category.title}
                   subtotal={category.subtotal}
-                  fields={category.fields}
+                  types={category.types}
                   handleUpdate={this.updateBox}
                   key={category.categoryKey}
                   id={category.id}

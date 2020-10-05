@@ -99,7 +99,7 @@
 }
 
 
-/* For fields used to log in.  Used in SignUp, Login, and Budget components */
+/* For forms used to log in.  Used in SignUp, Login, and Budget components */
 .login-label{
   background-color: rgba(137, 177, 157, 0.801);
   padding-top: 10px;
