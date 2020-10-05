@@ -98,6 +98,7 @@ CREATE TABLE expense_items
 ) ENGINE=InnoDB;
 
 
+-- These tables are for future versions, when users can add their own Types and Items.
 
 -- -- ### CUSTOM INCOME table
 -- CREATE TABLE custom_income_items

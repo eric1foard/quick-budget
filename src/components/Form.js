@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 import Field from './Field';
-import NewField from './NewField';
+// import NewField from './NewField';
 
 
 class Form extends Component {
@@ -67,7 +67,6 @@ class Form extends Component {
             
             </div>
           
-          <hr />
           <div id={dataId} className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
             {this.props.fields.map(field =>
               <Field 
@@ -79,13 +78,13 @@ class Form extends Component {
                 categoryTitle={this.props.categoryTitle}
               />
             )}
-            <div>
+            {/* <div>
               <NewField 
                 addingNewField={this.state.addingNewField}
                 toggleAddNewField={this.toggleAddNewField}
                 sendNewFieldInfo={this.handleSaveNew}
               />
-            </div>
+            </div> */}
           </div>
         </li>
 

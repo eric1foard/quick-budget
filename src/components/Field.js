@@ -1,19 +1,28 @@
+
+
+
 import React, { Component } from 'react';
+
 
 class Field extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // TODO (CB 10/5): Is it OK to have value here in state, as well as in Budget component in state?  It works well this way so that
+      // ... we can use onBlur to clean the values, and so that not every single keystroke triggers re-renders (only exiting form)
       value: this.props.value,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
+  // Passes the field's value up the chain of components, ultimately to Budget where the subtotals and total are also updated
   handleChange(evt) {    
     this.setState({value: evt.target.value});
   }
 
+  // When a user clicks out of the field they were editing, this cleans their value to look like "financial"
+  // ... by removing 0's to the left, and rounding to 2 decimal places. Then, it triggers handleChange
   handleOnBlur() {
     let cleanValue = this.state.value;
     if (cleanValue === "") cleanValue = 0;
@@ -23,11 +32,22 @@ class Field extends Component {
     this.props.handleChange(this.props.title, cleanValue, this.props.categoryTitle)
   }
 
+  // TODO (CB 10/5): This is specifically handling the very first time the values are loaded in for new users who have not yet saved
+  // ... It was turning the "0.00" from the newUserSeed file to "0", so this fixes it but isn't good for efficiency. 
+  componentDidMount() {
+    if (this.state.value === 0) {
+      let cleanValue = Number(this.state.value).toFixed(2);
+      this.setState({ value: cleanValue });
+    }
+  }
+
 
   render() {
     return(
 
+      
       <form key={this.key}>
+        <hr />
         <div className="form-group row">
           {/* Form's title, in upper case */}
           <div className="col-sm-9">
@@ -59,7 +79,7 @@ class Field extends Component {
           </div>
 
         </div>
-        <hr />
+        {/* <hr /> */}
       </form>
 
 

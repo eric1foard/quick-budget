@@ -14,6 +14,7 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ Make sure changes from yesterday are OK (try/catch, helpers)
 - ✓ Use onBlur to clean user input - change to numbers with no 0's to left, prevents empty NAN strings, and limits to 2 decimal places.  This also allows the app to re-render less often (it used to do so onChange)
 - add in extensive code comments
+- For new users - have it originally read 0.00, just like when users have saved 0.
 - Make Readme nicer
 - Consolidate "npm start" and "nodemon index/server"
 

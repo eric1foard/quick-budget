@@ -6,7 +6,6 @@
 // =============================================================
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const pino = require('express-pino-logger')();
 const cors = require('cors');
 
@@ -39,13 +38,6 @@ app.use(pino);
 // Static directory
 // =============================================================
 app.use(express.static("app/public"));
-
-
-// Can delete this
-// =============================================================
-app.get("/", (req, res) => {
-  res.json({message: "Welcome to the application, yeah"})
-})
 
 
 // Routes
