@@ -1,360 +1,299 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 
 // TODO 9/23 CLB - there is a lot of repitition in these API calls.
 // ... They should probably be moved to models, and then I can make helper functions to call.
 
-
-// exports.createNewUserItems = (req, res) => {
-//   // console.log("=======================");
-//   // console.log("=======================");
-//   // console.log("req: ", req.userId);
-//   // console.log("=======================");
-//   // console.log("=======================");
-
-//   db.User.findOne({
-//     where: {
-//       id: req.userId
-//     }
-//   })
-//     .then(user => {
-
-//     })
-//     .catch(err => {
-//       res.status(500).send({ message: err.message });
-//     });
-// }
-
-
-exports.userIncome = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("req: ", req.userId);
-  // console.log("=======================");
-  // console.log("=======================");
+// Returns the user's income items, formatted for the Budget component to work with.
+exports.userIncome = async (req, res) => {
   
-  db.Income_Item.findAll({
-    where: {
-      user_id: req.userId
-    },
-    include: [
-      {
-        model: db.Income_Type,
-        include: [
-            db.Income_Category
-        ]
-      }
-    ]
-  })
-    .then(cat => {
-      // console.log(cat);
+  // TODO - significant repitition from userExpense.  Should refactor.
+  // Find all income items associated with user, along with associated type and category information.
+  try {
 
-      if (!cat) {
-        return res.status(404).send({ message: "User's Income not found. Or is user not logged in?" });
-      }
-
-      let arr = [];
-      cat.forEach(item => {
-
-        let itemObj = 
+    let items = await db.Income_Item.findAll({
+      where: {
+        user_id: req.userId
+      },
+      include: [
         {
-          title: item.Income_Type.name,
-          description: item.Income_Type.description,
-          value: item.value,
-          id: item.id
+          model: db.Income_Type,
+          include: [
+              db.Income_Category
+          ]
         }
-
-        let categoryIdentifier = item.Income_Type.Income_Category.id;
-        let categoryName = item.Income_Type.Income_Category.name;
-        let categoryIndex = false;
-
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].categoryId === categoryIdentifier) {
-            categoryIndex = i;
-            break;
-          }
-        }
-
-        // let catNameIdx = arr.find(x => (x.title === catName));
-        if (categoryIndex === false) {
-          let obj = 
-          {
-            title: categoryName,
-            categoryId: item.Income_Type.Income_Category.id,
-            fields: [itemObj],
-          }
-          arr.push(obj);
-        } else {
-          arr[categoryIndex].fields.push(itemObj);
-        }
-      });
-
-      let categoryObj = {categories: arr}
-
-      categoryObj.categories.forEach(catElem => {
-        let sub = 0;
-        catElem.fields.forEach(typeElem => {
-          sub += typeElem.value;
-        })
-        catElem["subtotal"] = sub
-      });
-
-      let total = 0;
-      categoryObj.categories.forEach(catElem => {
-        total += catElem.subtotal;
-      });
-
-      res.status(200).send({
-        jsonStringResponse: JSON.stringify(categoryObj),
-        total: total
-      });
-
+      ]
     })
-    .catch(err => {
 
-      res.status(500).send({ message: err.message });
+    // I don't think this has ever been called.  Leaving just in case.
+    if (!items) return res.status(404).send({ message: "User's income information not found." });
+
+    let itemsArr = [];
+    items.forEach(Income_Item => {
+
+      // Object desctructruing for clarity
+      const {Income_Type} = Income_Item
+      const {Income_Category} = Income_Item.Income_Type;
+
+      // First, pulls the relevant item and type information into an object.
+      let itemObj = 
+        {
+          title: Income_Type.name,
+          description: Income_Type.description,
+          value: Income_Item.value,
+          id: Income_Item.id,
+          typeKey: Income_Type.typeKey
+        }
+
+      // Next, find which Category the Type belongs to, so we can group them by Category.
+
+      // 1) This approach is more modular, but less efficient.  Keeping for reference.
+      // const categoryIndex = arr.findIndex(x => x.categoryId === Income_Category.id);
+      
+      // 2) This approach simply takes the id from sql id's (1,2,3) and subtracts 1 (0,1,2) for their equivalent index in array.
+      // This could cause problems depending on how users are allowed to add types in the future, but currently works.
+      const arrayCategoryIdx = Income_Category.id - 1;
+
+      // If there is no Category object at that index yet, create it
+      if (!itemsArr[arrayCategoryIdx]) {
+        itemsArr.push(
+          {
+            title: Income_Category.name,
+            categoryId: Income_Category.id,
+            categoryKey: Income_Category.categoryKey,
+            types: [],
+          }
+        );
+      }
+      
+      // Push itemObj into arr within the types of the correct Category object
+      itemsArr[arrayCategoryIdx].types.push(itemObj);
+      
     });
+
+    let categoryObj = {categories: itemsArr}
+
+    // Find each Category's subtotal by adding all Type's Item's values
+    categoryObj.categories.forEach(category => {
+      let subtotal = 0;
+      category.types.forEach(type => subtotal += parseFloat(type.value));
+      category["subtotal"] = subtotal.toFixed(2);
+    });
+
+    // Find the overall total of Income by adding all subtotals
+    let total = 0;
+    categoryObj.categories.forEach(category => {
+      total += parseFloat(category.subtotal);
+    });
+    total = total.toFixed(2);
+
+    res.status(200).send({
+      jsonStringResponse: JSON.stringify(categoryObj),
+      total: total
+    });
+
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
 }
 
 
-exports.userExpense = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("req: ", req.userId);
-  // console.log("=======================");
-  // console.log("=======================");
+exports.userExpense = async (req, res) => {
   
-  db.Expense_Item.findAll({
-    where: {
-      user_id: req.userId
-    },
-    include: [
-      {
-        model: db.Expense_Type,
-        include: [
-            db.Expense_Category
-        ]
-      }
-    ]
-  })
-    .then(cat => {
-      // console.log(cat);
+  // TODO - significant repitition from userIncome.  Should refactor.
+  // Find all income items associated with user, along with associated type and category information.
+  try {
 
-      if (!cat) {
-        return res.status(404).send({ message: "User's Expense not found. Or is user not logged in?" });
-      }
-
-      let arr = [];
-      cat.forEach(item => {
-
-        let itemObj = 
+    let items = await db.Expense_Item.findAll({
+      where: {
+        user_id: req.userId
+      },
+      include: [
         {
-          title: item.Expense_Type.name,
-          description: item.Expense_Type.description,
-          value: item.value,
-          id: item.id
+          model: db.Expense_Type,
+          include: [
+              db.Expense_Category
+          ]
         }
-
-        let categoryIdentifier = item.Expense_Type.Expense_Category.id;
-        let categoryName = item.Expense_Type.Expense_Category.name;
-        let categoryIndex = false;
-
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].categoryId === categoryIdentifier) {
-            categoryIndex = i;
-            break;
-          }
-        }
-
-        // let catNameIdx = arr.find(x => (x.title === catName));
-        if (categoryIndex === false) {
-          let obj = 
-          {
-            title: categoryName,
-            categoryId: item.Expense_Type.Expense_Category.id,
-            subtotal: 0.00,
-            fields: [itemObj],
-          }
-          arr.push(obj);
-        } else {
-          arr[categoryIndex].fields.push(itemObj);
-        }
-      });
-
-      let categoryObj = {categories: arr}
-
-      categoryObj.categories.forEach(catElem => {
-        let sub = 0;
-        catElem.fields.forEach(typeElem => {
-          sub += typeElem.value;
-        })
-        catElem["subtotal"] = sub
-      })
-
-      let total = 0;
-      categoryObj.categories.forEach(catElem => {
-        total += catElem.subtotal;
-      })
-
-      res.status(200).send({
-        jsonStringResponse: JSON.stringify(categoryObj),
-        total: total
-      });
-
+      ]
     })
-    .catch(err => {
 
-      res.status(500).send({ message: err.message });
+    // I don't think this has ever been called.  Leaving just in case.
+    if (!items) return res.status(404).send({ message: "User's income information not found." });
+
+    let itemsArr = [];
+    items.forEach(Expense_Item => {
+
+      // Object desctructruing for clarity
+      const {Expense_Type} = Expense_Item
+      const {Expense_Category} = Expense_Item.Expense_Type;
+
+      // First, pulls the relevant item and type information into an object.
+      let itemObj = 
+        {
+          title: Expense_Type.name,
+          description: Expense_Type.description,
+          value: Expense_Item.value,
+          id: Expense_Item.id,
+          typeKey: Expense_Type.typeKey
+        }
+
+      // Next, find which Category the Type belongs to, so we can group them by Category.
+
+      // 1) This approach is more modular, but less efficient.  Keeping for reference.
+      // const categoryIndex = arr.findIndex(x => x.categoryId === Expense_Category.id);
+      
+      // 2) This approach simply takes the id from sql id's (1,2,3) and subtracts 1 (0,1,2) for their equivalent index in array.
+      // This could cause problems depending on how users are allowed to add types in the future, but currently works.
+      const arrayCategoryIdx = Expense_Category.id - 1;
+
+      // If there is no Category object at that index yet, create it
+      if (!itemsArr[arrayCategoryIdx]) {
+        itemsArr.push(
+          {
+            title: Expense_Category.name,
+            categoryId: Expense_Category.id,
+            categoryKey: Expense_Category.categoryKey,
+            types: [],
+          }
+        );
+      }
+      
+      // Push itemObj into arr within the types of the correct Category object
+      itemsArr[arrayCategoryIdx].types.push(itemObj);
+      
     });
+
+    let categoryObj = {categories: itemsArr}
+
+    // Find each Category's subtotal by adding all Type's Item's values
+    categoryObj.categories.forEach(category => {
+      let subtotal = 0;
+      category.types.forEach(type => subtotal += parseFloat(type.value));
+      category["subtotal"] = subtotal.toFixed(2);
+    });
+
+    // Find the overall total of Income by adding all subtotals
+    let total = 0;
+    categoryObj.categories.forEach(category => {
+      total += parseFloat(category.subtotal);
+    });
+    total = total.toFixed(2);
+
+    res.status(200).send({
+      jsonStringResponse: JSON.stringify(categoryObj),
+      total: total
+    });
+    
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  };
 }
 
-exports.saveIncomeNew = (req, res) => {
+// Used for the first time a user saves their income
+exports.saveIncomeNew = async (req, res) => {
 
-
-
-  console.log("=======================");
-  console.log("=======================");
-  console.log("SAVING NEW RECORDS");
-  // console.log("req.body.income.categories: ", req.body.income.categories.fields[0]);
-  // console.log("req.userId: ", req.userId);
-  console.log("=======================");
-  console.log("=======================");
-
-  // console.log(req.body)
-
+  // First, turns all Item info into an array of objects, and adds user_id into each object
   let dataArray = [];
   for (let i = 0; i < req.body.income.categories.length; i++) {
-    // console.log("LOOPING HERE: ", req.body.income.categories[i]);
-    for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
-      // console.log("SUB LOOP: ", req.body.income.categories[i].fields[j]);
+    for (let j = 0; j < req.body.income.categories[i].types.length; j++) {
       
-      let obj = {...req.body.income.categories[i].fields[j], user_id: req.userId}
+      let obj = {...req.body.income.categories[i].types[j], user_id: req.userId}
       dataArray.push(obj)
 
     }
   }
 
-  console.log("AFTER LOOP: ", dataArray);
-
-  db.Income_Item.bulkCreate(dataArray, {
-    fields: ["id", "value", "user_id", "income_type_id"],
-    // updateOnDuplicate: ["value"]
-  })
-    .then(response => {
-      // console.log("response: ", response);
-      res.status(204).send({
-        // Based on research, it appears that successful PUT requests...
-        // ...should return no content and a 204 status
-      });
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
+  // Then, use the now formatted info to create the Items in the DB
+  try {
+    let result = await db.Income_Item.bulkCreate(dataArray, {
+      fields: ["id", "value", "user_id", "income_type_id"]
     });
-
+    res.status(201).send({
+      result // TODO: send location in header as well
+    });
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
 
 }
 
-exports.saveExpenseNew = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("SAVING NEW RECORDS");
-  // console.log("req: ", req.body.expense.categories);
-  // console.log("=======================");
-  // console.log("=======================");
+exports.saveExpenseNew = async (req, res) => {
 
+  // First, turns all Item info into an array of objects, and adds user_id into each object
   let dataArray = [];
   for (let i = 0; i < req.body.expense.categories.length; i++) {
-    // console.log("LOOPING HERE: ", req.body.expense.categories[i]);
-    for (let j = 0; j < req.body.expense.categories[i].fields.length; j++) {
-      // console.log("SUB LOOP: ", req.body.expense.categories[i].fields[j]);
-      let obj = {...req.body.expense.categories[i].fields[j], user_id: req.userId}
+    for (let j = 0; j < req.body.expense.categories[i].types.length; j++) {
+
+      let obj = {...req.body.expense.categories[i].types[j], user_id: req.userId}
       dataArray.push(obj);
+
     }
   }
 
-  // console.log("AFTER LOOP: ", dataArray);
-
-  db.Expense_Item.bulkCreate(dataArray, {
-    fields: ["id", "value", "user_id", "expense_type_id"],
-    // updateOnDuplicate: ["value"]
-  })
-    .then(response => {
-      // console.log("response: ", response);
-      res.status(204).send({
-        // Based on research, it appears that successful PUT requests...
-        // ...should return no content and a 204 status
-      });
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
+  // Then, use the now formatted info to create the Items in the DB
+  try {
+    let result = await db.Expense_Item.bulkCreate(dataArray, {
+      fields: ["id", "value", "user_id", "expense_type_id"]
     });
+    res.status(201).send({
+      result // TODO: send location in header as well
+    });
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
 
 }
 
-exports.saveIncome = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("req: ", req.body.income.categories);
-  // console.log("=======================");
-  // console.log("=======================");
+// Saves existing Users' budgets by updating their Items' values
+exports.saveIncome = async (req, res) => {
 
+  // Formats Item information before making call to db
+  const {categories} = req.body.income;
   let dataArray = [];
-  for (let i = 0; i < req.body.income.categories.length; i++) {
-    console.log("LOOPING HERE: ", req.body.income.categories[i]);
-    for (let j = 0; j < req.body.income.categories[i].fields.length; j++) {
-      console.log("SUB LOOP: ", req.body.income.categories[i].fields[j]);
-      dataArray.push(req.body.income.categories[i].fields[j]);
+  for (let i = 0; i < categories.length; i++) {
+    for (let j = 0; j < categories[i].types.length; j++) {
+      dataArray.push(categories[i].types[j]);
     }
   }
 
-  // console.log("AFTER LOOP: ", dataArray);
-
-  db.Income_Item.bulkCreate(dataArray, {
-    fields: ["id", "value", "user_id", "income_type_id"],
-    updateOnDuplicate: ["value"]
-  })
-    .then(response => {
-      // console.log("response: ", response);
-      res.status(204).send({
-        // Based on research, it appears that successful PUT requests...
-        // ...should return no content and a 204 status
-      });
-    })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
+  // Uses bulkCreate, set up to update existing values
+  try {
+    await db.Income_Item.bulkCreate(dataArray, {
+      fields: ["id", "value", "user_id", "income_type_id"],
+      updateOnDuplicate: ["value"]
     });
+    res.status(204).send({
+      // Based on research, it appears that successful PUT requests should return no content and a 204 status
+    });
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
+
 }
 
-exports.saveExpense = (req, res) => {
-  // console.log("=======================");
-  // console.log("=======================");
-  // console.log("req: ", req.body.expense.categories);
-  // console.log("=======================");
-  // console.log("=======================");
+// Saves existing Users' budgets by updating their Items' values
+exports.saveExpense = async (req, res) => {
 
+  // Formats Item information before making call to db
+  const {categories} = req.body.expense;
   let dataArray = [];
-  for (let i = 0; i < req.body.expense.categories.length; i++) {
-    console.log("LOOPING HERE: ", req.body.expense.categories[i]);
-    for (let j = 0; j < req.body.expense.categories[i].fields.length; j++) {
-      console.log("SUB LOOP: ", req.body.expense.categories[i].fields[j]);
-      dataArray.push(req.body.expense.categories[i].fields[j]);
+  for (let i = 0; i < categories.length; i++) {
+    for (let j = 0; j < categories[i].types.length; j++) {
+      dataArray.push(categories[i].types[j]);
     }
   }
 
-  // console.log("AFTER LOOP: ", dataArray);
-
-  db.Expense_Item.bulkCreate(dataArray, {
-    fields: ["id", "value", "user_id", "expense_type_id"],
-    updateOnDuplicate: ["value"]
-  })
-    .then(response => {
-      // console.log("response: ", response);
-      res.status(204).send({
-        // Based on research, it appears that successful PUT requests...
-        // ...should return no content and a 204 status
-      });
+  // Uses bulkCreate, set up to update existing values
+  try {
+    await db.Expense_Item.bulkCreate(dataArray, {
+      fields: ["id", "value", "user_id", "expense_type_id"],
+      updateOnDuplicate: ["value"]
     })
-    .catch(err => {
-      res.status(500).send({ message: err.message });
+    res.status(204).send({
+      // Based on research, it appears that successful PUT requests should return no content and a 204 status
     });
+  } catch(error) {
+    res.status(500).send({ message: error.message });
+  }
+
 }

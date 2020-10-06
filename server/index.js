@@ -6,7 +6,6 @@
 // =============================================================
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const pino = require('express-pino-logger')();
 const cors = require('cors');
 
@@ -41,16 +40,8 @@ app.use(pino);
 app.use(express.static("app/public"));
 
 
-// Can delete this
-// =============================================================
-app.get("/", (req, res) => {
-  res.json({message: "Welcome to the application, yeah"})
-})
-
-
 // Routes
 // =============================================================
-require("./routes/api-routes.js")(app);
 require("./routes/auth.routes")(app);
 require("./routes/user.routes")(app);
 

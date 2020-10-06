@@ -1,67 +1,60 @@
+// *************************************************************************************************************
+// Box.js - Container component, one for income and one for expenses. Budget is parent, Category are children.
+// *************************************************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
 
-import Form from './Form';
+// Project Components
+import Category from './Category';
+
 
 class Box extends Component {
   constructor(props) {
     super(props);
     this.updateBox = this.updateBox.bind(this);
-    this.handleSaveNew = this.handleSaveNew.bind(this);
-    this.capitalizeFirstLetter = this.capitalizeFirstLetter.bind(this);
+    // this.handleSaveNew = this.handleSaveNew.bind(this);  - Will be added back in later, once the app is ready to have users add their own Types
   }
 
-  // updateBox receives info from Form's handleChange function
-  //  ...and sends the name of the field and the number to App.js,
-  //  ...where updateTotals crunches the numbers.
+  // Middleman function passing values between Type's value and Budget
   updateBox(name, num, category) {
     this.props.handleUpdate(name, num, category);
   }
 
-  // Helper function to capitlize the first letter when needed.
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  handleSaveNew(obj, category) {
-    this.props.handleSaveNew(obj, category);
-  }
+  // Will be added back in later, once the app is ready to have users add their own Types
+  // handleSaveNew(obj, category) {
+  //   this.props.handleSaveNew(obj, category);
+  // }
 
 
   render() {
-    // Looks like these are no longer necessary - CB 9/22
-    // const dataId = this.props.title.split(" ").join("-")
-    // const dataTarget = `#${dataId}`;
     
     // These are used for defining the class dynamically, used to style in the css file.
     const boxType = this.props.boxType; 
     const cardHeaderClasses = `card-header card-header-${boxType}`
     const cardFooterClasses = `card-footer card-footer-${boxType}`
 
-    // console.log('================')
-    // console.log(this.props.boxData)
-    // console.log('================')
-
     return(
       <div>
         <div className="card w-75">
 
-          {/* Header displays title, and is given classes for styling */}
+          {/* Header displays title "Income" or "Expenses" */}
           <div className={cardHeaderClasses}>
             <div className="btn-link-heading">
               {this.props.title}
             </div>
           </div>
 
-          {/* Maps through each item in income/expenses, passing this information to Form.js component */}
+          {/* Maps through each Category within income/expenses */}
             <ul className="list-group list-group-flush">
               {this.props.boxData.categories.map(category =>
-                <Form 
+                <Category 
                   boxType={boxType}
                   categoryTitle={category.title}
                   subtotal={category.subtotal}
-                  fields={category.fields}
+                  types={category.types}
                   handleUpdate={this.updateBox}
-                  key={category.id}
+                  key={category.categoryKey}
                   id={category.id}
                   handleSaveNew={this.handleSaveNew}
                 />
@@ -69,9 +62,9 @@ class Box extends Component {
             </ul>
 
 
-          {/* Footer displays the total of the income/expenses fields */}
+          {/* Footer displays at the bottom of Box, showing the total income/expenses */}
           <div className={cardFooterClasses}>
-            Total Monthly {this.props.title}: ${this.props.total.toFixed(2)}
+            Total Monthly {this.props.title}: ${parseFloat(this.props.total).toFixed(2)}
           </div>
 
         </div>

@@ -1,6 +1,11 @@
+// ********************************************************************************************
+// Navbar.js - Component appearing on all pages.  Provides links to different pages in site.
+// ********************************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
-// Although Router is not used in this component, it has to be here because removing it affects the styling of Navbar.
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom"; // Although Router is not used in this component, it has to be here because removing it affects the styling of Navbar.
+
 
 // Navbar is placed above the rest of the App.  It uses react-router-dom to direct the user.
 // Depending on whether someon is signed in, it will display different options.

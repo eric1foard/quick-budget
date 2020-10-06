@@ -1,9 +1,13 @@
-// Packages
+// *************************************************************************************************************
+// Budget.js - Holds logic for users interacting with their budgets. 
+// - Can be used by registered users (makes API call for their corresponding budget), or as a "demo" for unregistered users.
+// - App is parent, Box are children.
+// *************************************************************************************************************
+
+
+// Dependencies
 import React, { Component } from "react";
-import { Prompt } from 'react-router-dom';
 import SweetAlert from 'react-bootstrap-sweetalert';
-import Swal from 'sweetalert2';
-// import { v4 as uuidv4 } from "uuid"; - TODO Need to add in to give ID's (CB 9/30)
 
 // Project Components
 import Box from "./Box.js";
@@ -11,31 +15,30 @@ import Summary from "./Summary.js";
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
 import AuthService from "../services/auth.service";
-import userService from "../services/user.service.js";
+import UserService from "../services/user.service.js";
 import UnsavedChangesAlert from "./UnsavedChangesAlert.js"; // Alerts user when navigating away from the page without saving changes
-import HelloWorld from "./ModalSignUp.js";
 
-// Objects containing the default income and expense data, in the event a new user
+// Objects containing the default income and expense data, used in the event a new user
 import { incomeData } from "./shared/newUserSeed";
 import { expenseData } from "./shared/newUserSeed";
 
 // Helper methods used for validating new users' sign up information
-import { validateUsername, validateEmail, validatePassword } from "./shared/helpers"
-
+import { verifySignUp, errorAlert, successfulSaveAlert } from "./shared/helpers"
 
 class Budget extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      // Budget state information
+
+      // Budget information
       incomeData: null,  // Object containing the user's income information.  Obtained from API call getting user's info, or from default values for new users.
       expenseData: null, // Object containing the user's expense information.  Obtained from API call getting user's info, or from default values for new users.
       incomeTotal: 0, // Number appearing at bottom of income section, showing user's total income.
       expenseTotal: 0, // Number appearing at bottom of expense section, showing user's total expense.
       total: 0, // Number showing in bottommost card, showing user's total income minus total expense.  While it could be inferred, keeping this explicitly in state makes sure it is always rendered with current info.
       
-      // User state information
+      // User information
       currentUser: AuthService.getCurrentUser(), // Returns user's jwt accessToken, email, id, and username.
       unregisteredUser: null, // Boolean determined in componenentDidMount. Used when user clicks save.  If true, prompts them to sign up in order to save.
       newUser: null, // Boolean determined in componenentDidMount. If true, pulls default information from newUserSeed to populate budget.
@@ -53,27 +56,30 @@ class Budget extends Component {
       email: undefined,
       password: undefined,
     }
-    this.updateValue            = this.updateValue.bind(this);
-    this.updateCategoryTotal    = this.updateCategoryTotal.bind(this);
-    this.updateFullTotal        = this.updateFullTotal.bind(this);
-    this.updateIncomeHelper     = this.updateIncomeHelper.bind(this);
-    this.updateExpensesHelper   = this.updateExpensesHelper.bind(this);
+    this.updateValue              = this.updateValue.bind(this);
+    this.updateCategorySubtotal   = this.updateCategorySubtotal.bind(this);
+    this.updateFullTotal          = this.updateFullTotal.bind(this);
+    this.updateIncomeHelper       = this.updateIncomeHelper.bind(this);
+    this.updateExpensesHelper     = this.updateExpensesHelper.bind(this);
     // this.saveNewIncomeHelper    = this.saveNewIncomeHelper.bind(this); - used to add new items.  Currently disabled.
     // this.saveNewExpensesHelper  = this.saveNewExpensesHelper.bind(this); - used to add new items.  Currently disabled.
     // this.saveNewField           = this.saveNewField.bind(this); - used to add new items.  Currently disabled.
-    this.handleSave             = this.handleSave.bind(this);
+    this.handleSave               = this.handleSave.bind(this);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
-    this.hideAlert = this.hideAlert.bind(this);
+    this.handleChange             = this.handleChange.bind(this);
+    this.handleSignUp             = this.handleSignUp.bind(this);
+    this.hideAlert                = this.hideAlert.bind(this);
 
   }
 
   // **********************************************
   // UPDATING VALUES & TOTALS *********************
   // **********************************************
+
+  // Updates individual Type's values in state, then triggers updating category subtotals
   updateValue(incOrExp, category, name, num) {
 
+    // If user navigates away from page without saving, they will be alerted
     this.setState({ unsavedChanges: true });
 
     // Makes new copy of state...
@@ -81,33 +87,41 @@ class Budget extends Component {
 
     // ...in that copy, finds the field that needs to be updated...
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
+    const fieldToUpdate = categoryToUpdate.types.find(elem => elem.title === name);
 
-    const fieldToUpdate = categoryToUpdate.fields.find(elem => elem.title === name);
-
-    // ...and sets that field's value to the variable "num".
+    // ...and sets that field's value to the updated variable "num".
     fieldToUpdate.value = num;
 
     // Sets relevant state with updated numbers, starts callback to update totals
     this.setState({[incOrExp]: newState}, () => {
-      this.updateCategoryTotal(incOrExp, category);
+      this.updateCategorySubtotal(incOrExp, category);
     })
+
   }
 
-  updateCategoryTotal(incOrExp, category) {
+  // Updates the category subtotal, then triggers the income/expense total to update
+  updateCategorySubtotal(incOrExp, category) {
+
+    // Makes new copy of state
     let newState = this.state[incOrExp];
+
+    // Determines which category needs to be updated
     const categoryToUpdate = newState.categories.find(elem => elem.title === category);
 
-    let newSubTotal = categoryToUpdate.fields.reduce(
-      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.value)
+    // Reduces the types' values to find the category's subtotal
+    let newSubtotal = categoryToUpdate.types.reduce(
+      (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.value)
       , 0
     );
-    categoryToUpdate.subtotal = newSubTotal;
+    categoryToUpdate.subtotal = newSubtotal;
 
+    // Updates state, then triggers the income/expense total to update
     this.setState({[incOrExp]: newState}, () => {
       this.updateFullTotal(incOrExp);
     });
   }
 
+  // Updates the income/expense total, then triggers the overall monthly total to update
   updateFullTotal(incOrExp) {
     // Based on incOrExp, determines which total to update
     let totalToUpdate = (incOrExp === "incomeData" ? "incomeTotal" : "expenseTotal")
@@ -115,9 +129,9 @@ class Budget extends Component {
     // Makes new copy of state
     let dataCopy = this.state[incOrExp];
 
-    // Reduces array of fields to find total of values
+    // Reduces array of category subtotals to find total of values
     let newTotal = dataCopy.categories.reduce(
-      (accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue.subtotal)
+      (accumulator, currentValue) => parseFloat(accumulator) + parseFloat(currentValue.subtotal)
       , 0
     );
 
@@ -125,28 +139,29 @@ class Budget extends Component {
     this.setState({[totalToUpdate]: newTotal});
   }
 
-  // For changes to income fields, sends relevant info to updateTotal
+  // For changes to income types, sends relevant info to updateTotal
   updateIncomeHelper(name, num, category) {
     this.updateValue("incomeData", category, name, num);
   }
 
-  // For changes to expenses fields, sends relevant info to updateTotal
+  // For changes to expenses types, sends relevant info to updateTotal
   updateExpensesHelper(name, num, category) {
     this.updateValue("expenseData", category, name, num);
   }
 
 
+  // This section will be added back in later, once the app is ready to have users add their own Types
   // **********************************************
-  // SAVING NEW FIELDS ****************************
+  // SAVING NEW types ****************************
   // **********************************************
   // Appends the new field object to the end of the correct part of state
   // saveNewField(obj, type, category) {
   //   let newState = this.state[type]
   //   const categoryToSaveIn = newState.categories.find(elem => elem.title === category);
 
-  //   categoryToSaveIn.fields = [...categoryToSaveIn.fields, obj];
+  //   categoryToSaveIn.types = [...categoryToSaveIn.types, obj];
   //   this.setState({[type]: newState}, () => {
-  //     this.updateCategoryTotal(type, category);
+  //     this.updateCategorySubtotal(type, category);
   //   });
   // }
 
@@ -162,110 +177,56 @@ class Budget extends Component {
 
 
   // ***********************************************
-  // TO REFACTOR - repetition from SignUp component.
+  // TO REFACTOR 
+    // 1) There's lots of repetition from SignUp component.
+    // 2) This should live in a separate component
+  async handleSignUp(e) {
 
-  handleSignUp(e) {
-
-    if (!this.state.username || !this.state.email || !this.state.password) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please fill out all forms.',
-      }).then(() => this.toggleSignUp());
-    } else if (validateEmail(this.state.email) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a valid email address.',
-      }).then(() => this.toggleSignUp());
-    } else if (validateUsername(this.state.username) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Username must be between 3 and 20 characters long.',
-      }).then(() => this.toggleSignUp());
-    } else if (validatePassword(this.state.password) === false) {
-      this.hideAlert();
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Password must be between 6 and 40 characters long.',
-      }).then(() => this.toggleSignUp());
-    } else {
-      this.setState({
-        alert: false,
-        message: "",
-        successful: false
-      });
+    let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
     
-      AuthService.signup(
-        this.state.username,
-        this.state.email,
-        this.state.password
-      )
-        .then( () => {
-          this.setState({
-            successful: true,
-            unregisteredUser: false,
-          });
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-            showConfirmButton: false,
-            timer: 1500
-          })
-            .then( () => {
-              AuthService.login(this.state.username, this.state.password)
-              .then( () => {
-                this.saveNewUserBudget();
-              })
-                .then( () => {
-                  this.props.history.push("/dashboard");
-                  window.location.reload();
-                }).catch(error => {
-                  const resMessage =
-                    (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                  
-                  // console.log("Are we here?")
-                  this.setState({ loading: false });
-                  Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops!',
-                    text: `${resMessage} Please try again.`, 
-                    footer: 'Or, if you have not yet signed up, please do so.'
-                  })
-                });
-            },
-        error => {
-          // console.log("Here we are")
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    this.hideAlert();
+    
+    if (result === false) {
+      await alert;
+      await this.setState({ 
+        username: undefined, 
+        email: undefined, 
+        password: undefined 
+      });
+      this.toggleSignUp();
+    
+    } else {
+    
+      try {
+        await AuthService.signup(
+          this.state.username, 
+          this.state.email, 
+          this.state.password
+        );
 
-          this.setState({ successful: false });
+        try {
+          await alert;
 
-          Swal.fire({
-            icon: 'warning',
-            title: 'Oops!',
-            text: `${resMessage} Please try again.`, 
-            footer: 'Or, if you have already signed up, please go to the Log In page.'
-          });
-        });
-      })
+          await AuthService.login(this.state.username, this.state.password)
+          await this.setState({ unregisteredUser: false, unsavedChanges: false });
+          await this.saveNewUserBudget();
+
+          await this.props.history.push("/dashboard");
+          window.location.reload();
+        } catch(error) {
+          // TODO - it seems nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+          console.log(error);
+          errorAlert(error);
+          this.setState({ username: undefined, email: undefined, password: undefined });
+        }
+      } catch(error) {
+        // TODO - it seems nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+        console.log(error);
+        errorAlert(error);
+        this.setState({ username: undefined, email: undefined, password: undefined });
+      }
     }
   }
-
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value});
@@ -361,67 +322,62 @@ class Budget extends Component {
       alert: getAlert()
     });
   }
-  // TO REFACTOR - repetition from SignUp component.
   // ***********************************************
 
   hideAlert() {
-    this.setState({ alert: false, username: undefined, email: undefined, password: undefined});
+    this.setState({ alert: false });
   }
 
 
+  // Used when a new or unregistered user saves their budget.  POST their entries in db.
   saveNewUserBudget() {
-    console.log("handleSave has been called with a new user")
-    Promise.all([userService.saveIncomeNew(this.state.incomeData), userService.saveExpenseNew(this.state.expenseData)])
+    // TODO (CB 10/5) - turn this into async/await?
+    Promise.all([UserService.saveIncomeNew(this.state.incomeData), UserService.saveExpenseNew(this.state.expenseData)])
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
         console.log(res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          html: 'Your information has been saved!',
-        });
+        successfulSaveAlert();
       })
       .catch(error => {
         console.error(error.message)
       });
   }
 
+  // Used when an existing user saves their budget.  PUT their entries updated in db.
   saveExistingUserBudget() {
-    Promise.all([userService.saveIncome(this.state.incomeData), userService.saveExpense(this.state.expenseData)])
+    // TODO (CB 10/5) - turn this into async/await?
+    Promise.all([UserService.saveIncome(this.state.incomeData), UserService.saveExpense(this.state.expenseData)])
       .then(res =>{
         this.setState({ unsavedChanges: false });
         console.log(res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          html: 'Your information has been saved!',
-        });
+        successfulSaveAlert();
       })
       .catch(error => {
         console.error(error.message)
       });
   }
 
-
-
+ // Triggered when user clicks save. Calls the correct method based on user's status. 
   handleSave(evt) {    
     evt.preventDefault();
 
     if (this.state.unregisteredUser) {
-      console.log("handleSave has been called with an unregistered user");
+      // console.log("handleSave has been called with an unregistered user");
       this.toggleSignUp();
     } else if (this.state.newUser) {
-      console.log("handleSave has been called with a new user")
+      // console.log("handleSave has been called with a new user")
       this.saveNewUserBudget();
     } else {
-      console.log("handleSave has been called with an existing user")
+      // console.log("handleSave has been called with an existing user")
       this.saveExistingUserBudget();
     }
   }
 
+
+  // Based on user's status, makes API call for the user's budget information or seeds default values
   componentDidMount() {
     if (!this.state.currentUser) {
-      console.log("Unregistered User!")
+      // console.log("Unregistered User!")
       this.setState({ 
         unregisteredUser: true,
         incomeData: incomeData,
@@ -430,7 +386,7 @@ class Budget extends Component {
       });
 
     } else {
-      Promise.all([userService.getUserIncome(), userService.getUserExpense()])
+      Promise.all([UserService.getUserIncome(), UserService.getUserExpense()])
         .then(values =>{
           const [income, expense] = [values[0], values[1]];
 
@@ -441,7 +397,6 @@ class Budget extends Component {
           // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
           if (jsonParsedIncomeObject.categories.length === 0 && jsonParsedExpenseObject.categories.length === 0) {
-            // console.log("New user!")
             this.setState({
               incomeData: incomeData,
               expenseData: expenseData,
@@ -449,7 +404,6 @@ class Budget extends Component {
               isLoaded: true,
             });
           } else {
-            // console.log("Existing user!")
             this.setState({
               incomeData: jsonParsedIncomeObject,
               expenseData: jsonParsedExpenseObject,
@@ -468,22 +422,22 @@ class Budget extends Component {
   }
 
 
-  
-  
+
   render() {
 
     return (
+
       <div className="budget">
 
+      {/* If user has made changes without saving and tries to leave page, alerts the user */}
       <UnsavedChangesAlert unsavedChanges={this.state.unsavedChanges} />
 
-        {/* Title and subtitle */}
+        {/* Title and subtitle, with instructions for user */}
         <Jumbotron
           largeTitle="Calculator "
           smallTitle="Quick Budget"
           subtitle="A quick and easy reference tool to calculate your basic monthly budget."
         >
-
           <div className="budget-instructions-list">
             <ol className="budget-list-text">
               <li className="budget-list-text income">
@@ -497,10 +451,9 @@ class Budget extends Component {
               </li>
             </ol>
           </div>
-
         </Jumbotron>
 
-        
+        {/* Renders loading image until API calls finish.  Then, renders the Boxes with budget information */}
         {this.state.isLoaded 
           ?
             <div>
@@ -510,20 +463,18 @@ class Budget extends Component {
                 boxType="income"
                 boxData={this.state.incomeData}
                 handleUpdate={this.updateIncomeHelper}
-                // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
                 total={this.state.incomeTotal}
-                // key={this.props.incomeData.id}
+                // handleSaveNew={this.saveNewIncomeHelper} - used to add new items.  Currently disabled.
               />
 
-              {/* Box with expenses information */}
+              {/* Box with expense information */}
               <Box
                 title="Expenses"
                 boxType="expenses"
                 boxData={this.state.expenseData} 
                 handleUpdate={this.updateExpensesHelper}
-                // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
                 total={this.state.expenseTotal}
-                // key={this.props.expensesData.id}
+                // handleSaveNew={this.saveNewExpensesHelper} - used to add new items.  Currently disabled.
               />
 
               {/* Summary displays the final total monthly amount */}
@@ -532,7 +483,7 @@ class Budget extends Component {
                 totalExpenses={this.state.expenseTotal}
               />
 
-
+              {/* Save button */}
               <button onClick={this.handleSave} type="button" className="btn btn-save">Save</button>
             </div>
           :
@@ -540,10 +491,9 @@ class Budget extends Component {
             <Loading />
         }
         
-      {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save */}
+      {/* This is the location for the SweetAlert modal that appears when an unregistered user clicks save, prompting them to register */}
       {this.state.alert}
 
-      {/* </UnsavedChangesAlert> */}
       </div>
     );
   }

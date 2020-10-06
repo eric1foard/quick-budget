@@ -1,3 +1,8 @@
+// ************************************************************************
+// Summary.js - Component displaying the user's overall monthly total. 
+// ************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
 
 class Summary extends Component {

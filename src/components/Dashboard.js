@@ -1,9 +1,15 @@
-import React, { Component } from "react";
-import AuthService from "../services/auth.service";
-import userService from "../services/user.service";
+// ************************************************************
+// Dashboard.js - Displays information on the user's account
+// ************************************************************
 
+// Dependencies
+import React, { Component } from "react";
+
+// Project Components
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
+import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -21,20 +27,22 @@ class Dashboard extends Component {
     };
   }
 
+
   componentDidMount() {
     if (!this.state.currentUser) {
       // TODO: Figure out how to handle user who has not logged in yet
       this.setState({ content: 'No user' })
     } else {
-      Promise.all([userService.getUserIncome(), userService.getUserExpense()])
+      // TODO (CB 10/5) - turn this into async/await?
+      Promise.all([UserService.getUserIncome(), UserService.getUserExpense()])
         .then(values =>{
           const [income, expense] = [values[0], values[1]];
 
           const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
           const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
     
-          console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-          console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
+          // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
+          // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
           this.setState({
             incomeData: jsonParsedIncomeObject,
@@ -63,6 +71,7 @@ class Dashboard extends Component {
 
         {this.state.isLoaded 
           ?
+          // TODO (CB 10/5) - make the Dashboard more interesting!  Add more here
             <div>
               <div>
                 Total Income: {this.state.incomeTotal}

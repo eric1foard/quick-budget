@@ -1,3 +1,8 @@
+// ********************************************************************************************************************
+// NewField.js - Currently unused.  Will allow users to add new types into the Budget with custom names and descriptions.
+// ********************************************************************************************************************
+
+// Dependencies
 import React, { Component } from 'react';
 
 class NewField extends Component {
@@ -24,7 +29,7 @@ class NewField extends Component {
   }
 
   handleSaveNew(evt) {
-    console.log("Does this fire?")
+    // console.log("Does this fire?")
     evt.preventDefault();
     let newFieldInfo =  {
       title: this.state.name, 

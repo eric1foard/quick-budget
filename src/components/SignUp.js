@@ -1,9 +1,15 @@
-import React, { Component } from "react";
-import Swal from 'sweetalert2'
+// ***************************************************************************************************************************
+// SignUp.js - Component with forms for user to register.  Validates user input, makes API call to create user and log them in.
+// ***************************************************************************************************************************
 
-import AuthService from "../services/auth.service";
+// Dependencies
+import React, { Component } from "react";
+
+// Project Components
 import Jumbotron from "./Jumbotron";
-import { validateUsername, validateEmail, validatePassword } from "./shared/helpers";
+import { verifySignUp, errorAlert, successfulSignUpAlert } from "./shared/helpers";
+import AuthService from "../services/auth.service";
+
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -15,8 +21,7 @@ export default class SignUp extends Component {
       username: "",
       email: "",
       password: "",
-      successful: false,
-      message: ""
+      loading: false
     };
   }
 
@@ -24,101 +29,42 @@ export default class SignUp extends Component {
     this.setState({[evt.target.name]: evt.target.value});
   }
 
-  // TODO: There's too much logic here.  Should abstract this away from the component and make async. (CB 9/25)
-  handleSignUp(e) {
+  // TODO: There's too much logic here.  Should abstract this away from the component. (CB 9/25)
+  async handleSignUp(e) {
     e.preventDefault();
 
-    if (!this.state.username || !this.state.email || !this.state.password) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please fill out all forms.',
-      });
-    } else if (validateEmail(this.state.email) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Please enter a valid email address.',
-      });
-    } else  if (validateUsername(this.state.username) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Username must be between 3 and 20 characters long.',
-      });
-    } else if (validatePassword(this.state.password) === false) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops!',
-        text: 'Password must be between 6 and 40 characters long.',
-      });
-    } else {
-
-      this.setState({
-        message: "",
-        successful: false
-      });
+    let [alert, result] = verifySignUp(this.state.username, this.state.email, this.state.password);
+    this.setState({ loading: true });
     
-      AuthService.signup(this.state.username, this.state.email, this.state.password)
-        .then( 
-          res => {
-            this.setState({
-              successful: true
-            });
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              html: 'You are now registered!<br><br>Redirecting you to your dashboard...',
-              showConfirmButton: false,
-              timer: 1500
-            })
+    if (result === false) {
+      await alert;
+    } else {
+      try {
+        await AuthService.signup(this.state.username, this.state.email, this.state.password)
+        await successfulSignUpAlert();
 
+        try {
+          await AuthService.login(this.state.username, this.state.password);
+          this.props.history.push("/dashboard");
+          window.location.reload();
+        } catch (error) {
+          // TODO (CB 10/5) - MDN docs imply nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
+          console.log(error);
+          errorAlert(error);
+          this.setState({ loading: false });
+        }
 
-            AuthService.login(this.state.username, this.state.password)
-                .then( () => {
-                  this.props.history.push("/dashboard");
-                  window.location.reload();
-                }).catch(error => {
-                  const resMessage =
-                    (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                    
-                  this.setState({ loading: false });
-                  Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops!',
-                    text: `${resMessage} Please try again.`, 
-                    footer: 'Or, if you have not yet signed up, please do so.'
-                  })
-                });
-
-            
-          }).catch(error => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();
-        
-              this.setState({ successful: false });
-        
-              Swal.fire({
-                icon: 'warning',
-                title: 'Oops!',
-                text: `${resMessage} Please try again.`, 
-                footer: 'Or, if you have already signed up, please go to the Log In page.'
-              });
-          })
+      } catch (error) {
+        console.log(error);
+        errorAlert(error);
+        this.setState({ loading: false });
+      }
     }
   }
+  
 
   render() {
     return (
-
 
       <Jumbotron
         largeTitle="Sign Up "
@@ -191,6 +137,7 @@ export default class SignUp extends Component {
                 </button>
               </div>
             </div>
+          
           </div>
         </form>
 
