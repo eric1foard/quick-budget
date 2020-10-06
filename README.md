@@ -1,164 +1,152 @@
-# Roadmap
+# Quick Budget
 
-## Now
-#### Branch `ids-indexes-comments-readme`
-This branch will be a general sweep of the App with a few minor changes to make to the code, but mostly will be centered around adding comments and creating a real README.
+Quick Budget is a full stack application that helps users create a snapshot of their monthly finances.  
 
-- ✓ add UUID as typeKey in models, schema, seeds
-- ✓ add UUID for new users, by modifying newUserSeed's default values
-- ✓ modify Budget, Box, and Form to accept the unique keys correctly
-- ✓ complete adding in id's so react will stop yelling at me
-- ✓ make sure indexes are working on income and expense items (update - turns out foreign keys are automatically indexed, which includes what we need.)
-- ✓ add note in app as to why using two sweetalert packages
-- ✓ turn the rest of sweet alert messages into helpers
-- ✓ Make sure changes from yesterday are OK (try/catch, helpers)
-- ✓ Use onBlur to clean user input - change to numbers with no 0's to left, prevents empty NAN strings, and limits to 2 decimal places.  This also allows the app to re-render less often (it used to do so onChange)
-- ✓ add in code comments
-- ✓ For new users - have it originally read 0.00, just like when users have saved 0.
-- Make Readme nicer
-- Consolidate "npm start" and "nodemon index/server"
+Users are guided through evaluating their monthly income and expenses through a comprehensive list of possible items.  Users can register so they can save and return to their budget.
 
+This project was built using React, Node, Express, Sequelize, MySQL, Axios, bcryptJS, and Bootstrap 4.
 
+![Image of the app's home screen](/images/README/Home_10-05-20.png "Homepage")
 
-Also:
-- get logic out of controller and into models (?)
-- Beautify dashboard.
+![Image of the app's home screen](/https://github.com/cody-brock/budget-app/master/images/README/Home_10-05-20.png "Homepage")
 
-### Next:
-- User Controller
--- reduce repitition between user/expense logic
+## Why
 
-- REST API
--- Seems that I'm likely missing a few protocols.  Have someone look things over.
+In evaluating my own finances over the years, I've always wanted a better way to go about things than my normal pen-and-paper or Excel approach.  I like to think about my budget in terms of average monthly income and expenses, without getting bogged down in exact daily amounts or overwhelmed by considering a year at once.
 
-- Tests
--- Add them
+I began building this app because it's something that is useful for me in my own life, and I'm hoping that others may also find it helpful as well.  Although it is currently in its nascent form, I'm excited for future updates with additional features.
 
-- Dashboard
--- Finish making it look nice
--- Add some other insights or tools (saving goals, loan calculator, etc)
--- Forecast - calculate accumulating savings over months, or diminishing from total.  User can enter goal.
--- show percentages of income/expenses - in pie chart?
+## Getting Started
 
-- DB
--- Let user save multiple versions of their budget.  For example, they can have one version where they have x rent or y rent.
+These instructions will get you a copy of the project up and running on your local machine.
 
-- To Turn into Components
--- (none at the moment)
+### Prerequisites
 
-- About Me
--- Add one, why not.  Link it from the bottom nav (and top?)
+In order to get this project running on your local machine, you will need:
+* mySQL
+* Node.js
+* A GitHub account
+* Terminal
 
+### Installing
 
+#### 1) Clone repo and install packages
 
-### Icebox:
-- To do's - minor
--- get rid of extra line when collapse sections on budget
--- More things that can be turned into components?
-- To do's - major
--- Improve variable naming.
--- User can delete types (will this be possible?)
--- User can edit types (will this be possible?)
+Clone the repo to your machine.  From your terminal, navigate to the root of the folder and run an npm install to get the necessary packages:
 
+```
+npm i
+```
 
+#### 2) Set up DB
 
-### Ideas
-- On dashboard - have loan calculator - enter loans and their interest, and enter a monthly payment amount - calculates total interest paid, helps user find how much is appropriate to put towards loans.
-- When user comes to page, a series of instructions show (depending if they've been there before?  Or a button in corner of screen asking them if they'd like instructions?
-- scrollspy on the budget page?
+Next, we will set up the database.  Pull up your MySQL workbench.  From the root of the project folder, you can grab the schema.sql file.  Copy and paste this into your SQL query.  Run this query to create the database and tables.
 
-### Done!
-- ✓ Figure out how to structure DB.
-- ✓ User can get info from DB onto the Budget component.
-- ✓ User can save changes they make on the Budget component back into the DB.
-- ✓ Subtotals and totals display on DOM.
-- ✓ Beautify the login page.
-- ✓ Beautify the signup page.
-- ✓ Add a bottom navbar
-- ✓ Make jumbo a component
-- ✓ reduce logo font size for small screens
-- ✓ DB - add seed file
-- ✓ DB - add schema file
-- ✓ When new user goes onto budget, populate default values
- When a new and already registered user saves for the first time, their budget info is posted to db.
-- ✓ Adds a button to "start now" from the Home component, which takes user to Budget and populates it with default data.
-- ✓ Adds "start now" button to navbar that appears when no user is logged in.
-- ✓ Allow users without profiles to use budget, like a demo
-- ✓ When an unregistered user clicks save, lets them sign up and save info
-- ✓ Adds a close button to the signup modal
-- ✓ Makes the save button look nicer on Budget component.
-- ✓ Adds a reusable loading image component for while requests are being made.
-- ✓ Adds modal after user saves using sweetalert
-- ✓ Adds reusable component UnsavedChangesAlert that tracks if user has made changes. If they have, it warns them before leaving page (both for browser and react-router-dom).
-- ✓ Doesn't allow users to have the same username when signing up
+#### 3) Seed the DB
+
+In order to seed your database, run the following command from the root of the project folder: 
+
+```
+npm run seed
+```
+
+#### 4) Get servers running
+
+This project uses the [concurrently](https://www.npmjs.com/package/concurrently) package to run both servers at the same time. Use this command to get your development version going:
+
+```
+npm run dev
+```
+
+## Examples
+Here are some gifs showing the app in action.
+
+When the user first comes to the page, they see a homescreen with some basic information about the app, along with links to log in, sign up, or just get started without registering.
+![Gif of app being used](https://github.com/cody-brock/budget-app/master/images/README/Budget_Example_10-05-20.gif "Homepage and Budget Calculator")
+
+If someone chooses to "Start Now" and builds their budget without saving, they can use the calculator but will be prompted to register if they try to save.
+![Gif of app unregistered user being prompted to sign up upon saving](https://github.com/cody-brock/budget-app/master/images/README/New_User_Save_Example_10-05-20.gif "Unregistered user being prompted to sign up upon saving")
+
+Users who are registered can save their budget at the bottom of the Budget Calculator page.
+![Gif of budget being saved](https://github.com/cody-brock/budget-app/master/images/README/Save_Example_10-05-20.gif "Budget being saved")
+
+If a user has made changes without saving, an alert will notify they before they leave the page.  This is done both on the window and with react-router-dom, so they will be prompted whether they navigate within the app or close/refresh the page.
+![Gif of user being alerted that they are leaving with unsaved changes](https://github.com/cody-brock/budget-app/master/images/README/Unsaved_Changes_Example_10-05-20.gif "User being alerted of unsaved changes").
 
 
+## Roadmap
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### TODO - Now
 
-## Available Scripts
+#### Dashboard
+- Beautify its current ... spartan(?) ... appearance.
+- Add more features into the dashboard.  
+- Ideas: calculator for the amount of time to reach an amount.
+  - User can select goal, then app will calculate the amount of time for user to reach that amount.
+  - In addition to monthly cash flow, user can enter totals of existing savings/debts.  With that, can calculate timeframes for savings goals or paying off debts.
+- Add some links to personal finance education resources
 
-In the project directory, you can run:
+#### Loan Calculator
+- Give users a sandbox to see how different payment amounts will affect paying off their loans.
+  - Via either a new page or on the dashboard, allow the user to enter debts and APR.  
+  - Then, the user can calculate the lifetime of the loan based on what amount they pay 
+    - How long it will take to pay off at that rate, 
+    - total cost once it is paid off, 
+    - how much of that was interest.
 
-### `yarn start`
+#### Tests
+- Write some!
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### About Me
+- Add one, why not.  
+  - Link it from the bottom nav (and top?).
+  - Have it give some background on why I'm making this app.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### Budget
+- Allow users to customize the Types in their budget
+  - User can delete existing types.
+  - User can edit types (changing their title/description).
+  - User can add new types within categories.
 
-### `yarn test`
+### TODO - Long Term
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### DB
+- Allow users to save multiple versions of their budget
+  - For example, they can have one version where they have $x in rent, and another with $y in rent.
 
-### `yarn build`
+#### Budget
+- Have a popup that asks user if they want instructions, then guides them through general use.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Dashboard
+- Lean how to display the user's budget in a pie chart, with different categories' percentages.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### TODO - Get Help
 
-### `yarn eject`
+#### REST API Best Practices
+- I'm likely missing a few protocols.  Have someone look things over and see if I'm on track and what I can improve.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### App File Structure / Best Practices
+- Is it OK that I have so much of my logic in the controllers?
+- There is a lot of repitition between income/expense logic.  How could I reduce more of this?
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### DB Structure
+- I've separated out Income and Expense tables - is this right?  
+  - They are exactly the same besides being income or expense.  I did this thinking that it would be necessary for later on being able to let users enter custom new Types to their budgets.  Is that the case?  
+  - Should I just add a new column noting income vs. expense, thereby cutting the number of tables and API calls in half?
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### React Components
+- What else should I be turning into components?  How can I reduce redundancy?  It seems the fields are especially redundant.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Author
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* **Cody Brock** - *Full Application* 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Acknowledgments
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* Thank you Mom!
