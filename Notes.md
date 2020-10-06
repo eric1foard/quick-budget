@@ -16,7 +16,7 @@ This branch will be a general sweep of the App with a few minor changes to make 
 - ✓ Consolidate "npm start" and "nodemon index/server"
 - ✓ get rid of extra line when collapse sections on budget
 - ✓ comment out the currently unused code for users adding new Types
-- Make Readme nicer
+- ✓ Make Readme nicer
 
 
 

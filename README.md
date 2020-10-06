@@ -8,8 +8,6 @@ This project was built using React, Node, Express, Sequelize, MySQL, Axios, bcry
 
 ![Image of the app's home screen](/images/README/Home_10-05-20.png "Homepage")
 
-![Image of the app's home screen](/https://github.com/cody-brock/budget-app/master/images/README/Home_10-05-20.png "Homepage")
-
 ## Why
 
 In evaluating my own finances over the years, I've always wanted a better way to go about things than my normal pen-and-paper or Excel approach.  I like to think about my budget in terms of average monthly income and expenses, without getting bogged down in exact daily amounts or overwhelmed by considering a year at once.
@@ -62,16 +60,16 @@ npm run dev
 Here are some gifs showing the app in action.
 
 When the user first comes to the page, they see a homescreen with some basic information about the app, along with links to log in, sign up, or just get started without registering.
-![Gif of app being used](https://github.com/cody-brock/budget-app/master/images/README/Budget_Example_10-05-20.gif "Homepage and Budget Calculator")
+![Gif of app being used](/images/README/Budget_Example_10-05-20.gif "Homepage and Budget Calculator")
 
 If someone chooses to "Start Now" and builds their budget without saving, they can use the calculator but will be prompted to register if they try to save.
-![Gif of app unregistered user being prompted to sign up upon saving](https://github.com/cody-brock/budget-app/master/images/README/New_User_Save_Example_10-05-20.gif "Unregistered user being prompted to sign up upon saving")
+![Gif of app unregistered user being prompted to sign up upon saving](/images/README/New_User_Save_Example_10-05-20.gif "Unregistered user being prompted to sign up upon saving")
 
 Users who are registered can save their budget at the bottom of the Budget Calculator page.
-![Gif of budget being saved](https://github.com/cody-brock/budget-app/master/images/README/Save_Example_10-05-20.gif "Budget being saved")
+![Gif of budget being saved](/images/README/Save_Example_10-05-20.gif "Budget being saved")
 
 If a user has made changes without saving, an alert will notify they before they leave the page.  This is done both on the window and with react-router-dom, so they will be prompted whether they navigate within the app or close/refresh the page.
-![Gif of user being alerted that they are leaving with unsaved changes](https://github.com/cody-brock/budget-app/master/images/README/Unsaved_Changes_Example_10-05-20.gif "User being alerted of unsaved changes").
+![Gif of user being alerted that they are leaving with unsaved changes](/images/README/Unsaved_Changes_Example_10-05-20.gif "User being alerted of unsaved changes").
 
 
 ## Roadmap
