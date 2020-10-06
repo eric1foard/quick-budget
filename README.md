@@ -162,4 +162,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Thank you Mom!
+* Thank you to my loving wife whose fresh baked cookies gave me the inspiration to push through any bug!
