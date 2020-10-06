@@ -59,16 +59,31 @@ npm run dev
 ## Examples
 Here are some gifs showing the app in action.
 
+### Homepage and Budget Calculator
 When the user first comes to the page, they see a homescreen with some basic information about the app, along with links to log in, sign up, or just get started without registering.
+
+
 ![Gif of app being used](/images/README/Budget_Example_10-05-20.gif "Homepage and Budget Calculator")
 
-If someone chooses to "Start Now" and builds their budget without saving, they can use the calculator but will be prompted to register if they try to save.
+
+### Getting Started
+If someone chooses to "Start Now" (rather than "Sign Up" first) and builds their budget without saving, they can still use the calculator.  All of the information on the Budget Calculator lives in state, so there is no problem for them to enter numbers and have the page calculate their income totals.  Should they wish to return to their budget in the future, they will need to save so the information reaches the DB.  I've made this easier for new users by adding a modal that pops up if an unregistered user tries to save, which prompts the new user to sign up.
+
+
 ![Gif of app unregistered user being prompted to sign up upon saving](/images/README/New_User_Save_Example_10-05-20.gif "Unregistered user being prompted to sign up upon saving")
 
-Users who are registered can save their budget at the bottom of the Budget Calculator page.
+
+### Saving Your Budget
+For users who have already registered, their existing budget will be pre-filled in from however they last saved it.  To make changes, they just enter the new numbers and then click save as before, and a modal will pop up to let them know it's been saved successfully.  In the future, I'd like to let users save multiple versions of their budget so that they can compare between their budgets.
+
+
 ![Gif of budget being saved](/images/README/Save_Example_10-05-20.gif "Budget being saved")
 
-If a user has made changes without saving, an alert will notify they before they leave the page.  This is done both on the window and with react-router-dom, so they will be prompted whether they navigate within the app or close/refresh the page.
+
+### Leaving Without Saving
+It would be frustrating for a user to make lots of changes only to navigate without having saved their progress.  To prevent this, a user who has made changes without saving will be alerted before they leave the page.  Since this app uses client-side rendering, this alert had to be implemented both on the window and with react-router-dom.  This way, they will be prompted whether they navigate within the app or close/refresh the page.  I made this into a component that can be placed onto any page in the app in the future.
+
+
 ![Gif of user being alerted that they are leaving with unsaved changes](/images/README/Unsaved_Changes_Example_10-05-20.gif "User being alerted of unsaved changes").
 
 
