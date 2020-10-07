@@ -28,7 +28,7 @@
     "validator": "^13.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && node server/index",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
