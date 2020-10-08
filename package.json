@@ -1,43 +1,25 @@
 {
-  "name": "budget-app",
+  "name": "budget-app-server",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.14.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^4.5.0",
-    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
-    "jquery": "^3.5.1",
+    "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
     "popper.js": "^1.16.1",
-    "react": "^16.13.1",
-    "react-bootstrap-sweetalert": "^5.2.0",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "react-validation": "^3.0.7",
-    "sequelize": "^6.3.4",
-    "sweetalert2": "^10.3.3",
-    "uuid": "^8.3.0",
-    "validator": "^13.1.1"
+    "sequelize": "^6.3.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "node-env-run server --exec nodemon | pino-colada",
-    "dev": "concurrently \"npm start\" \"node server/index\"",
-    "dev2": "concurrently \"npm start\" \"nodemon server\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server.js",
+    "client": "node start-client.js",
     "seed": "node seed.js"
   },
-  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -55,7 +37,7 @@
   },
   "devDependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1",
+    "concurrently": "^5.3.0",
     "express-pino-logger": "^5.0.0",
     "node-env-run": "^4.0.1",
     "nodemon": "^2.0.4",

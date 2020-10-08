@@ -1,4 +1,4 @@
-const db = require('./server/models/index');
+const db = require('../server/models/index');
 const { v4: uuidv4 } = require('uuid');
 
 const Users = db.User;

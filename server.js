@@ -37,7 +37,12 @@ app.use(pino);
 
 // Static directory
 // =============================================================
-app.use(express.static("app/public"));
+  // Express only serves static assets in production - (CB 10/8 - testing this)
+  if (process.env.NODE_ENV === "production") {
+    // app.use(express.static("client/build"));
+  } else {
+    app.use(express.static("app/client/public"));
+  }
 
 
 // Routes
