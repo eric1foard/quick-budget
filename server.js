@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 
 // Requiring our models for syncing
 // =============================================================
-var db = require("./models");
+var db = require("./server/models");
 
 
 // Sets up the Express app to handle data parsing
@@ -42,13 +42,17 @@ app.use(express.static("app/public"));
 
 // Routes
 // =============================================================
-require("./routes/auth.routes")(app);
-require("./routes/user.routes")(app);
+require("./server/routes/auth.routes")(app);
+require("./server/routes/user.routes")(app);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the application." });
+});
 
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-var PORT = process.env.PORT || 3001;
+var PORT = 3001;
 db.sequelize.sync({ force: false }).then(function() {
   console.log("db synced");
   app.listen(PORT, function() {
