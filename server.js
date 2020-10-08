@@ -39,9 +39,11 @@ app.use(pino);
 // =============================================================
   // Express only serves static assets in production - (CB 10/8 - testing this)
   if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
+    console.log("YES production.  App serving app/client/build")
+    app.use(express.static("app/client/build"));
   } else {
-    app.use(express.static("client/public"));
+    console.log("NOT production.  App serving app/client/public")
+    app.use(express.static("app/client/public"));
   }
 
 
