@@ -23,12 +23,11 @@
   },
   "scripts": {
     "start": "node server.js",
-    "install": "cd client && npm install && npm run build && cd ..",
+    "install": "cd client && npm install && npm run build && cd .. && npm run seed",
     "startdev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
     "client": "node start-client.js",
-    "seed": "node seed.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "seed": "node seed.js"
   },
   "eslintConfig": {
     "extends": "react-app"
