@@ -46,7 +46,8 @@ app.use(pino);
   // Express only serves static assets in production - (CB 10/8 - testing this)
   if (process.env.NODE_ENV === "production") {
     console.log("YES production.  App serving app/client/build")
-    app.use(express.static("app/client/build"));
+    // app.use(express.static("app/client/build"));
+    app.use(express.static(path.join(__dirname, 'client/build')));
   } else {
     console.log("NOT production.  App serving app/client/public")
     app.use(express.static("app/client/public"));
@@ -58,9 +59,9 @@ app.use(pino);
 require("./server/routes/auth.routes")(app);
 require("./server/routes/user.routes")(app);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the application." });
-});
+// app.get("/", (req, res) => {
+//   res.json({ message: "Welcome to the application." });
+// });
 
 // AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
 // app.get('*', (req, res) => {
@@ -72,7 +73,7 @@ app.get("/", (req, res) => {
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-var PORT = process.env.REACT_APP_SERVER_PORT || process.env.PORT || 3001;
+var PORT = process.env.PORT || process.env.REACT_APP_SERVER_PORT || 3001;
 db.sequelize.sync({ force: false }).then(function() {
   console.log("db synced");
   app.listen(PORT, function() {

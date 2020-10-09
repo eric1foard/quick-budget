@@ -22,7 +22,9 @@
     "sequelize": "^6.3.4"
   },
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server.js",
+    "install": "cd client && npm install && npm run build && cd ..",
+    "startdev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
     "client": "node start-client.js",
     "seed": "node seed.js",
