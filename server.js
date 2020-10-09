@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-var PORT = process.env.REACT_APP_SERVER_PORT || 3001;
+var PORT = process.env.REACT_APP_SERVER_PORT || process.env.PORT || 3001;
 db.sequelize.sync({ force: false }).then(function() {
   console.log("db synced");
   app.listen(PORT, function() {
