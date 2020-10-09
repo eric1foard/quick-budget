@@ -1,5 +1,4 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -69,7 +68,7 @@ exports.signin = async (req, res) => {
     }
 
     // Create jwt token for the user, used to identify users in API calls
-    const token = jwt.sign({ id: user.id }, config.secret, {
+    const token = jwt.sign({ id: user.id }, process.env.REACT_APP_AUTH_CONFIG_SECRET, {
       expiresIn: 86400 // 24 hours
     });
 
