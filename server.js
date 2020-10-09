@@ -13,6 +13,8 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const cors = require('cors');
 
+const path = require('path') 
+
 
 // Sets up the Express App
 // =============================================================
@@ -59,6 +61,13 @@ require("./server/routes/user.routes")(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the application." });
 });
+
+// AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/../client/build/index.html'))
+})
+
+
 
 
 // Syncing our sequelize models and then starting our Express app
