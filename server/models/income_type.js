@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Income_Type = sequelize.define("Income_Type", {
+  var income_type = sequelize.define("income_type", {
 
     id: {
       type: DataTypes.INTEGER,
@@ -19,12 +19,12 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
   });
 
-  Income_Type.associate = function(models) {
-    Income_Type.belongsTo(models.Income_Category, { foreignKey: 'income_category_id' } );
-    Income_Type.hasMany(models.Income_Item, { foreignKey: 'income_type_id' } );
+  income_type.associate = function(models) {
+    income_type.belongsTo(models.income_category, { foreignKey: 'income_category_id' } );
+    income_type.hasMany(models.income_item, { foreignKey: 'income_type_id' } );
   }
 
 
-  return Income_Type;
+  return income_type;
 
 };

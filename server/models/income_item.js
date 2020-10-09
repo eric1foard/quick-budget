@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Income_Item = sequelize.define("Income_Item", {
+  var income_item = sequelize.define("income_item", {
     
     // id is used as foreign key for other tables to reference
     id: {
@@ -14,10 +14,10 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
   });
 
-  Income_Item.associate = function(models) {
-    Income_Item.belongsTo(models.Income_Type, { foreignKey: 'income_type_id' } );
-    Income_Item.belongsTo(models.User, { foreignKey: 'user_id' } );
+  income_item.associate = function(models) {
+    income_item.belongsTo(models.income_type, { foreignKey: 'income_type_id' } );
+    income_item.belongsTo(models.user, { foreignKey: 'user_id' } );
   }
 
-  return Income_Item;
+  return income_item;
 };

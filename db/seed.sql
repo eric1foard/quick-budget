@@ -1,13 +1,13 @@
 const db = require('./server/models/index');
 const { v4: uuidv4 } = require('uuid');
 
-const users = db.user;
-const income_items = db.income_item;
-const income_types = db.income_type;
-const income_categories = db.income_category;
-const expense_items = db.expense_item;
-const expense_types = db.expense_type;
-const expense_categories = db.expense_category;
+const Users = db.User;
+const Income_Items = db.Income_Item;
+const Income_Types = db.Income_Type;
+const Income_Categories = db.Income_Category;
+const Expense_Items = db.Expense_Item;
+const Expense_Types = db.Expense_Type;
+const Expense_Categories = db.Expense_Category;
 
 var bcrypt = require("bcryptjs");
 
@@ -330,14 +330,15 @@ const expenseItemSeeds = [
   {value: 30, user_id: 2, expense_type_id: 30},
 ];
 
+
 const seed = async () => {
-  await users.bulkCreate(userSeeds);
-  await income_categories.bulkCreate(incomeCategorySeeds);
-  await expense_categories.bulkCreate(expenseCategorySeeds);
-  await income_types.bulkCreate(incomeTypeSeeds);
-  await income_items.bulkCreate(incomeItemSeeds);
-  await expense_types.bulkCreate(expenseTypeSeeds);
-  await expense_items.bulkCreate(expenseItemSeeds);
+  await Users.bulkCreate(userSeeds);
+  await Income_Categories.bulkCreate(incomeCategorySeeds);
+  await Expense_Categories.bulkCreate(expenseCategorySeeds);
+  await Income_Types.bulkCreate(incomeTypeSeeds);
+  await Income_Items.bulkCreate(incomeItemSeeds);
+  await Expense_Types.bulkCreate(expenseTypeSeeds);
+  await Expense_Items.bulkCreate(expenseItemSeeds);
   process.exit();
 }
 

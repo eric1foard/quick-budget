@@ -8,7 +8,7 @@ exports.signup = async (req, res) => {
   
   // First, check to see if username already exists.
   try {
-    const user = await db.User.findOne({
+    const user = await db.user.findOne({
       where: {
         username: req.body.username
       }
@@ -17,7 +17,7 @@ exports.signup = async (req, res) => {
     // If there is no one with that username, then create user.
     if (!user) {
       try {
-        await db.User.create({
+        await db.user.create({
           username: req.body.username,
           email: req.body.email,
           password: bcrypt.hashSync(req.body.password, 8),
@@ -43,7 +43,7 @@ exports.signin = async (req, res) => {
   
   // First, check to see if username exists already.
   try {
-    const user = await db.User.findOne({
+    const user = await db.user.findOne({
       where: {
         username: req.body.username
       }

@@ -10,15 +10,15 @@ exports.userIncome = async (req, res) => {
   // Find all income items associated with user, along with associated type and category information.
   try {
 
-    let items = await db.Income_Item.findAll({
+    let items = await db.income_item.findAll({
       where: {
         user_id: req.userId
       },
       include: [
         {
-          model: db.Income_Type,
+          model: db.income_type,
           include: [
-              db.Income_Category
+              db.income_category
           ]
         }
       ]
@@ -28,38 +28,38 @@ exports.userIncome = async (req, res) => {
     if (!items) return res.status(404).send({ message: "User's income information not found." });
 
     let itemsArr = [];
-    items.forEach(Income_Item => {
+    items.forEach(income_item => {
 
       // Object desctructruing for clarity
-      const {Income_Type} = Income_Item
-      const {Income_Category} = Income_Item.Income_Type;
+      const {income_type} = income_item
+      const {income_category} = income_item.income_type;
 
       // First, pulls the relevant item and type information into an object.
       let itemObj = 
         {
-          title: Income_Type.name,
-          description: Income_Type.description,
-          value: Income_Item.value,
-          id: Income_Item.id,
-          typeKey: Income_Type.typeKey
+          title: income_type.name,
+          description: income_type.description,
+          value: income_item.value,
+          id: income_item.id,
+          typeKey: income_type.typeKey
         }
 
       // Next, find which Category the Type belongs to, so we can group them by Category.
 
       // 1) This approach is more modular, but less efficient.  Keeping for reference.
-      // const categoryIndex = arr.findIndex(x => x.categoryId === Income_Category.id);
+      // const categoryIndex = arr.findIndex(x => x.categoryId === income_category.id);
       
       // 2) This approach simply takes the id from sql id's (1,2,3) and subtracts 1 (0,1,2) for their equivalent index in array.
       // This could cause problems depending on how users are allowed to add types in the future, but currently works.
-      const arrayCategoryIdx = Income_Category.id - 1;
+      const arrayCategoryIdx = income_category.id - 1;
 
       // If there is no Category object at that index yet, create it
       if (!itemsArr[arrayCategoryIdx]) {
         itemsArr.push(
           {
-            title: Income_Category.name,
-            categoryId: Income_Category.id,
-            categoryKey: Income_Category.categoryKey,
+            title: income_category.name,
+            categoryId: income_category.id,
+            categoryKey: income_category.categoryKey,
             types: [],
           }
         );
@@ -103,15 +103,15 @@ exports.userExpense = async (req, res) => {
   // Find all income items associated with user, along with associated type and category information.
   try {
 
-    let items = await db.Expense_Item.findAll({
+    let items = await db.expense_item.findAll({
       where: {
         user_id: req.userId
       },
       include: [
         {
-          model: db.Expense_Type,
+          model: db.expense_type,
           include: [
-              db.Expense_Category
+              db.expense_category
           ]
         }
       ]
@@ -121,38 +121,38 @@ exports.userExpense = async (req, res) => {
     if (!items) return res.status(404).send({ message: "User's income information not found." });
 
     let itemsArr = [];
-    items.forEach(Expense_Item => {
+    items.forEach(expense_item => {
 
       // Object desctructruing for clarity
-      const {Expense_Type} = Expense_Item
-      const {Expense_Category} = Expense_Item.Expense_Type;
+      const {expense_type} = expense_item
+      const {expense_category} = expense_item.expense_type;
 
       // First, pulls the relevant item and type information into an object.
       let itemObj = 
         {
-          title: Expense_Type.name,
-          description: Expense_Type.description,
-          value: Expense_Item.value,
-          id: Expense_Item.id,
-          typeKey: Expense_Type.typeKey
+          title: expense_type.name,
+          description: expense_type.description,
+          value: expense_item.value,
+          id: expense_item.id,
+          typeKey: expense_type.typeKey
         }
 
       // Next, find which Category the Type belongs to, so we can group them by Category.
 
       // 1) This approach is more modular, but less efficient.  Keeping for reference.
-      // const categoryIndex = arr.findIndex(x => x.categoryId === Expense_Category.id);
+      // const categoryIndex = arr.findIndex(x => x.categoryId === expense_category.id);
       
       // 2) This approach simply takes the id from sql id's (1,2,3) and subtracts 1 (0,1,2) for their equivalent index in array.
       // This could cause problems depending on how users are allowed to add types in the future, but currently works.
-      const arrayCategoryIdx = Expense_Category.id - 1;
+      const arrayCategoryIdx = expense_category.id - 1;
 
       // If there is no Category object at that index yet, create it
       if (!itemsArr[arrayCategoryIdx]) {
         itemsArr.push(
           {
-            title: Expense_Category.name,
-            categoryId: Expense_Category.id,
-            categoryKey: Expense_Category.categoryKey,
+            title: expense_category.name,
+            categoryId: expense_category.id,
+            categoryKey: expense_category.categoryKey,
             types: [],
           }
         );
@@ -205,7 +205,7 @@ exports.saveIncomeNew = async (req, res) => {
 
   // Then, use the now formatted info to create the Items in the DB
   try {
-    let result = await db.Income_Item.bulkCreate(dataArray, {
+    let result = await db.income_item.bulkCreate(dataArray, {
       fields: ["id", "value", "user_id", "income_type_id"]
     });
     res.status(201).send({
@@ -232,7 +232,7 @@ exports.saveExpenseNew = async (req, res) => {
 
   // Then, use the now formatted info to create the Items in the DB
   try {
-    let result = await db.Expense_Item.bulkCreate(dataArray, {
+    let result = await db.expense_item.bulkCreate(dataArray, {
       fields: ["id", "value", "user_id", "expense_type_id"]
     });
     res.status(201).send({
@@ -258,7 +258,7 @@ exports.saveIncome = async (req, res) => {
 
   // Uses bulkCreate, set up to update existing values
   try {
-    await db.Income_Item.bulkCreate(dataArray, {
+    await db.income_item.bulkCreate(dataArray, {
       fields: ["id", "value", "user_id", "income_type_id"],
       updateOnDuplicate: ["value"]
     });
@@ -285,7 +285,7 @@ exports.saveExpense = async (req, res) => {
 
   // Uses bulkCreate, set up to update existing values
   try {
-    await db.Expense_Item.bulkCreate(dataArray, {
+    await db.expense_item.bulkCreate(dataArray, {
       fields: ["id", "value", "user_id", "expense_type_id"],
       updateOnDuplicate: ["value"]
     })

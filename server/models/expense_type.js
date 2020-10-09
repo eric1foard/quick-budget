@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Expense_Type = sequelize.define("Expense_Type", {
+  var expense_type = sequelize.define("expense_type", {
     
     id: {
       type: DataTypes.INTEGER,
@@ -19,12 +19,12 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
   });
 
-  Expense_Type.associate = function(models) {
-    Expense_Type.belongsTo(models.Expense_Category, { foreignKey: 'expense_category_id' } );
-    Expense_Type.hasMany(models.Expense_Item, { foreignKey: 'expense_type_id' } );
+  expense_type.associate = function(models) {
+    expense_type.belongsTo(models.expense_category, { foreignKey: 'expense_category_id' } );
+    expense_type.hasMany(models.expense_item, { foreignKey: 'expense_type_id' } );
   }
 
 
-  return Expense_Type;
+  return expense_type;
 
 };

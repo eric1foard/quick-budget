@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Expense_Category = sequelize.define("Expense_Category", {
+  var expense_category = sequelize.define("expense_category", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -13,9 +13,9 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  Expense_Category.associate = function(models) {
-    Expense_Category.hasMany(models.Expense_Type, { foreignKey: 'expense_category_id' } );
+  expense_category.associate = function(models) {
+    expense_category.hasMany(models.expense_type, { foreignKey: 'expense_category_id' } );
   }
 
-  return Expense_Category;
+  return expense_category;
 };

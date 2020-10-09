@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Income_Category = sequelize.define("Income_Category", {
+  var income_category = sequelize.define("income_category", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true
@@ -13,9 +13,9 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  Income_Category.associate = function(models) {
-    Income_Category.hasMany(models.Income_Type, { foreignKey: 'income_category_id' } );
+  income_category.associate = function(models) {
+    income_category.hasMany(models.income_type, { foreignKey: 'income_category_id' } );
   }
 
-  return Income_Category;
+  return income_category;
 };

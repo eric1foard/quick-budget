@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
+  var user = sequelize.define("user", {
     
     id: {
       type: DataTypes.INTEGER,
@@ -16,12 +16,12 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false
   });
 
-  User.associate = function(models) {
-    User.hasMany(models.Income_Item, { foreignKey:  'user_id' }  );
-    User.hasMany(models.Expense_Item, { foreignKey:  'user_id' }  );
+  user.associate = function(models) {
+    user.hasMany(models.income_item, { foreignKey:  'user_id' }  );
+    user.hasMany(models.expense_item, { foreignKey:  'user_id' }  );
   }
 
 
-  return User;
+  return user;
 
 };
