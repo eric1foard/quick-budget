@@ -4,7 +4,6 @@
  */
 
 
-
 /* CATEGORIES */
 
 -- Income Categories

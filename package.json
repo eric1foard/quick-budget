@@ -26,8 +26,7 @@
     "install": "cd client && npm install && npm run build && cd ..",
     "startdev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server.js",
-    "client": "node start-client.js",
-    "seed": "node seed.js"
+    "client": "node start-client.js"
   },
   "eslintConfig": {
     "extends": "react-app"
