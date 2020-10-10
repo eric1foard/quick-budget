@@ -22,9 +22,16 @@ class Dashboard extends Component {
       expenseData: null,
       incomeTotal: 0,
       expenseTotal: 0,
+      total: 0,
 
       isLoaded: false
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(evt) {
+    evt.preventDefault();
+    this.props.history.push("/budget");
   }
 
 
@@ -44,11 +51,14 @@ class Dashboard extends Component {
           // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
           // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
     
+          const total = Number(income.data.total - expense.data.total).toFixed(2);
+
           this.setState({
             incomeData: jsonParsedIncomeObject,
             expenseData: jsonParsedExpenseObject,
             incomeTotal: income.data.total,
             expenseTotal: expense.data.total,
+            total: total,
             isLoaded: true,
           });
         })
@@ -74,16 +84,23 @@ class Dashboard extends Component {
           // TODO (CB 10/5) - make the Dashboard more interesting!  Add more here
             <div>
               <div>
-                Total Income: {this.state.incomeTotal}
+                Total Income: ${this.state.incomeTotal}
               </div>
 
               <div>
-                Total Expense: {this.state.expenseTotal}
+                Total Expenses: ${this.state.expenseTotal}
               </div>
 
               <div>
-                Go to your Budget
+                Monthly Cashflow: ${this.state.total}
               </div>
+
+              <div>
+                <button onClick={this.handleClick} className="btn btn-dashboard">
+                   Go to Budget
+                </button>
+              </div>
+              
             </div>
           :
             <Loading />

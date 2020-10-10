@@ -119,6 +119,19 @@
   border-radius: 20px
 }
 
+/* For the Dashboard component */
+.btn-dashboard{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgba(13, 97, 72, 0.842);
+  color: rgb(255, 255, 255);
+  width: 230px;
+}
+
+.btn-signup:hover{
+  background-color: rgba(7, 121, 86, 0.767);
+  color:  rgb(0, 0, 0);
+}
 
 /* For the Budget component */
 .budget-instructions-list{
