@@ -24,12 +24,18 @@ export const successfulSignUpAlert = async () => {
 }
 
 // Displays a modal notifying user they have saved their info successfully
-export const successfulSaveAlert = () => {
-  Swal.fire({
+export const successfulSaveAlert = async () => {
+  const message = Swal.fire({
     icon: 'success',
     title: 'Success!',
     html: 'Your information has been saved!',
+    showCancelButton: true,
+    cancelButtonText: 'Continue editing budget',
+    confirmButtonText: 'Go to dashboard to see updated results',
   });
+
+  let result = await message;
+  return result;
 }
 
 // Displays a general error modal, used to display API call errors to user

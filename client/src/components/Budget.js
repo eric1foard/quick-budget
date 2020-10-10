@@ -336,7 +336,14 @@ class Budget extends Component {
       .then(res =>{
         this.setState({ newUser: false, unsavedChanges: false });
         console.log(res);
-        successfulSaveAlert();
+        
+        // User is prompted to go to dashboard, or to stay
+        successfulSaveAlert()
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/dashboard");
+            }
+          });
       })
       .catch(error => {
         console.error(error.message)
@@ -350,7 +357,14 @@ class Budget extends Component {
       .then(res =>{
         this.setState({ unsavedChanges: false });
         console.log(res);
-        successfulSaveAlert();
+
+        // User is prompted to go to dashboard, or to stay
+        successfulSaveAlert()
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.props.history.push("/dashboard");
+            }
+          });
       })
       .catch(error => {
         console.error(error.message)

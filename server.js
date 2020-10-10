@@ -42,7 +42,8 @@ app.use(pino);
 
 // Static directory
 // =============================================================
-// Express only serves static assets in production - (CB 10/8 - testing this)
+// Express only serves static assets when build file is present
+// (TODO CB 10/9 - this works in production. For development, it seems to just be ignored.  It would be better to have some kind of conditional based on environment.)
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 
@@ -52,7 +53,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 require("./server/routes/auth.routes")(app);
 require("./server/routes/user.routes")(app);
 
-// AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
+// AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!) 
+// (TODO CB 10/9 - this works in production. For development, it seems to just be ignored.  It would be better to have some kind of conditional based on environment.)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 });

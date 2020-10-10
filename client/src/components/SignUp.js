@@ -129,11 +129,11 @@ export default class SignUp extends Component {
                   className="btn btn-signup"
                   disabled={this.state.loading}
                   onClick={this.handleSignUp}
-                  >
+                >
                   {this.state.loading && (
                     <span className="spinner-border spinner-border-sm"></span>
-                    )}
-                  <span>Sign Up</span>
+                  )}
+                  <span> Sign Up</span>
                 </button>
               </div>
             </div>

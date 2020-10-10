@@ -1,10 +1,16 @@
 ## Now
-- deploy to heroku
+- ✓ deploy to heroku
 - add onto:
   - resume
   - website
   - linkedin
+- when user saves, given option to "continue editing budget" or "see updated results in dashboard"
 - make dashboard better
+  - helpful links
+  - some kind of visual representation of %'s of categories?
+  - Savings calculator, etc.
+
+- fix any out-of-place modals
 
 
 
@@ -52,3 +58,11 @@
 - ✓ get rid of extra line when collapse sections on budget
 - ✓ comment out the currently unused code for users adding new Types
 - ✓ Make Readme nicer
+
+## Helpful
+- Information on deploying to Heroku using a CRA app with express backend.
+  - https://github.com/facebook/create-react-app/issues/639
+- Production vs. Development using CRA.  The link above expands on this article for deploying to heroku.
+  - https://www.newline.co/fullstack-react/articles/using-create-react-app-with-a-server/
+- Setting up JWT authentication with Node
+  - https://bezkoder.com/node-js-jwt-authentication-mysql/
