@@ -12,7 +12,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const cors = require('cors');
-
 const path = require('path') 
 
 
@@ -43,15 +42,9 @@ app.use(pino);
 
 // Static directory
 // =============================================================
-  // Express only serves static assets in production - (CB 10/8 - testing this)
-  // if (process.env.NODE_ENV === "production") {
-  //   console.log("YES production.  App serving app/client/build")
-    // app.use(express.static("app/client/build"));
-    app.use(express.static(path.join(__dirname, 'client/build')));
-  // } else {
-  //   console.log("NOT production.  App serving app/client/public")
-  //   app.use(express.static("app/client/public"));
-  // }
+// Express only serves static assets in production - (CB 10/8 - testing this)
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 
 // Routes
@@ -59,14 +52,10 @@ app.use(pino);
 require("./server/routes/auth.routes")(app);
 require("./server/routes/user.routes")(app);
 
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to the application." });
-// });
-
 // AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
-})
+});
 
 
 
