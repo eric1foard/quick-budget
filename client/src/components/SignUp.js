@@ -46,7 +46,7 @@ export default class SignUp extends Component {
         try {
           await AuthService.login(this.state.username, this.state.password);
           this.props.history.push("/dashboard");
-          window.location.reload();
+          window.location.reload(); // (CB TODO (10/10) - This is used to get the Navbar to update.  Is there a better way?)
         } catch (error) {
           // TODO (CB 10/5) - MDN docs imply nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
           console.log(error);

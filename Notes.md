@@ -1,14 +1,13 @@
 ## Now
-- ✓ deploy to heroku
-- add onto:
-  - resume
-  - website
-  - linkedin
-- when user saves, given option to "continue editing budget" or "see updated results in dashboard"
 - make dashboard better
   - helpful links
   - some kind of visual representation of %'s of categories?
   - Savings calculator, etc.
+
+- add onto:
+  - resume
+  - website
+  - linkedin
 
 - fix any out-of-place modals
 
@@ -58,6 +57,8 @@
 - ✓ get rid of extra line when collapse sections on budget
 - ✓ comment out the currently unused code for users adding new Types
 - ✓ Make Readme nicer
+- ✓ deploy to heroku
+- ✓ when user saves, given option to "continue editing budget" or "see updated results in dashboard"
 
 ## Helpful
 - Information on deploying to Heroku using a CRA app with express backend.

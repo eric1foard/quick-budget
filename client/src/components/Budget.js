@@ -212,7 +212,7 @@ class Budget extends Component {
           await this.saveNewUserBudget();
 
           await this.props.history.push("/dashboard");
-          window.location.reload();
+          window.location.reload(); // (CB TODO (10/10) - This is used to get the Navbar to update.  Is there a better way?)
         } catch(error) {
           // TODO - it seems nested catch statements are unnecessary.  Ask someone if that's OK (CB 10/3)
           console.log(error);
