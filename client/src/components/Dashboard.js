@@ -8,6 +8,7 @@ import React, { Component } from "react";
 // Project Components
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
+import DoughnutChart from "./DoughnutChart";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 
@@ -53,11 +54,37 @@ class Dashboard extends Component {
     
           const total = Number(income.data.total - expense.data.total).toFixed(2);
 
+          let expenseChartLabels = [];
+          let expenseChartData = [];
+
+          // console.log(jsonParsedExpenseObject);
+          jsonParsedExpenseObject.categories.forEach((elem) => {
+            expenseChartLabels.push(elem.title);
+            expenseChartData.push(elem.subtotal);
+          });
+
+
+          let incomeChartLabels = [];
+          let incomeChartData = [];
+
+          // console.log(jsonParsedincomeObject);
+          jsonParsedIncomeObject.categories.forEach((elem) => {
+            incomeChartLabels.push(elem.title);
+            incomeChartData.push(elem.subtotal);
+          });
+
+
+          
+
           this.setState({
             incomeData: jsonParsedIncomeObject,
             expenseData: jsonParsedExpenseObject,
             incomeTotal: income.data.total,
             expenseTotal: expense.data.total,
+            expenseChartLabels: expenseChartLabels,
+            expenseChartData: expenseChartData,
+            incomeChartLabels: incomeChartLabels,
+            incomeChartData: incomeChartData,
             total: total,
             isLoaded: true,
           });
@@ -95,12 +122,32 @@ class Dashboard extends Component {
                 Monthly Cashflow: ${this.state.total}
               </div>
 
+              {/* <DashboardDetails
+
+              > */}
+
+              <DoughnutChart 
+                chartHeader="Income"
+                labels={this.state.incomeChartLabels}
+                data={this.state.incomeChartData}
+                colors="incomeColors"
+              />
+
+              <DoughnutChart 
+                chartHeader="Expenses"
+                labels={this.state.expenseChartLabels}
+                data={this.state.expenseChartData}
+                colors="expenseColors"
+              />
+
+
+
               <div>
                 <button onClick={this.handleClick} className="btn btn-dashboard">
                    Go to Budget
                 </button>
               </div>
-              
+
             </div>
           :
             <Loading />
