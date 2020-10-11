@@ -48,8 +48,12 @@
   margin-right: 8px;
 }
 
-.welcome-list-text{
+.welcome-list-line{
   margin-bottom: 20px;
+}
+
+.welcome-list-text{
+  font-size: 20px
 }
 
 .home-buttons{
@@ -132,6 +136,38 @@
   background-color: rgba(7, 121, 86, 0.767);
   color:  rgb(0, 0, 0);
 }
+
+.dashboard-intro{
+  width: 25%;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 100px;
+  border: black;
+}
+
+.dashboard-list-line{
+  margin-bottom: 40px;
+}
+
+.dashboard-intro.income{
+  background-color: rgba(62, 172, 62, 0.26);
+}
+
+.dashboard-intro.expense{
+  background-color: rgba(149, 57, 57, 0.26);
+}
+
+.dashboard-intro.total{
+  background-color: rgba(0, 195, 255, 0.322);
+}
+
+/* For the Dashboard Details component */
+.chart-wrapper{
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
 
 /* For the Budget component */
 .budget-instructions-list{

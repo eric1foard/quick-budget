@@ -11,6 +11,7 @@ import Loading from "./Loading";
 import DoughnutChart from "./DoughnutChart";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
+import DashboardDetails from "./DashboardDetails";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -100,46 +101,63 @@ class Dashboard extends Component {
 
     return (
 
-      <Jumbotron
-        largeTitle="Welcome "
-        smallTitle={currentUser.username}
-        subtitle="Here's a quick summary of what we have on file for you:"
-      >
+      <div>
 
         {this.state.isLoaded 
           ?
           // TODO (CB 10/5) - make the Dashboard more interesting!  Add more here
             <div>
-              <div>
-                Total Income: ${this.state.incomeTotal}
-              </div>
+
+              <Jumbotron
+                largeTitle="Welcome "
+                smallTitle={currentUser.username}
+                subtitle="This is your dashboard. Here, you'll find insights into what we have on file for you."
+              >
+                
+                <div className="welcome-list">
+                  <div className="dashboard-list-line">
+                    <span className="dashboard-intro income">
+                      <i className="fas fa-plus welcome-list-icon"></i>
+                      <span className="welcome-list-text"> 
+                        Total Income: ${this.state.incomeTotal}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="dashboard-list-line">
+                    <span className="dashboard-intro expense">
+                      <i className="fas fa-minus welcome-list-icon"></i>
+                      <span className="welcome-list-text">
+                        Total Expenses: ${this.state.expenseTotal}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="dashboard-list-line">
+                    <span className="dashboard-intro total">
+                      <i className="fas fa-equals welcome-list-icon"></i>
+                      <span className="welcome-list-text">
+                        Monthly Cashflow: ${this.state.total}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+              </Jumbotron>
 
               <div>
-                Total Expenses: ${this.state.expenseTotal}
+                <DashboardDetails
+                  chartHeader="Income"
+                  labels={this.state.incomeChartLabels}
+                  data={this.state.incomeChartData}
+                  type="income"
+                />
+
+                <DashboardDetails 
+                  chartHeader="Expenses"
+                  labels={this.state.expenseChartLabels}
+                  data={this.state.expenseChartData}
+                  type="expenses"
+                />
               </div>
-
-              <div>
-                Monthly Cashflow: ${this.state.total}
-              </div>
-
-              {/* <DashboardDetails
-
-              > */}
-
-              <DoughnutChart 
-                chartHeader="Income"
-                labels={this.state.incomeChartLabels}
-                data={this.state.incomeChartData}
-                colors="incomeColors"
-              />
-
-              <DoughnutChart 
-                chartHeader="Expenses"
-                labels={this.state.expenseChartLabels}
-                data={this.state.expenseChartData}
-                colors="expenseColors"
-              />
-
 
 
               <div>
@@ -150,10 +168,19 @@ class Dashboard extends Component {
 
             </div>
           :
-            <Loading />
+            <Jumbotron
+              largeTitle="Welcome "
+              smallTitle={currentUser.username}
+              subtitle="Here are some insights into what we have on file for you"
+            >
+
+              <Loading />
+
+            </Jumbotron>
+            
         }
 
-      </Jumbotron>
+      </div>
         
     );
   }

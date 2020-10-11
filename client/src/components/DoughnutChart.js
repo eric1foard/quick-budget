@@ -26,7 +26,7 @@ class DoughnutChart extends Component {
       "rgba(143, 76, 214, 0.3)"
     ]
 
-    const colors = (this.props.colors === "incomeColors" ? incomeColors : expenseColors)
+    const colors = (this.props.type === "income" ? incomeColors : expenseColors)
 
 
 
@@ -51,14 +51,11 @@ class DoughnutChart extends Component {
 
   render() {
     return (
-      <div className="card">
-        <div className="card-header">
-          {this.props.chartHeader}
-        </div>
-          <canvas
-            style={{ width: 300, height: 100 }}
-            ref={node => (this.node = node)}
-          />
+      <div>
+        <canvas
+          style={{ width: 300, height: 100 }}
+          ref={node => (this.node = node)}
+        />
       </div>
     );
   }

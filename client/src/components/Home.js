@@ -27,13 +27,13 @@ export default class Home extends Component {
         >
 
           <div className="welcome-list">
-            <div className="welcome-list-text">
+            <div className="welcome-list-line">
               <i className="fas fa-check-circle welcome-list-icon"></i>   Quick Budget guides you through entering your monthly income and expenses
             </div>
-            <div className="welcome-list-text">
+            <div className="welcome-list-line">
               <i className="fas fa-chart-bar welcome-list-icon"></i> We'll crunch the numbers and let you know your monthly surplus or shortfall
             </div>
-            <div className="welcome-list-text">
+            <div className="welcome-list-line">
               <i className="far fa-clock welcome-list-icon"></i> Your budget is stored here, so you can return and adjust whenever needed
             </div>
           </div>
