@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ProjectionsInput from "./ProjectionsInput";
 
 
 class DashboardProjections extends Component {
@@ -7,29 +8,31 @@ class DashboardProjections extends Component {
     this.state = {
       // TODO (CB 10/11): Is it OK to have value here in state, as well as in Budget component in state?  It works well this way so that
       // ... we can use onBlur to clean the values, and so that not every single keystroke triggers re-renders (only exiting form)
-      checkingAcct: this.props.checkingAcct,
-      savingsAcct: this.props.savingsAcct,
-      liquidAcct: this.props.liquidAcct,
+      checkingAcct: 0,
+      savingsAcct: 0,
+      liquidAcct: 0,
+      total: 0,
+      emergencyMonths: null
     }
     this.handleChange = this.handleChange.bind(this);
-    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.updateTotal = this.updateTotal.bind(this);
   }
 
-
-    // When a user clicks out of the Value form they were editing, this cleans their value to look "financial"
-  // ... by removing 0's to the left, and rounding to 2 decimal places. Then, it triggers handleChange, passing values to Budget
-  handleOnBlur() {
-    let cleanValue = this.state.value;
-    if (cleanValue === "") cleanValue = 0;
-    cleanValue = Number(this.state.value).toFixed(2);
-
-    this.setState({ value: cleanValue });
-    // this.props.handleChange(this.props.title, cleanValue, this.props.categoryTitle)
+  // Sets the state from ProjectionsInput value
+  handleChange(name, value) {    
+    this.setState({[name]: value}, () => {
+      this.updateTotal();
+    });
   }
 
-  // Passes the Type's value up the chain of components, ultimately to Budget where the subtotals and total are also updated
-  handleChange(evt) {    
-    this.setState({value: evt.target.value});
+  updateTotal() {
+    const newTotal = (Number(this.state.checkingAcct) + Number(this.state.savingsAcct) + Number(this.state.liquidAcct));
+    this.setState({ total: newTotal });
+  }
+
+  handleClick(evt) {
+    evt.preventDefault();
+    console.log("Clicked")
   }
 
   render() {
@@ -51,58 +54,32 @@ class DashboardProjections extends Component {
             
             <form>
 
-              <div class="form-group row">
-                <label for="colFormLabel" class="col-sm-8 col-form-label">
-                  The total of your Checking Account balances:
-                </label>
-                <div class="col-sm-4">
-                  <input 
-                    type="number"
-                    name="checkingAcct"
-                    onChange={this.handleChange}
-                    className="form-control" 
-                    id="checkingAcct"
-                    value={this.state.checkingAcct}
-                    onBlur={this.handleOnBlur}
-                  />
-                </div>
-              </div>
+              <ProjectionsInput 
+                name="Checking Account"
+                value={this.state.checkingAcct}
+                handleChange={this.handleChange}
+                id="checkingAcct"
+              />
 
-              <div class="form-group row">
-                <label for="colFormLabel" class="col-sm-8 col-form-label">
-                  The total of your Savings Account balances:
-                </label>
-                <div class="col-sm-4">
-                  <input 
-                    type="number"
-                    name="savingsAcct"
-                    onChange={this.handleChange}
-                    className="form-control" 
-                    id="savingsAcct"
-                    value={this.state.savingsAcct}
-                    onBlur={this.handleOnBlur}
-                  />
-                </div>
-              </div>
+              <ProjectionsInput 
+                name="Savings Account"
+                value={this.state.checkingAcct}
+                handleChange={this.handleChange}
+                id="savingsAcct"
+              />
 
-              <div class="form-group row">
-                <label for="colFormLabel" class="col-sm-8 col-form-label">
-                 Any additional liquid balances:
-                </label>
-                <div class="col-sm-4">
-                  <input 
-                    type="number"
-                    name="liquidAcct"
-                    onChange={this.handleChange}
-                    className="form-control" 
-                    id="liquidAcct"
-                    value={this.state.liquidAcct}
-                    onBlur={this.handleOnBlur}
-                  />
-                </div>
-              </div>
+              <ProjectionsInput 
+                name="additional liquid"
+                value={this.state.checkingAcct}
+                handleChange={this.handleChange}
+                id="liquidAcct"
+              />
 
             </form>
+
+            Total: {this.state.total}
+
+            <button className="btn btn-info" onClick={this.handleClick}>Click Here</button>
 
 
             <div className="card">
@@ -113,6 +90,9 @@ class DashboardProjections extends Component {
                 It is recommended that you save 3 - 6 months' worth of expenses.  That way, if something unexpected happens 
                 (i.e. loss of job, urgent travel to see a family member, unforeseen large expense),
                 you can cover the costs with your emergency fund instead of accumulating debt.
+              </div>
+              <div>
+                You currently have: [({this.state.total} / {this.props.expenseTotal})]
               </div>
             </div>
 

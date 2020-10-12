@@ -169,7 +169,7 @@ class Dashboard extends Component {
                 <DashboardProjections
                   chartHeader="Future Projections"
                   type="summary"
-                  
+                  expenseTotal={this.state.expenseTotal}
                 />
               </div>
 
