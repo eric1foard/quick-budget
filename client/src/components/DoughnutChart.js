@@ -56,7 +56,7 @@ class DoughnutChart extends Component {
         title: {
           display: true,
           fontSize: 20,
-          text: `Categories Visualized as a Proportion of Total`
+          text: `Categories Visualized as a Proportion of Total ${this.props.name}`
         }
       }
     });

@@ -25,6 +25,7 @@ class DashboardDetails extends Component {
                 title={this.props.chartHeader}
                 labels={this.props.labels}
                 data={this.props.data}
+                name={this.props.name}
                 type={this.props.type}
               />
             </div>

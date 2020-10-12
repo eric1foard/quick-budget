@@ -156,6 +156,7 @@ class Dashboard extends Component {
                   chartHeader="Income"
                   labels={this.state.incomeChartLabels}
                   data={this.state.incomeChartData}
+                  name="Income"
                   type="income"
                 />
 
@@ -163,13 +164,16 @@ class Dashboard extends Component {
                   chartHeader="Expenses Analysis"
                   labels={this.state.expenseChartLabels}
                   data={this.state.expenseChartData}
+                  name="Expenses"
                   type="expenses"
                 />
 
                 <DashboardProjections
                   chartHeader="Future Projections"
                   type="summary"
-                  expenseTotal={this.state.expenseTotal}
+                  expenseTotalMonthly={this.state.expenseTotal}
+                  incomeTotalMonthly={this.state.incomeTotal}
+                  monthlyTotal={this.state.total}
                 />
               </div>
 

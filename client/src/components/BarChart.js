@@ -64,7 +64,7 @@ class BarChart extends Component {
         title: {
           display: true,
           fontSize: 20,
-          text: 'Expenses as a Percentage of Income, Overlayed With Recommended Percentages'
+          text: 'Expenses as a Percentage of Income, Overlayed With Recommended Ranges'
         }
       }
     });

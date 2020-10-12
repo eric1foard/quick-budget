@@ -36,7 +36,7 @@ class ProjectionsInput extends Component {
 
       <div className="form-group row">
         <label htmlFor="colFormLabel" className="col-sm-8 col-form-label">
-          The total of your {this.props.name} balances:
+          {this.props.title}
         </label>
         <div className="col-sm-4">
           <input 
