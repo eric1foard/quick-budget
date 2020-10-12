@@ -44,14 +44,26 @@ class BarChart extends Component {
               "rgba(214, 76, 78, 0.2)",
               "rgba(143, 76, 214, 0.2)"
             ],
-            data: [[25, 35], [12, 17], [10,15], [5,20], [10,12], [7,15], [10,20]]
+            data: [[25, 35], [10, 17], [8,18], [5,20], [10,18], [7,15], [10,20]]
           }
         ]
       },
       options: {
-        legend: { display: true },
+        legend: { 
+          display: true,
+          position: 'top'
+        },
+        layout: {
+          padding: {
+            left: 20,
+            right: 20,
+            top: 10,
+            bottom: 20
+          }
+        },
         title: {
           display: true,
+          fontSize: 20,
           text: 'Expenses as a Percentage of Income, Overlayed With Recommended Percentages'
         }
       }

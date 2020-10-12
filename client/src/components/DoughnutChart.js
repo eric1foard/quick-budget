@@ -47,10 +47,22 @@ class DoughnutChart extends Component {
         ]
       },
       options: {
-        legend: { display: true },
+        legend: { 
+          display: true,
+          position: 'left'
+        },
+        layout: {
+          padding: {
+            left: 20,
+            right: 20,
+            top: 10,
+            bottom: 20
+          }
+        },
         title: {
           display: true,
-          text: `Chart Showing Proportion of ${this.props.title}`
+          fontSize: 20,
+          text: `${this.props.title} Categories Visualized as a Proportion of Total`
         }
       }
     });
@@ -60,7 +72,7 @@ class DoughnutChart extends Component {
     return (
       <div>
         <canvas
-          style={{ width: 300, height: 100 }}
+          style={{ width: 300, height: 140 }}
           ref={node => (this.node = node)}
         />
       </div>

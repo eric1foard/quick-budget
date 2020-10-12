@@ -29,12 +29,15 @@ class DashboardDetails extends Component {
 
           {this.props.type === "expenses" 
             &&
-              <div className="chart-wrapper">
-                <BarChart 
-                  labels={this.props.labels}
-                  data={this.props.data}
-                  type={this.props.type}
-                />
+              <div>
+                <hr />
+                <div className="chart-wrapper">
+                  <BarChart 
+                    labels={this.props.labels}
+                    data={this.props.data}
+                    type={this.props.type}
+                  />
+                </div>
               </div>
           }
 

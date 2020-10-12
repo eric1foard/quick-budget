@@ -144,15 +144,16 @@ class Dashboard extends Component {
               </Jumbotron>
 
               <div>
+                {/* TODO - what else can I add for income? */}
                 <DashboardDetails
-                  chartHeader="Income"
+                  chartHeader="Income and Projections"
                   labels={this.state.incomeChartLabels}
                   data={this.state.incomeChartData}
                   type="income"
                 />
 
                 <DashboardDetails 
-                  chartHeader="Expenses"
+                  chartHeader="Expenses Analysis"
                   labels={this.state.expenseChartLabels}
                   data={this.state.expenseChartData}
                   type="expenses"
