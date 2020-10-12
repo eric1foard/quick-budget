@@ -173,7 +173,7 @@ class Dashboard extends Component {
                   type="summary"
                   expenseTotalMonthly={this.state.expenseTotal}
                   incomeTotalMonthly={this.state.incomeTotal}
-                  monthlyTotal={this.state.total}
+                  cashFlowTotalMonthly={this.state.total}
                 />
               </div>
 

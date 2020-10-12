@@ -6,57 +6,74 @@ class DashboardProjections extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // TODO (CB 10/11): Is it OK to have value here in state, as well as in Budget component in state?  It works well this way so that
-      // ... we can use onBlur to clean the values, and so that not every single keystroke triggers re-renders (only exiting form)
+      
+      // Values from the DashboardProjection section, passed up what the user enters in the ProjectionsInput fields
       checkingAcct: 0,
       savingsAcct: 0,
       liquidAcct: 0,
-      total: 0,
-      emergencyMonths: null,
-      savingsGoal: 0,
-      showEmergency: false,
-      showSavingsGoalMonths: false,
-      negativeMonths: 0,
-      showNegativeMonths: false
+      totalCurrentAccts: 0, // The sum of checkingAcct, savingsAcct, and liquidAcct
+
+      
+      // For the Emergency Fund section
+      showEmergencyMonths: false, // Displays instructions until user clicks "Calculate" button
+      emergencyMonths: null, // The number of months' worth of emergency funds the user has.  Calculated by this component.
+
+      // For the Savings Goal section
+      showSavingsGoalMonths: false, // Displays instructions until user clicks "Calculate" button
+      savingsGoal: 0, // Value from the user's input, passed up what the user enters in the ProjectionsInput field
+      savingsGoalMonths: 0, // The number of months until the user reaches savingsGoal.  Calculated by this component.
+      
+      // For the How Long Your Money Will Last section
+      showNegativeMonths: false, // Displays instructions until user clicks "Calculate" button
+      negativeMonths: 0, // The number of months until the user's funds reach 0.  Calculated by this component.
     }
     this.handleChange = this.handleChange.bind(this);
-    this.updateTotal = this.updateTotal.bind(this);
+    this.updateTotalCurrentAccts = this.updateTotalCurrentAccts.bind(this);
     this.handleClickEmergency = this.handleClickEmergency.bind(this);
     this.handleClickSavingsGoal = this.handleClickSavingsGoal.bind(this);
     this.handleClickNegativeMonths = this.handleClickNegativeMonths.bind(this);
   }
 
-  // Sets the state from ProjectionsInput value
+  // General handler for when ProjectionsInput value changes.  Sets state here in this parent component so we can make calculations.
   handleChange(name, value) {    
     this.setState({[name]: value}, () => {
-      this.updateTotal();
+      this.updateTotalCurrentAccts();
     });
   }
 
-  updateTotal() {
+  // Updates the totalCurrentAccts value in state
+  updateTotalCurrentAccts() {
     const newTotal = (Number(this.state.checkingAcct) + Number(this.state.savingsAcct) + Number(this.state.liquidAcct)).toFixed(2);
-    this.setState({ total: newTotal });
+    this.setState({ totalCurrentAccts: newTotal });
   }
 
+  // Click handler in the Emergency Fund section.  Calculates the number of months of Emergency Funds the user has saved.
   handleClickEmergency(evt) {
     evt.preventDefault();
-    const emergencyMonths = (this.state.total / this.props.expenseTotalMonthly).toFixed(2);
+
+    // We find the number of months by dividing the user's total accounts by their monthly expenses.  Their monthly income is not a part of this calculation.
+    const emergencyMonths = (this.state.totalCurrentAccts / this.props.expenseTotalMonthly).toFixed(2);
     this.setState({ emergencyMonths: emergencyMonths}, () => {
-      this.setState({ showEmergency: true })
+      this.setState({ showEmergencyMonths: true })
     });
   }
 
+  // Click handler in the Emergency Fund section.  Calculates the number of months until user reaches their savings goal.
   handleClickSavingsGoal(evt) {
     evt.preventDefault();
+
     let savingsGoalMonths = 0;
 
     console.log("this.state.savingsGoal: ", this.state.savingsGoal);
-    console.log("this.state.total: ", this.state.total)
+    console.log("this.state.totalCurrentAccts: ", this.state.totalCurrentAccts);
+    console.log("this.props.cashFlowTotalMonthly: ", this.props.cashFlowTotalMonthly);
 
-    if (this.state.savingsGoal <= this.state.total) {
+
+    if (this.state.savingsGoal <= this.state.totalCurrentAccts) {
+      console.log("goal is less than current accounts");
       savingsGoalMonths = "You Already Did It!"
     } else {
-      let number = ((this.state.savingsGoal - this.state.total) / this.props.incomeTotalMonthly).toFixed(2);
+      let number = ((this.state.savingsGoal - this.state.totalCurrentAccts) / this.props.cashFlowTotalMonthly).toFixed(2);
       savingsGoalMonths = `${number} Months`
     }
 
@@ -68,7 +85,7 @@ class DashboardProjections extends Component {
   handleClickNegativeMonths(evt) {
     evt.preventDefault();
 
-    const negativeMonths = (this.state.total / (this.props.expenseTotalMonthly - this.props.incomeTotalMonthly)).toFixed(2);
+    const negativeMonths = (this.state.totalCurrentAccts / (this.props.expenseTotalMonthly - this.props.incomeTotalMonthly)).toFixed(2);
 
     this.setState({ negativeMonths: negativeMonths}, () => {
       this.setState({ showNegativeMonths: true });
@@ -76,6 +93,8 @@ class DashboardProjections extends Component {
   }
 
   render() {
+
+    console.log("this.props.cashFlowTotalMonthly: ", this.props.cashFlowTotalMonthly)
 
     const cardHeaderClasses = `card-header card-header-${this.props.type}`
 
@@ -136,7 +155,7 @@ class DashboardProjections extends Component {
                   <u>Total Balance of Your Liquid Accounts</u>
                 </div>
                 <div className="projection-number">
-                  ${this.state.total}
+                  ${this.state.totalCurrentAccts}
                 </div>
 
               </div>
@@ -163,7 +182,7 @@ class DashboardProjections extends Component {
                   <u>Months of Emergency Funds Currently Saved</u>
                 </div>
                 <div>
-                  {this.state.showEmergency
+                  {this.state.showEmergencyMonths
                   ?
                     <div className="projection-number">
                       {this.state.emergencyMonths} Months
@@ -186,7 +205,7 @@ class DashboardProjections extends Component {
               </div>
             </div>
 
-            {this.props.monthlyTotal > 0
+            {this.props.cashFlowTotalMonthly > 0
             ?
               <div className="card">
                 <div className="card-header card-header-projections">
