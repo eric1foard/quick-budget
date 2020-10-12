@@ -30,9 +30,9 @@ class DoughnutChart extends Component {
 
 
 
-    console.log(this.props.labels)
-    console.log(this.props.data)
-    console.log(this.props.colors)
+    // console.log(this.props.labels)
+    // console.log(this.props.data)
+    // console.log(this.props.colors)
     
 
     var myChart = new Chart(node, {
@@ -45,6 +45,13 @@ class DoughnutChart extends Component {
             backgroundColor: colors
           }
         ]
+      },
+      options: {
+        legend: { display: true },
+        title: {
+          display: true,
+          text: `Chart Showing Proportion of ${this.props.title}`
+        }
       }
     });
   }

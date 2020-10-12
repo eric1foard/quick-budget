@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 
-import DoughnutChart from "./DoughnutChart"
+import DoughnutChart from "./DoughnutChart";
+import BarChart from "./BarChart";
 
 class DashboardDetails extends Component {
   render() {
 
     const cardHeaderClasses = `card-header card-header-${this.props.type}`
-    // const cardFooterClasses = `card-footer card-footer-${boxType}`
 
     return(
       <div>
@@ -18,14 +18,25 @@ class DashboardDetails extends Component {
             </div>
           </div>
 
-
           <div className="chart-wrapper">
             <DoughnutChart 
+              title={this.props.chartHeader}
               labels={this.props.labels}
               data={this.props.data}
               type={this.props.type}
             />
           </div>
+
+          {this.props.type === "expenses" 
+            &&
+              <div className="chart-wrapper">
+                <BarChart 
+                  labels={this.props.labels}
+                  data={this.props.data}
+                  type={this.props.type}
+                />
+              </div>
+          }
 
         </div>
 
