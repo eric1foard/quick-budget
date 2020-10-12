@@ -1,11 +1,18 @@
+// ***************************************************************
+// DashboardChart.js - Displays charts using user's Budget data
+// ***************************************************************
+
+// Dependencies
 import React, { Component } from "react";
 
-import DoughnutChart from "./DoughnutChart";
-import BarChart from "./BarChart";
+// Project Components
+import DoughnutChart  from "./DoughnutChart";
+import BarChart       from "./BarChart";
 
-class DashboardDetails extends Component {
+class DashboardChart extends Component {
   render() {
 
+    // Used in order to style the card header like the Budget component, for consistency
     const cardHeaderClasses = `card-header card-header-${this.props.type}`
 
     return(
@@ -18,6 +25,7 @@ class DashboardDetails extends Component {
             </div>
           </div>
 
+          {/* Both Income and Expenses are visualized via the DoughnutChart */}
           {(this.props.type === "income" || this.props.type === "expenses") 
             &&
             <div className="chart-wrapper">
@@ -31,6 +39,7 @@ class DashboardDetails extends Component {
             </div>
           }
 
+          {/* Only Expenses gets the additional BarChart */}
           {this.props.type === "expenses" 
             &&
             <div>
@@ -52,4 +61,4 @@ class DashboardDetails extends Component {
   }
 }
 
-export default DashboardDetails;
+export default DashboardChart;

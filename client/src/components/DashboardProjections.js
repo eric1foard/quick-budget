@@ -1,4 +1,11 @@
+// *****************************************************************************************
+// Dashboard.js - Subsection of Dashboard, calculates future projections based on user info
+// *****************************************************************************************
+
+// Dependencies
 import React, { Component } from "react";
+
+// Project Components
 import ProjectionsInput from "./ProjectionsInput";
 
 
@@ -26,13 +33,17 @@ class DashboardProjections extends Component {
       // For the How Long Your Money Will Last section
       showNegativeMonths: false, // Displays instructions until user clicks "Calculate" button
       negativeMonths: 0, // The number of months until the user's funds reach 0.  Calculated by this component.
+
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.updateTotalCurrentAccts = this.updateTotalCurrentAccts.bind(this);
-    this.handleClickEmergency = this.handleClickEmergency.bind(this);
-    this.handleClickSavingsGoal = this.handleClickSavingsGoal.bind(this);
-    this.handleClickNegativeMonths = this.handleClickNegativeMonths.bind(this);
+
+    this.handleChange               = this.handleChange.bind(this);
+    this.updateTotalCurrentAccts    = this.updateTotalCurrentAccts.bind(this);
+    this.handleClickEmergency       = this.handleClickEmergency.bind(this);
+    this.handleClickSavingsGoal     = this.handleClickSavingsGoal.bind(this);
+    this.handleClickNegativeMonths  = this.handleClickNegativeMonths.bind(this);
+    
   }
+
 
   // General handler for when ProjectionsInput value changes.  Sets state here in this parent component so we can make calculations.
   handleChange(name, value) {    
@@ -62,17 +73,15 @@ class DashboardProjections extends Component {
   handleClickSavingsGoal(evt) {
     evt.preventDefault();
 
-    let savingsGoalMonths = 0;
+    // Declaring variable that will be modified by if/else statement
+    let savingsGoalMonths;
 
-    console.log("this.state.savingsGoal: ", this.state.savingsGoal);
-    console.log("this.state.totalCurrentAccts: ", this.state.totalCurrentAccts);
-    console.log("this.props.cashFlowTotalMonthly: ", this.props.cashFlowTotalMonthly);
-
-
+    // If the user puts a savings goal that they've already reached, we tell them so.
     if (this.state.savingsGoal <= this.state.totalCurrentAccts) {
       console.log("goal is less than current accounts");
       savingsGoalMonths = "You Already Did It!"
     } else {
+      // Otherwise, calculate the number of months until they reach goal
       let number = ((this.state.savingsGoal - this.state.totalCurrentAccts) / this.props.cashFlowTotalMonthly).toFixed(2);
       savingsGoalMonths = `${number} Months`
     }
@@ -82,25 +91,27 @@ class DashboardProjections extends Component {
     });
   }
 
+  // Click handler in the How Long Will Your Money Last section.  Calculates the number of months until reaches 0.
   handleClickNegativeMonths(evt) {
     evt.preventDefault();
 
-    const negativeMonths = (this.state.totalCurrentAccts / (this.props.expenseTotalMonthly - this.props.incomeTotalMonthly)).toFixed(2);
+    const negativeMonths = (-1 * (this.state.totalCurrentAccts / this.props.cashFlowTotalMonthly)).toFixed(2);
 
     this.setState({ negativeMonths: negativeMonths}, () => {
       this.setState({ showNegativeMonths: true });
     });
   }
 
+
   render() {
 
-    console.log("this.props.cashFlowTotalMonthly: ", this.props.cashFlowTotalMonthly)
-
+    // Used to give the styling to the Future Projections card header
     const cardHeaderClasses = `card-header card-header-${this.props.type}`
 
+    // TODO (CLB 10/12) - there is a lot of repitition here in the sub-cards.  Things could be make into components.
     return(
       <div>
-
+        {/* We have an outer card, with each section contained in an inner card */}
         <div className="card w-75">
           <div className={cardHeaderClasses}>
             <div className="btn-link-heading">
@@ -108,9 +119,29 @@ class DashboardProjections extends Component {
             </div>
           </div>
 
-
           <div className="card-body">
 
+            <div className="dashboard-list">
+              <div className="dashboard-list-line">
+                <span className="dashboard-intro">
+                  <i className="fas fa-info-circle welcome-list-icon"></i>
+                  <span className="welcome-list-text"> 
+                    By combining your budget with your current account balances, there's more we can show you.
+                  </span>
+                </span>
+              </div>
+              <div className="dashboard-list-line">
+                <span className="dashboard-intro">
+                  <i className="fas fa-calculator welcome-list-icon"></i>
+                  <span className="welcome-list-text">
+                    If you'd like more useful inferences, please enter your account balances below.
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            {/* First, the user is prompted to enter their account values */}
+            {/* TODO (CB 10/12) - This information could probably be saved in the DB, so the user doesn't have to re-enter every time */}
             <div className="card">
               <div className="card-header card-header-projections">
                 Your Accounts
@@ -162,32 +193,36 @@ class DashboardProjections extends Component {
             </div>
             
 
-
+            {/* Then, users can calculate how many months of an Emergency Fund they currently have */}
             <div className="card">
               <div className="card-header card-header-projections">
                 Emergency Fund
               </div>
               <div className="card-body">
                 <div>
-                  An emergency fund is an amount you set aside in your checking or savings account that you keep in case of an emergency.
+                  An emergency fund is an amount you set aside in your checking or savings account that you keep in case of an emergency.  It is independent of your income, and solely based on your savings and monthly spending.
                 </div>
                 <br/>
                 <div>
-                  It is recommended that an emergency fund contain 3 - 6 months' worth of your expenses.  
+                  <strong>It is recommended that an emergency fund contain 3 - 6 months' worth of your expenses.</strong> 
+                  <br/>
                   That way, if something unexpected happens (i.e. loss of job, urgent travel, unforeseen large expense),
                   you can cover your costs with your emergency fund instead of accumulating debt.
                 </div>
-                <br />
+                <br/>
                 <div className="label-title">
                   <u>Months of Emergency Funds Currently Saved</u>
                 </div>
                 <div>
+                  {/* Has the user clicked calculate? */}
                   {this.state.showEmergencyMonths
                   ?
+                    // If yes, display the number of months.
                     <div className="projection-number">
                       {this.state.emergencyMonths} Months
                     </div>
                   :
+                    // If not, give them instructions.
                     <div>
                       <br/>
                       <div>
@@ -204,9 +239,12 @@ class DashboardProjections extends Component {
                 </div>
               </div>
             </div>
+            
 
+            {/* Does the user have a positive monthly cash flow? */}
             {this.props.cashFlowTotalMonthly > 0
-            ?
+            ? 
+              // If yes, display the Savings Goal calculator
               <div className="card">
                 <div className="card-header card-header-projections">
                   Savings Goal
@@ -229,7 +267,7 @@ class DashboardProjections extends Component {
                     <hr/>
                   </div>
                   <div className="label-title">
-                    Time Until You Reach Your Goal 
+                    <u>Time Until You Reach Your Goal </u>
                   </div>
                   {this.state.showSavingsGoalMonths
                   ?
@@ -253,6 +291,7 @@ class DashboardProjections extends Component {
                 </div>
               </div>
             :
+              // If user has negative cash flow, display this calculator
               <div className="card">
                 <div className="card-header card-header-projections">
                   How Long Your Money Will Last
@@ -264,7 +303,7 @@ class DashboardProjections extends Component {
                   </div>
                   <br/>
                   <div className="label-title">
-                    With Current Monthly Budget, Your Accounts Will Last 
+                    <u>With Current Monthly Budget, Your Accounts Will Last</u>
                   </div>
                   {this.state.showNegativeMonths 
                   ?
@@ -289,13 +328,8 @@ class DashboardProjections extends Component {
               </div>
             }
 
-
-
-
           </div>
-
         </div>
-
       </div>
     )
   }

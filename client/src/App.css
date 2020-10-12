@@ -127,13 +127,13 @@
 .btn-dashboard{
   padding: 7px 65px;
   border-radius: 20px;
-  background-color: rgba(13, 97, 72, 0.842);
+  background-color: rgb(13, 97, 72);
   color: rgb(255, 255, 255);
   width: 230px;
 }
 
-.btn-signup:hover{
-  background-color: rgba(7, 121, 86, 0.767);
+.btn-dashboard:hover{
+  background-color: rgb(7, 121, 87);
   color:  rgb(0, 0, 0);
 }
 

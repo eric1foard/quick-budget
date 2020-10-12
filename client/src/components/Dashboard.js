@@ -6,12 +6,13 @@
 import React, { Component } from "react";
 
 // Project Components
-import Jumbotron from "./Jumbotron";
-import Loading from "./Loading";
+import Jumbotron              from "./Jumbotron";
+import DashboardChart         from "./DashboardChartContainer";
+import DashboardProjections   from "./DashboardProjections"
+import Loading                from "./Loading";
+
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
-import DashboardDetails from "./DashboardDetails";
-import DashboardProjections from "./DashboardProjections"
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,17 +21,20 @@ class Dashboard extends Component {
     this.state = {
       currentUser: AuthService.getCurrentUser(),
 
+      // Obtained from API call
       incomeData: null,
       expenseData: null,
       incomeTotal: 0,
       expenseTotal: 0,
-      total: 0,
+      cashFlowTotalMonthly: 0,
 
+      // Until ComponentDidMount is ready, displays loading spinner
       isLoaded: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // Button at bottom of page, lets user navigate to their Budget
   handleClick(evt) {
     evt.preventDefault();
     this.props.history.push("/budget");
@@ -49,21 +53,10 @@ class Dashboard extends Component {
 
           const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
           const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
-    
-          // console.log("componentDidMount API call INCOME response: ", jsonParsedIncomeObject);
-          // console.log("componentDidMount API call EXPENSE response: ", jsonParsedExpenseObject);
-    
-          const total = Number(income.data.total - expense.data.total).toFixed(2);
-
-          let expenseChartLabels = [];
-          let expenseChartData = [];
-
-          jsonParsedExpenseObject.categories.forEach((elem) => {
-            expenseChartLabels.push(elem.title);
-            expenseChartData.push(elem.subtotal);
-          });
+          const cashFlowTotalMonthly = Number(income.data.total - expense.data.total).toFixed(2);
 
 
+          // Arrays that will hold data for Income-related charts
           let incomeChartLabels = [];
           let incomeChartData = [];
 
@@ -76,24 +69,37 @@ class Dashboard extends Component {
           // (TODO CB 10/11 - For now, using this so that the income data is more interesting (only 3 total possible sources at the moment))
           jsonParsedIncomeObject.categories.forEach((elem) => {
             elem.types.forEach(type => {
+              // Push each Type's title and value into the arrays to be used for making charts
               incomeChartLabels.push(type.title);
               incomeChartData.push(type.value);
             })
           });
 
+          // Arrays that will hold data for Expense-related charts
+          let expenseChartLabels = [];
+          let expenseChartData = [];
 
-          
+          // Push each Category's title and value into the arrays to be used for making charts
+          jsonParsedExpenseObject.categories.forEach((elem) => {
+            expenseChartLabels.push(elem.title);
+            expenseChartData.push(elem.subtotal);
+          });
 
+
+          // Now that we have all the information we need, set state accordingly
           this.setState({
             incomeData: jsonParsedIncomeObject,
             expenseData: jsonParsedExpenseObject,
+
             incomeTotal: income.data.total,
             expenseTotal: expense.data.total,
-            expenseChartLabels: expenseChartLabels,
-            expenseChartData: expenseChartData,
+            cashFlowTotalMonthly: cashFlowTotalMonthly,
+            
             incomeChartLabels: incomeChartLabels,
             incomeChartData: incomeChartData,
-            total: total,
+            expenseChartLabels: expenseChartLabels,
+            expenseChartData: expenseChartData,
+
             isLoaded: true,
           });
         })
@@ -103,6 +109,7 @@ class Dashboard extends Component {
     }
   }
 
+
   render() {
     const { currentUser } = this.state;
 
@@ -110,9 +117,10 @@ class Dashboard extends Component {
 
       <div>
 
+        {/* Has our ComponentDidMount has finished loading data? */}
         {this.state.isLoaded 
           ?
-          // TODO (CB 10/5) - make the Dashboard more interesting!  Add more here
+            // If yes, display the following.
             <div>
 
               <Jumbotron
@@ -121,6 +129,7 @@ class Dashboard extends Component {
                 subtitle="This is your dashboard. Here, you'll find insights into what we have on file for you."
               >
                 
+                {/* Colored bars with icons in Jumbotron, displaying user's monthly income, expense, and cashflow */}
                 <div className="dashboard-list">
                   <div className="dashboard-list-line">
                     <span className="dashboard-intro income">
@@ -142,7 +151,7 @@ class Dashboard extends Component {
                     <span className="dashboard-intro total">
                       <i className="fas fa-equals welcome-list-icon"></i>
                       <span className="welcome-list-text">
-                        Monthly Cashflow: ${this.state.total}
+                        Monthly Cashflow: ${this.state.cashFlowTotalMonthly}
                       </span>
                     </span>
                   </div>
@@ -150,17 +159,21 @@ class Dashboard extends Component {
 
               </Jumbotron>
 
+              {/* After the Jumbotron, we show the user a series of charts using data from their budget. */}
               <div>
-                {/* TODO - what else can I add for income? */}
-                <DashboardDetails
-                  chartHeader="Income"
+                {/* TODO (CB 10/11) - what else can I add for income? */}
+                {/* Income currently shows a doughnut/pie chart with their income sources broken down */}
+                <DashboardChart
+                  chartHeader="Income Analysis"
                   labels={this.state.incomeChartLabels}
                   data={this.state.incomeChartData}
                   name="Income"
                   type="income"
                 />
 
-                <DashboardDetails 
+                {/* Expenses currently has 2 charts - 1) doughnut/pie chart with expenses broken down, and 2) a bar/line graph
+                  ... showing what % of their expenses each category composes, compared to the ideal %'s they would spend in each category */}
+                <DashboardChart 
                   chartHeader="Expenses Analysis"
                   labels={this.state.expenseChartLabels}
                   data={this.state.expenseChartData}
@@ -168,16 +181,18 @@ class Dashboard extends Component {
                   type="expenses"
                 />
 
+                {/* This section lets the user enter how much money they already have, and makes projections from how that relates to their monthly cashflow */}
                 <DashboardProjections
                   chartHeader="Future Projections"
                   type="summary"
                   expenseTotalMonthly={this.state.expenseTotal}
                   incomeTotalMonthly={this.state.incomeTotal}
-                  cashFlowTotalMonthly={this.state.total}
+                  cashFlowTotalMonthly={this.state.cashFlowTotalMonthly}
                 />
+
               </div>
 
-
+              {/* Simple navigational button to end the page, goes to their Budget */}
               <div>
                 <button onClick={this.handleClick} className="btn btn-dashboard">
                    Go to Budget
@@ -186,6 +201,7 @@ class Dashboard extends Component {
 
             </div>
           :
+            // Otherwise, if ComponentDidMount has not finished, only displays Jumbotron with loading spinner
             <Jumbotron
               largeTitle="Welcome "
               smallTitle={currentUser.username}

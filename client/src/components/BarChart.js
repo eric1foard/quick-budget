@@ -1,12 +1,16 @@
+// ***********************************************************************************************
+// BarChart.js - User's expense information visualized as line/bar chart, using chart.js package
+// ***********************************************************************************************
+
+// Dependencies
 import React, { Component } from "react";
-import Chart from "chart.js";
+import Chart                from "chart.js";
 
+// Note: the goal of this chart is to show the user what % each of their Expense categories is (the line), 
+// ... with a recommended range highlighted behind it as a "floating" bar graph 
 class BarChart extends Component {
-  constructor(props) {
-    super(props);
-  }
 
-    
+
   componentDidMount() {
     const node = this.node;
 
@@ -17,10 +21,11 @@ class BarChart extends Component {
     // Find total
     const total = parsedData.reduce((acc, curr) => acc += curr);
 
-    // Divide each by the total, to get the % of income
+    // Divide each by the total, to get the the category's % of total expenses
     const dataPercentages = parsedData.map(x => ((x / total) * 100).toFixed(2));
 
-    var myChart = new Chart(node, {
+    // Here is the logic fed into chart.js
+    new Chart(node, {
       type: 'bar',
       data: {
         labels: this.props.labels,
@@ -35,15 +40,17 @@ class BarChart extends Component {
             data: dataPercentages
           }, {
             label: "Recommended Percentage",
+            // Note: These colors match the DoughnutChart expense colors
             backgroundColor: [
               "rgba(214, 76, 147, 0.2)",
               "rgba(214, 76, 78, 0.2)",
               "rgba(214, 212, 76, 0.2)",
               "rgba(76, 147, 214, 0.2)",
               "rgba(147, 214, 76, 0.2)",
-              "rgba(214, 76, 78, 0.2)",
+              "rgba(145, 145, 145, 0.2)",
               "rgba(143, 76, 214, 0.2)"
             ],
+            // Note: these values were loosely researched.  Could be fine-tuned in the future.
             data: [[25, 35], [10, 17], [8,18], [5,20], [10,18], [7,15], [10,20]]
           }
         ]
