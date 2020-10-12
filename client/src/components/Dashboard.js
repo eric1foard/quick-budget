@@ -8,10 +8,10 @@ import React, { Component } from "react";
 // Project Components
 import Jumbotron from "./Jumbotron";
 import Loading from "./Loading";
-import DoughnutChart from "./DoughnutChart";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 import DashboardDetails from "./DashboardDetails";
+import DashboardProjections from "./DashboardProjections"
 
 class Dashboard extends Component {
   constructor(props) {
@@ -58,7 +58,6 @@ class Dashboard extends Component {
           let expenseChartLabels = [];
           let expenseChartData = [];
 
-          // console.log(jsonParsedExpenseObject);
           jsonParsedExpenseObject.categories.forEach((elem) => {
             expenseChartLabels.push(elem.title);
             expenseChartData.push(elem.subtotal);
@@ -68,10 +67,18 @@ class Dashboard extends Component {
           let incomeChartLabels = [];
           let incomeChartData = [];
 
-          // console.log(jsonParsedincomeObject);
+          // (TODO CB 10/11 - When users are able to add their own types, switch to this code)
+          // jsonParsedIncomeObject.categories.forEach((elem) => {
+          //   incomeChartLabels.push(elem.title);
+          //   incomeChartData.push(elem.subtotal);
+          // });
+          
+          // (TODO CB 10/11 - For now, using this so that the income data is more interesting (only 3 total possible sources at the moment))
           jsonParsedIncomeObject.categories.forEach((elem) => {
-            incomeChartLabels.push(elem.title);
-            incomeChartData.push(elem.subtotal);
+            elem.types.forEach(type => {
+              incomeChartLabels.push(type.title);
+              incomeChartData.push(type.value);
+            })
           });
 
 
@@ -114,7 +121,7 @@ class Dashboard extends Component {
                 subtitle="This is your dashboard. Here, you'll find insights into what we have on file for you."
               >
                 
-                <div className="welcome-list">
+                <div className="dashboard-list">
                   <div className="dashboard-list-line">
                     <span className="dashboard-intro income">
                       <i className="fas fa-plus welcome-list-icon"></i>
@@ -146,7 +153,7 @@ class Dashboard extends Component {
               <div>
                 {/* TODO - what else can I add for income? */}
                 <DashboardDetails
-                  chartHeader="Income and Projections"
+                  chartHeader="Income"
                   labels={this.state.incomeChartLabels}
                   data={this.state.incomeChartData}
                   type="income"
@@ -157,6 +164,12 @@ class Dashboard extends Component {
                   labels={this.state.expenseChartLabels}
                   data={this.state.expenseChartData}
                   type="expenses"
+                />
+
+                <DashboardProjections
+                  chartHeader="Future Projections"
+                  type="summary"
+                  
                 />
               </div>
 

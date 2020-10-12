@@ -26,13 +26,7 @@ class DoughnutChart extends Component {
       "rgba(143, 76, 214, 0.3)"
     ]
 
-    const colors = (this.props.type === "income" ? incomeColors : expenseColors)
-
-
-
-    // console.log(this.props.labels)
-    // console.log(this.props.data)
-    // console.log(this.props.colors)
+    const colors = (this.props.type === "income" ? incomeColors : expenseColors);
     
 
     var myChart = new Chart(node, {
@@ -62,7 +56,7 @@ class DoughnutChart extends Component {
         title: {
           display: true,
           fontSize: 20,
-          text: `${this.props.title} Categories Visualized as a Proportion of Total`
+          text: `Categories Visualized as a Proportion of Total`
         }
       }
     });

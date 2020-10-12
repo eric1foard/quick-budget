@@ -18,27 +18,30 @@ class DashboardDetails extends Component {
             </div>
           </div>
 
-          <div className="chart-wrapper">
-            <DoughnutChart 
-              title={this.props.chartHeader}
-              labels={this.props.labels}
-              data={this.props.data}
-              type={this.props.type}
-            />
-          </div>
+          {(this.props.type === "income" || this.props.type === "expenses") 
+            &&
+            <div className="chart-wrapper">
+              <DoughnutChart 
+                title={this.props.chartHeader}
+                labels={this.props.labels}
+                data={this.props.data}
+                type={this.props.type}
+              />
+            </div>
+          }
 
           {this.props.type === "expenses" 
             &&
-              <div>
-                <hr />
-                <div className="chart-wrapper">
-                  <BarChart 
-                    labels={this.props.labels}
-                    data={this.props.data}
-                    type={this.props.type}
-                  />
-                </div>
+            <div>
+              <hr />
+              <div className="chart-wrapper">
+                <BarChart 
+                  labels={this.props.labels}
+                  data={this.props.data}
+                  type={this.props.type}
+                />
               </div>
+            </div>
           }
 
         </div>

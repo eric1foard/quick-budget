@@ -141,9 +141,14 @@
   width: 25%;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 50px;
   margin-bottom: 100px;
   border: black;
+}
+
+.dashboard-list {
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .dashboard-list-line{
@@ -167,6 +172,9 @@
   margin-top: 30px;
   margin-bottom: 40px;
 }
+
+
+/* For the DashboardProjections component */
 
 
 /* For the Budget component */
