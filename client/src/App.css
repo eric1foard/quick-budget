@@ -22,7 +22,7 @@
 }
 
 .welcome-to{
-  font-weight: 20;
+  font-weight: 175;
 }
 
 .jumbo{
@@ -175,6 +175,14 @@
 
 
 /* For the DashboardProjections component */
+.card-header-projections{
+  background-color: rgba(136, 217, 241, 0.301);
+}
+
+.projection-number{
+  font-size: 40px;
+  font-weight: 100;
+}
 
 
 /* For the Budget component */

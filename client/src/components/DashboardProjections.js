@@ -17,7 +17,7 @@ class DashboardProjections extends Component {
       showEmergency: false,
       showSavingsGoalMonths: false,
       negativeMonths: 0,
-      showNegativeMonths: 0
+      showNegativeMonths: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.updateTotal = this.updateTotal.bind(this);
@@ -34,7 +34,7 @@ class DashboardProjections extends Component {
   }
 
   updateTotal() {
-    const newTotal = (Number(this.state.checkingAcct) + Number(this.state.savingsAcct) + Number(this.state.liquidAcct));
+    const newTotal = (Number(this.state.checkingAcct) + Number(this.state.savingsAcct) + Number(this.state.liquidAcct)).toFixed(2);
     this.setState({ total: newTotal });
   }
 
@@ -48,7 +48,17 @@ class DashboardProjections extends Component {
 
   handleClickSavingsGoal(evt) {
     evt.preventDefault();
-    const savingsGoalMonths = ((this.state.savingsGoal - this.state.total) / this.props.incomeTotalMonthly).toFixed(2);
+    let savingsGoalMonths = 0;
+
+    console.log("this.state.savingsGoal: ", this.state.savingsGoal);
+    console.log("this.state.total: ", this.state.total)
+
+    if (this.state.savingsGoal <= this.state.total) {
+      savingsGoalMonths = "You Already Did It!"
+    } else {
+      let number = ((this.state.savingsGoal - this.state.total) / this.props.incomeTotalMonthly).toFixed(2);
+      savingsGoalMonths = `${number} Months`
+    }
 
     this.setState({ savingsGoalMonths: savingsGoalMonths}, () => {
       this.setState({ showSavingsGoalMonths: true })
@@ -81,51 +91,90 @@ class DashboardProjections extends Component {
 
 
           <div className="card-body">
-            
-            <form>
-
-              <ProjectionsInput 
-                title="Your Total Checking Account Balance"
-                value={this.state.checkingAcct}
-                handleChange={this.handleChange}
-                id="checkingAcct"
-              />
-
-              <ProjectionsInput 
-                title="Your Total Savings Account Balance"
-                value={this.state.checkingAcct}
-                handleChange={this.handleChange}
-                id="savingsAcct"
-              />
-
-              <ProjectionsInput 
-                title="Total of Other Liquid Assets"
-                value={this.state.checkingAcct}
-                handleChange={this.handleChange}
-                id="liquidAcct"
-              />
-
-            </form>
-
-            Total: {this.state.total}
 
             <div className="card">
-              <div className="card-header">
+              <div className="card-header card-header-projections">
+                Your Accounts
+              </div>
+              <div className="card-body">
+                <div>
+                  <form>
+
+                    <ProjectionsInput 
+                      title="Checking Account"
+                      description="Enter the total balance of your checking account(s)"
+                      value={this.state.checkingAcct}
+                      handleChange={this.handleChange}
+                      id="checkingAcct"
+                    />
+
+                    <hr/>
+
+                    <ProjectionsInput 
+                      title="Savings Account"
+                      description="Enter the total balance of your savings account(s)"
+                      value={this.state.checkingAcct}
+                      handleChange={this.handleChange}
+                      id="savingsAcct"
+                    />
+
+                    <hr/>
+
+                    <ProjectionsInput 
+                      title="Total of Other Liquid Assets"
+                      description="Enter the total balance of any other liquid assets (excluding any accounts which cannot immediately be used)"
+                      value={this.state.checkingAcct}
+                      handleChange={this.handleChange}
+                      id="liquidAcct"
+                    />
+
+                    <hr/>
+
+                  </form>
+                </div>
+                <div className="label-title">
+                  <u>Total Balance of Your Liquid Accounts</u>
+                </div>
+                <div className="projection-number">
+                  ${this.state.total}
+                </div>
+
+              </div>
+            </div>
+            
+
+
+            <div className="card">
+              <div className="card-header card-header-projections">
                 Emergency Fund
               </div>
               <div className="card-body">
                 <div>
-                  An emergency fund is an amount you set aside in your checking or savings account that you keep in case of an emergency. 
+                  An emergency fund is an amount you set aside in your checking or savings account that you keep in case of an emergency.
+                </div>
+                <br/>
+                <div>
                   It is recommended that an emergency fund contain 3 - 6 months' worth of your expenses.  
                   That way, if something unexpected happens (i.e. loss of job, urgent travel, unforeseen large expense),
-                  you can cover the costs with your emergency fund instead of accumulating debt.
+                  you can cover your costs with your emergency fund instead of accumulating debt.
                 </div>
                 <br />
+                <div className="label-title">
+                  <u>Months of Emergency Funds Currently Saved</u>
+                </div>
                 <div>
                   {this.state.showEmergency
-                  &&
+                  ?
+                    <div className="projection-number">
+                      {this.state.emergencyMonths} Months
+                    </div>
+                  :
                     <div>
-                      You currently have {this.state.emergencyMonths} months' worth of emergency funds.
+                      <br/>
+                      <div>
+                        <em>1. Enter your account balances above.  2. Click the Calculate button below.</em>
+                      </div>
+                      <br/>
                     </div>
                   }
 
@@ -140,7 +189,7 @@ class DashboardProjections extends Component {
             {this.props.monthlyTotal > 0
             ?
               <div className="card">
-                <div className="card-header">
+                <div className="card-header card-header-projections">
                   Savings Goal
                 </div>
                 <div className="card-body">
@@ -149,27 +198,44 @@ class DashboardProjections extends Component {
                     Here is a tool to calculate how many months it will take to reach a target savings goal.
                   </div>
                   <br/>
-                  <div>            
+                  <div>    
+                    <hr/>        
                     <ProjectionsInput 
-                      title="Your Target Savings Goal"
+                      title="Target Savings Goal"
+                      description="Enter the amount you would like to save up - whether it be for a house, a car, or whatever you are saving for"
                       value={this.state.savingsGoal}
                       handleChange={this.handleChange}
                       id="savingsGoal"
                     />
+                    <hr/>
                   </div>
+                  <div className="label-title">
+                    Time Until You Reach Your Goal 
+                  </div>
+                  {this.state.showSavingsGoalMonths
+                  ?
+                    <div className="projection-number">
+                      {this.state.savingsGoalMonths}
+                    </div>
+                  :
+                    <div>
+                      <br/>
+                      <div>
+                        <em>1. Enter your account balances above.  2. Click the Calculate button below.</em>
+                      </div>
+                      <br/>
+                    </div>
+                  }
                   <div>
                     <button className="btn btn-info" onClick={this.handleClickSavingsGoal}>
                       Calculate
                     </button>
                   </div>
-                  <div>
-                    You will reach your goal in {this.state.savingsGoalMonths} months
-                  </div>
                 </div>
               </div>
             :
               <div className="card">
-                <div className="card-header">
+                <div className="card-header card-header-projections">
                   How Long Your Money Will Last
                 </div>
                 <div className="card-body">
@@ -178,13 +244,27 @@ class DashboardProjections extends Component {
                     Here is a tool to calculate how long your accounts will last at your current spending rate.
                   </div>
                   <br/>
+                  <div className="label-title">
+                    With Current Monthly Budget, Your Accounts Will Last 
+                  </div>
+                  {this.state.showNegativeMonths 
+                  ?
+                    <div className="projection-number">
+                      {this.state.negativeMonths} Months
+                    </div>
+                  :
+                    <div>
+                      <br/>
+                      <div>
+                        <em>1. Enter your account balances above.  2. Click the Calculate button below.</em>
+                      </div>
+                      <br/>
+                    </div>
+                  }
                   <div>
                     <button className="btn btn-info" onClick={this.handleClickNegativeMonths}>
                       Calculate
                     </button>
-                  </div>
-                  <div>
-                    Your accounts will last {this.state.negativeMonths} months
                   </div>
                 </div>
               </div>

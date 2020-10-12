@@ -34,22 +34,61 @@ class ProjectionsInput extends Component {
 
     return(
 
-      <div className="form-group row">
-        <label htmlFor="colFormLabel" className="col-sm-8 col-form-label">
-          {this.props.title}
-        </label>
-        <div className="col-sm-4">
-          <input 
-            type="number"
-            name={this.props.name}
-            onChange={this.handleChange}
-            className="form-control" 
-            id={this.props.name}
-            value={this.state.value}
-            onBlur={this.handleOnBlur}
-          />
-        </div>
-      </div>
+        <div className="form-group row">
+
+            {/* Type's title, in upper case */}
+            <div className="col-sm-9">
+              <label htmlFor={this.props.title} className="col-form-label label-title">
+                {this.props.title}
+              </label>
+              {/* Underneath the title, a description */}
+              <div className="label-description">
+                {this.props.description}
+              </div>
+            </div>
+
+            {/* On the right side, the input for users to put $ amounts */}
+            <div className="col-sm-3">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <div className="input-group-text" id="inputGroup-sizing-sm">$</div>
+                </div>
+                
+                
+                {/* Value goes here. (TODO (CB 10/5) - should Value be abstracted to a separate component for clarity?) */}
+                <input
+                  type="number" 
+                  name={this.props.title}
+                  id={this.props.title}
+                  onChange={this.handleChange}
+                  className="form-control"
+                  value={this.state.value}
+                  onBlur={this.handleOnBlur}
+                />
+
+              </div>
+            </div>
+          </div>
+          
+
+
+      // <div className="form-group row">
+      //   <label htmlFor="colFormLabel" className="col-sm-8 col-form-label">
+      //     {this.props.title}
+      //   </label>
+      //   <div className="col-sm-4">
+      //     $
+      //     <input 
+      //       type="number"
+      //       name={this.props.name}
+      //       onChange={this.handleChange}
+      //       className="form-control" 
+      //       id={this.props.name}
+      //       value={this.state.value}
+      //       onBlur={this.handleOnBlur}
+      //     />
+      //   </div>
+      // </div>
 
 
           
