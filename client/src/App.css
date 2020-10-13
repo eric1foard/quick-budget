@@ -167,6 +167,19 @@
   background-color: rgba(0, 195, 255, 0.322);
 }
 
+.btn-sample{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgba(200, 156, 61, 0.897);
+  color: rgb(255, 255, 255);
+  width: 400px;
+}
+
+.btn-sample:hover{
+  background-color: rgb(243, 241, 105);
+  color:  rgb(0, 0, 0);
+}
+
 /* For the Dashboard Details component */
 .chart-wrapper{
   margin-top: 30px;

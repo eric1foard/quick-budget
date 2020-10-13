@@ -51,7 +51,7 @@ class BarChart extends Component {
               "rgba(143, 76, 214, 0.2)"
             ],
             // Note: these values were loosely researched.  Could be fine-tuned in the future.
-            data: [[25, 35], [10, 17], [8,18], [5,20], [10,18], [7,15], [10,20]]
+            data: [[25, 40], [10, 17], [8,18], [5,20], [10,18], [7,15], [10,20]]
           }
         ]
       },

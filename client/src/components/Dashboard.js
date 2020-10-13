@@ -13,6 +13,7 @@ import Loading                from "./Loading";
 
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
+import { exampleIncomeData, exampleExpenseData } from "./shared/newUserSeed";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -28,16 +29,33 @@ class Dashboard extends Component {
       expenseTotal: 0,
       cashFlowTotalMonthly: 0,
 
+      // 
+      showSampleData: false,
+
       // Until ComponentDidMount is ready, displays loading spinner
       isLoaded: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleExampleClick = this.handleExampleClick.bind(this);
   }
 
   // Button at bottom of page, lets user navigate to their Budget
   handleClick(evt) {
     evt.preventDefault();
     this.props.history.push("/budget");
+  }
+
+  handleExampleClick(evt) {
+    evt.preventDefault();
+
+    this.setState({ 
+      showSampleData: true, 
+      newUser: false, 
+      currentUser: {username: "Example"}, 
+      incomeTotal: 9500,
+      expenseTotal: 9103,
+      cashFlowTotalMonthly: 397,
+    });
   }
 
 
@@ -51,10 +69,22 @@ class Dashboard extends Component {
         .then(values =>{
           const [income, expense] = [values[0], values[1]];
 
-          const jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
-          const jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
-          const cashFlowTotalMonthly = Number(income.data.total - expense.data.total).toFixed(2);
+          
+          
+          let jsonParsedIncomeObject = JSON.parse(income.data.jsonStringResponse);
+          let jsonParsedExpenseObject = JSON.parse(expense.data.jsonStringResponse);
+          
+          
+          if (jsonParsedIncomeObject.categories.length === 0 && jsonParsedExpenseObject.categories.length === 0) {
+            this.setState({ newUser: true }, () => {
+              jsonParsedIncomeObject = exampleIncomeData;
+              jsonParsedExpenseObject = exampleExpenseData;
+            })
+          }
+          console.log("jsonParsedIncomeObject: ", jsonParsedIncomeObject);
+          console.log("jsonParsedExpenseObject: ", jsonParsedExpenseObject);
 
+          const cashFlowTotalMonthly = Number(income.data.total - expense.data.total).toFixed(2);
 
           // Arrays that will hold data for Income-related charts
           let incomeChartLabels = [];
@@ -85,7 +115,6 @@ class Dashboard extends Component {
             expenseChartData.push(elem.subtotal);
           });
 
-
           // Now that we have all the information we need, set state accordingly
           this.setState({
             incomeData: jsonParsedIncomeObject,
@@ -102,6 +131,7 @@ class Dashboard extends Component {
 
             isLoaded: true,
           });
+
         })
         .catch(error => {
           console.error(error.message)
@@ -118,8 +148,8 @@ class Dashboard extends Component {
       <div>
 
         {/* Has our ComponentDidMount has finished loading data? */}
-        {this.state.isLoaded 
-          ?
+        {this.state.isLoaded && !this.state.newUser
+          &&
             // If yes, display the following.
             <div>
 
@@ -192,15 +222,38 @@ class Dashboard extends Component {
 
               </div>
 
-              {/* Simple navigational button to end the page, goes to their Budget */}
-              <div>
-                <button onClick={this.handleClick} className="btn btn-dashboard">
-                   Go to Budget
-                </button>
-              </div>
+
 
             </div>
-          :
+        } 
+        
+
+        {this.state.isLoaded && this.state.newUser && !this.state.showSampleData
+        &&
+          // NEW USER
+          <div>
+
+          <Jumbotron
+            largeTitle="Welcome "
+            smallTitle={currentUser.username}
+            subtitle="This is your dashboard. It's a bit empty so far."
+            subsubtitle="Once you've filled out your Budget, this is where you'll find insights into what we have on file for you."
+          >
+
+            <button className="btn btn-sample" onClick={this.handleExampleClick}>
+              Would you like to see this page displayed with sample data?
+            </button>
+
+          </Jumbotron>
+          </div>
+
+        }
+
+
+
+
+        {!this.state.isLoaded
+          &&
             // Otherwise, if ComponentDidMount has not finished, only displays Jumbotron with loading spinner
             <Jumbotron
               largeTitle="Welcome "
@@ -214,8 +267,15 @@ class Dashboard extends Component {
             
         }
 
-      </div>
+        {/* Simple navigational button to end the page, goes to their Budget */}
+        <div>
+          <button onClick={this.handleClick} className="btn btn-dashboard">
+              Go to Budget
+          </button>
+        </div>
         
+      </div>
+         
     );
   }
 }

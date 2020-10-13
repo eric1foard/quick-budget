@@ -19,6 +19,9 @@ class Jumbotron extends Component {
             <div className="subtitle">
               {this.props.subtitle}
             </div>
+            <div className="subtitle">
+              {this.props.subsubtitle}
+            </div>
           </div>
         </div>
         
