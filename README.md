@@ -2,9 +2,9 @@
 
 Quick Budget is a full stack application that helps users create a snapshot of their monthly finances.  
 
-Users are guided through evaluating their monthly income and expenses through a comprehensive list of possible items.  Users can register so they can save and return to their budget.
+Users are guided through evaluating their monthly income and expenses through a comprehensive list of possible items.  Users can register so they can save and return to their budget.  Their dashboard crunches numbers to give them additional insights into their income and spending.
 
-This project was built using React, Node, Express, Sequelize, MySQL, Axios, bcryptJS, and Bootstrap 4.
+This project was built using React, Node, Express, Sequelize, MySQL, Axios, bcryptJS, Chart.js, and Bootstrap 4.
 
 ![Image of the app's home screen](/images/README/Home_10-05-20.png "Homepage")
 
@@ -92,12 +92,11 @@ It would be frustrating for a user to make lots of changes only to navigate with
 ### TODO - Now
 
 #### Dashboard
-- Beautify its current ... spartan(?) ... appearance.
-- Add more features into the dashboard.  
-- Ideas: calculator for the amount of time to reach an amount.
-  - User can select goal, then app will calculate the amount of time for user to reach that amount.
-  - In addition to monthly cash flow, user can enter totals of existing savings/debts.  With that, can calculate timeframes for savings goals or paying off debts.
-- Add some links to personal finance education resources
+- Beautify the dashboard a bit
+  - In the Projections section, add graphs showing the progression over time of the growth/shrinking of their accounts.
+- Reduce some of the repitition in dashboard's code
+- Add some helpful links for the user of outside educational resources
+- Let user save their account balances in DB instead of re-entering them every time (currently the info only lives in state)
 
 #### Loan Calculator
 - Give users a sandbox to see how different payment amounts will affect paying off their loans.
@@ -130,14 +129,12 @@ It would be frustrating for a user to make lots of changes only to navigate with
 #### Budget
 - Have a popup that asks user if they want instructions, then guides them through general use.
 
-#### Dashboard
-- Lean how to display the user's budget in a pie chart, with different categories' percentages.
-
 
 ### TODO - Get Help
 
 #### REST API Best Practices
 - I'm likely missing a few protocols.  Have someone look things over and see if I'm on track and what I can improve.
+- I purposefully am not using id's in the url, with security in mind.  Not sure if that is a good practice?
 
 #### App File Structure / Best Practices
 - Is it OK that I have so much of my logic in the controllers?

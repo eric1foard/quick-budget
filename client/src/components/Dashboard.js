@@ -147,10 +147,14 @@ class Dashboard extends Component {
 
       <div>
 
-        {/* Has our ComponentDidMount has finished loading data? */}
+        {/* There are 3 possible things to be displayed - 1) regular dashboard, 2) new user dashboard, 3) loading */}
+        {/* TODO (CB 10/13) - could this be simplified?  It's a lot of logic in the return */}
+
+
+        {/* 1) Has our ComponentDidMount has finished loading data && it is an existing user with data? */}
         {this.state.isLoaded && !this.state.newUser
           &&
-            // If yes, display the following.
+            // If yes, display the full dashboard.
             <div>
 
               <Jumbotron
@@ -222,39 +226,52 @@ class Dashboard extends Component {
 
               </div>
 
-
+              {/* Simple navigational button to end the page, goes to their Budget */}
+              <div>
+                <button onClick={this.handleClick} className="btn btn-dashboard">
+                    Go to Budget
+                </button>
+              </div>
 
             </div>
         } 
         
 
+        {/* 2) Is the page loaded && we have a new user who has not yet saved budget && they have not clicked on the "sample" button */}
         {this.state.isLoaded && this.state.newUser && !this.state.showSampleData
         &&
           // NEW USER
-          <div>
-
           <Jumbotron
             largeTitle="Welcome "
             smallTitle={currentUser.username}
-            subtitle="This is your dashboard. It's a bit empty so far."
-            subsubtitle="Once you've filled out your Budget, this is where you'll find insights into what we have on file for you."
+            subtitle="This is your dashboard. It's a bit empty."
+            subsubtitle="After you fill out your budget, return here to see insights."
           >
 
-            <button className="btn btn-sample" onClick={this.handleExampleClick}>
-              Would you like to see this page displayed with sample data?
-            </button>
+            {/* When clicked, sets state with sample data so user gets demo of dashboard features */}
+            <div>
+              <button className="btn btn-sample" onClick={this.handleExampleClick}>
+                See this page displayed with sample data
+              </button>
+            </div>
+
+            {/* Simple navigational button to end the page, goes to their Budget */}
+            <div>
+              <button onClick={this.handleClick} className="btn btn-dashboard">
+                  Go to Budget
+              </button>
+            </div>
 
           </Jumbotron>
-          </div>
 
         }
 
 
-
-
+        {/* 3) Is the page not yet loaded? */}
         {!this.state.isLoaded
           &&
-            // Otherwise, if ComponentDidMount has not finished, only displays Jumbotron with loading spinner
+          <div>
+            {/* Jumbotron with loading spinner within */}
             <Jumbotron
               largeTitle="Welcome "
               smallTitle={currentUser.username}
@@ -264,16 +281,19 @@ class Dashboard extends Component {
               <Loading />
 
             </Jumbotron>
+
+
+            {/* Simple navigational button to end the page, goes to their Budget */}
+            <div>
+              <button onClick={this.handleClick} className="btn btn-dashboard">
+                  Go to Budget
+              </button>
+            </div>
+          </div>
             
         }
 
-        {/* Simple navigational button to end the page, goes to their Budget */}
-        <div>
-          <button onClick={this.handleClick} className="btn btn-dashboard">
-              Go to Budget
-          </button>
-        </div>
-        
+
       </div>
          
     );

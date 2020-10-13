@@ -168,15 +168,15 @@
 }
 
 .btn-sample{
-  padding: 7px 65px;
+  padding: 7px;
   border-radius: 20px;
   background-color: rgba(200, 156, 61, 0.897);
   color: rgb(255, 255, 255);
-  width: 400px;
+  width: 350px;
 }
 
 .btn-sample:hover{
-  background-color: rgb(243, 241, 105);
+  background-color: rgb(250, 201, 41);
   color:  rgb(0, 0, 0);
 }
 

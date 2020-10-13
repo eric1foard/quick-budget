@@ -6,7 +6,9 @@
 const { v4: uuidv4 } = require('uuid'); // Used to make unique keys.
 
 
-// TODO: It would be nice to have this info feed from seed.js, so there's only one place to update when needed (CB 9/28)
+// TODO: It would be nice to have this info feed from the seed schema (or vice versa), so there's only one place to update when needed (CB 9/28)
+
+// 1) Default data used when new or unregistered users come to their Budget for the first time
 export const incomeData = {
   categories: [
     {
@@ -31,7 +33,6 @@ export const incomeData = {
   ]
 };
 
-// TODO: It would be nice to have this info feed from seed.js, so there's only one place to update when needed (CB 9/28)
 export const expenseData = {
   categories: [
     {
@@ -126,7 +127,7 @@ export const expenseData = {
 
 
 
-
+// 2) Example data used when new user is on Dashboard and clicks button to see sample data
 export const exampleIncomeData = {
   categories: [
     {

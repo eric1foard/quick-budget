@@ -26,6 +26,7 @@
     "start": "node server.js",
     "install": "cd client && npm install && npm run build && cd ..",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "devInstall": "npm install && cd client && npm install && cd ..",
     "server": "node server.js",
     "client": "node start-client.js"
   },

@@ -77,7 +77,9 @@ class DashboardProjections extends Component {
     let savingsGoalMonths;
 
     // If the user puts a savings goal that they've already reached, we tell them so.
-    if (this.state.savingsGoal <= this.state.totalCurrentAccts) {
+    // Note - added Number() to fix bug where numbers were being treated incorrectly (i.e. 2000 < 300)
+    if (Number(this.state.savingsGoal) <= Number(this.state.totalCurrentAccts)) {
+
       console.log("goal is less than current accounts");
       savingsGoalMonths = "You Already Did It!"
     } else {
