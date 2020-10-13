@@ -43,7 +43,7 @@ export default class LogIn extends Component {
         await AuthService.login(this.state.username, this.state.password)
         await alert;
         this.props.history.push("/dashboard");
-        window.location.reload();
+        window.location.reload(); // (CB TODO (10/10) - This is used to get the Navbar to update.  Is there a better way?)
       } catch (error) {
         console.log(error);
         errorAlert(error);
@@ -109,7 +109,7 @@ export default class LogIn extends Component {
                   {this.state.loading && (
                     <span className="spinner-border spinner-border-sm"></span>
                     )}
-                  <span>Log In</span>
+                  <span> Log In</span>
                 </button>
               </div>
             </div>

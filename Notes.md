@@ -1,16 +1,13 @@
 ## Now
-- ✓ deploy to heroku
+- Update Readme
+  - update roadmap
+  - check if any contradicting info
+  - add gif of new dashboard
 - add onto:
   - resume
   - website
   - linkedin
-- when user saves, given option to "continue editing budget" or "see updated results in dashboard"
-- make dashboard better
-  - helpful links
-  - some kind of visual representation of %'s of categories?
-  - Savings calculator, etc.
 
-- fix any out-of-place modals
 
 
 
@@ -58,6 +55,19 @@
 - ✓ get rid of extra line when collapse sections on budget
 - ✓ comment out the currently unused code for users adding new Types
 - ✓ Make Readme nicer
+- ✓ deploy to heroku
+- ✓ when user saves, given option to "continue editing budget" or "see updated results in dashboard"
+
+
+- ✓ Beautify dashboard's current ... spartan(?) ... appearance.
+- ✓ Add more features into the dashboard.  
+- ✓ Lean how to display the user's budget in a pie chart, with different categories' percentages.
+- ✓ Calculator for the amount of time to reach an amount of savings.
+- ✓ Calculator for how long until user runs out of money
+- ✓ In addition to monthly cash flow, user can enter totals of existing savings/debts.
+- ✓ Figure out bug in savings goal calculation.
+- ✓ Add a bigger button to go to budget
+
 
 ## Helpful
 - Information on deploying to Heroku using a CRA app with express backend.
