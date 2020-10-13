@@ -10,51 +10,10 @@ This project was built using React, Node, Express, Sequelize, MySQL, Axios, bcry
 
 ## Why
 
-In evaluating my own finances over the years, I've always wanted a better way to go about things than my normal pen-and-paper or Excel approach.  I like to think about my budget in terms of average monthly income and expenses, without getting bogged down in exact daily amounts or overwhelmed by considering a year at once.
+In evaluating my own finances over the years, I've always wanted a better way to go about things than my normal pen-and-paper or Excel approach.  I like to think about my budget in terms of average monthly income and expenses, without getting bogged down in exact daily amounts or overwhelmed by considering a year at once.  I was also excited about the idea of being able to take these numbers and create charts and graphs from them, which has been done in the user's dashboard.
 
 I began building this app because it's something that is useful for me in my own life, and I'm hoping that others may also find it helpful as well.  Although it is currently in its nascent form, I'm excited for future updates with additional features.
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine.
-
-### Prerequisites
-
-In order to get this project running on your local machine, you will need:
-* mySQL
-* Node.js
-* A GitHub account
-* Terminal
-
-### Installing
-
-#### 1) Clone repo and install packages
-
-Clone the repo to your machine.  From your terminal, navigate to the root of the folder and run an npm install to get the necessary packages:
-
-```
-npm i
-```
-
-#### 2) Set up DB
-
-Next, we will set up the database.  Pull up your MySQL workbench.  From the root of the project folder, you can grab the schema.sql file.  Copy and paste this into your SQL query.  Run this query to create the database and tables.
-
-#### 3) Seed the DB
-
-In order to seed your database, run the following command from the root of the project folder: 
-
-```
-npm run seed
-```
-
-#### 4) Get servers running
-
-This project uses the [concurrently](https://www.npmjs.com/package/concurrently) package to run both servers at the same time. Use this command to get your development version going:
-
-```
-npm run dev
-```
 
 ## Examples
 Here are some gifs showing the app in action.
@@ -85,6 +44,74 @@ It would be frustrating for a user to make lots of changes only to navigate with
 
 
 ![Gif of user being alerted that they are leaving with unsaved changes](/images/README/Unsaved_Changes_Example_10-05-20.gif "User being alerted of unsaved changes").
+
+
+
+## Getting This Project Running
+
+These instructions will get you a copy of the project up and running on your local machine.
+
+### Prerequisites
+
+In order to get this project running on your local machine, you will need:
+* mySQL
+* Node.js
+* A GitHub account
+* Terminal
+
+
+### Installing
+
+#### 1) Clone repo and install packages
+
+Clone the repo to your machine.  From your terminal, navigate to the root of the folder and run an npm install to get the necessary packages:
+
+```
+npm i
+```
+
+This is a custom script that will: 1) install dependencies in the root, 2) move to Client folder, 3) install dependencies in Client folder, 4) create a build from Client folder, and 5) cd to root.  If you will only use the app in development, you can delete the build folder to use hot-reloading.
+
+
+#### 2) Set up DB
+
+Next, we will set up the database.  Pull up your MySQL workbench.  From the root of the project folder, navigate into the db folder.  From here:
+
+1) Copy the code within the schema.sql file.  Paste it into a query in your workbench and run it.  This will create the database and tables.
+2) Copy the code within the seed.sql file.  Paste it into another query in your workbench and run it.  This will seed the necessary information for the app to work.  NOTE: the app will not work until you have finished seeding the db.
+
+
+#### 3) Set up Environment Variables
+
+There are some environment variables that you will need to define.  In the root of the project, create a .env file.  Within this file, set the following environment variables:
+
+1) Navigate from the root to /server/config/config.js  Within this file, you will a number of environment variables related to connecting to your db.
+2) process.env.REACT_APP_AUTH_CONFIG_SECRET
+  - Secret used to hash user passwords.
+3) REACT_APP_SERVER_PORT
+  - You can set this to 3001, or not set it at all ( server.js defaults this to 3001 if it is not otherwise defined).  Note that 3001 is set in root/client/package.json as the accepted proxy, which is important when working in development.  If you want to work from a different port, this is how you can configure this.
+
+
+#### 4) Get servers running
+
+a) In order to run the project in development, run this code from the root of the project folder:
+
+```
+npm run dev
+```
+
+This uses the [concurrently](https://www.npmjs.com/package/concurrently) package to run the API server at the same time as the webpack, allowing for hot-reloading.
+
+b) In order to run the project for production, run this code from the root of the project folder:
+
+```
+npm i
+```
+
+As explained above, this will: 1) install dependencies in the root, 2) move to Client folder, 3) install dependencies in Client folder, 4) create a build from Client folder, and 5) cd to root.
+
+From this point, since the project is deployed on Heroku, I use `heroku local` to check that the build will work when deployed on heroku (this still uses the development db).  In the future, I will learn to build a better way to run the production environment locally, but this suffices for the moment.
+
 
 
 ## Roadmap
