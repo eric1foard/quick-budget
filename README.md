@@ -29,7 +29,7 @@ The user's dashboard crunches the information from their Budget to give useful i
 
 On the bottom of the dashboard, the user can also enter their current account balances for a few additional insights.  First, they can calculate how large of an emergency fund they currently have saved.  Second, depending on whether they have a positive or negative monthly cash flow, they can calculate the amount of time to reach a savings goal, or learn how long their accounts will last (for example, in case of retirement).
 
-![Gif of dashboard being scrolled through](/images/README/Dashboard_Example_10-05-20.gif "User Dashboard and visuals")
+![Gif of dashboard being scrolled through](/images/README/Dashboard_Example_10-13-20.gif "User Dashboard and visuals")
 
 
 ### Getting Started
