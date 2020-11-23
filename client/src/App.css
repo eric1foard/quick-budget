@@ -1,0 +1,368 @@
+/* For the App component, which wraps all components besides Navbar and Footer */
+.App{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  min-height: 88vh;
+}
+
+.container{
+  margin-bottom: 50px;
+}
+
+/* For the Jumbotron component */
+.logo{
+  margin-top: 1rem;
+  color: rgba(82, 197, 107, 0.801);
+  margin-bottom: 0;
+  font-weight: 100;
+  display: inline-block;
+  font-size: 5rem;
+}
+
+.welcome-to{
+  font-weight: 20;
+}
+
+.jumbo{
+  background-color: rgb(255, 255, 255);
+  margin-top: 30px;
+  border-radius: 50px;
+}
+
+.subtitle{
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: large;
+  font-weight: 600;
+}
+
+/* For the Home component */
+.welcome-list {
+  margin-bottom: 40px;
+}
+
+.welcome-list-icon{
+  font-size: 25px;
+  margin-right: 8px;
+}
+
+.welcome-list-line{
+  margin-bottom: 20px;
+}
+
+.welcome-list-text{
+  font-size: 20px
+}
+
+.home-buttons{
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.btn-start-now{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgba(123, 250, 244, 0.472);
+  color: rgba(15, 65, 50, 0.842);
+  border-color: rgb(7, 7, 7);
+  width: 210px;
+}
+
+.btn-start-now:hover{
+  background-color: rgba(16, 157, 161, 0.623);
+  color: rgba(0, 0, 0, 0.842);
+}
+
+.btn-login{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgba(13, 97, 72, 0.842);
+  border-color: rgb(7, 7, 7);
+  width: 210px;
+}
+
+.btn-login:hover{
+  background-color: rgba(180, 255, 215, 0.5);
+  color: rgba(0, 0, 0, 0.842);
+}
+
+.btn-signup{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgba(13, 97, 72, 0.842);
+  color: rgb(255, 255, 255);
+  width: 210px;
+}
+
+.btn-signup:hover{
+  background-color: rgba(7, 121, 86, 0.767);
+  color:  rgb(0, 0, 0);
+}
+
+
+/* For forms used to log in.  Used in SignUp, Login, and Budget components */
+.login-label{
+  background-color: rgba(137, 177, 157, 0.801);
+  padding-top: 10px;
+  padding-bottom: 15px;
+  border-radius: 20px;
+  border-width: medium;
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  font-weight: 10;
+}
+
+.login-form{
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 20px
+}
+
+/* For the Dashboard component */
+.btn-dashboard{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgb(13, 97, 72);
+  color: rgb(255, 255, 255);
+  width: 230px;
+}
+
+.btn-dashboard:hover{
+  background-color: rgb(7, 121, 87);
+  color:  rgb(0, 0, 0);
+}
+
+.dashboard-intro{
+  width: 25%;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  border: black;
+}
+
+.dashboard-list {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.dashboard-list-line{
+  margin-bottom: 40px;
+}
+
+.dashboard-intro.income{
+  background-color: rgba(62, 172, 62, 0.26);
+}
+
+.dashboard-intro.expense{
+  background-color: rgba(149, 57, 57, 0.26);
+}
+
+.dashboard-intro.total{
+  background-color: rgba(0, 195, 255, 0.322);
+}
+
+.btn-sample{
+  padding: 7px;
+  border-radius: 20px;
+  background-color: rgba(200, 156, 61, 0.897);
+  color: rgb(255, 255, 255);
+  width: 350px;
+}
+
+.btn-sample:hover{
+  background-color: rgb(250, 201, 41);
+  color:  rgb(0, 0, 0);
+}
+
+/* For the Dashboard Details component */
+.chart-wrapper{
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+
+/* For the DashboardProjections component */
+.card-header-projections{
+  background-color: rgba(136, 217, 241, 0.301);
+}
+
+.projection-number{
+  font-size: 40px;
+  font-weight: 100;
+}
+
+
+/* For the Budget component */
+.budget-instructions-list{
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+ol.budget-list-text {
+  list-style: none;
+  counter-reset: item;
+  align-items: left;
+}
+
+li.budget-list-text{
+  list-style-position: inside;
+  counter-increment: item;
+  margin-top: 15px;
+}
+
+li.budget-list-text:before {
+  margin-right: 10px;
+  content: counter(item);
+  border-radius: 100%;
+  color: white;
+  width: 1.6em;
+  text-align: center;
+  display: inline-block;
+}
+
+li.income:before{
+  background: rgba(34, 133, 42, 0.698);
+}
+
+li.expenses:before{
+  background: rgba(149, 57, 57, 0.63);
+}
+
+li.save:before{
+  background: rgba(0, 195, 255, 0.445);
+}
+
+.btn-save{
+  padding: 7px 65px;
+  border-radius: 20px;
+  background-color: rgb(49, 99, 133);
+  color: rgb(255, 255, 255);
+}
+
+.btn-save:hover{
+  background-color: rgb(28, 177, 214);
+  color:  rgb(0, 0, 0);
+}
+
+
+
+/* For the Box component */
+.card{
+  margin: 0 auto;
+  float: none; 
+  margin-bottom: 30px; 
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.card-header-income{
+  background-color: rgba(34, 133, 42, 0.698);
+}
+
+.card-header-expenses{
+  background-color: rgba(149, 57, 57, 0.63);
+}
+
+.card-footer-income{
+  background-color: rgba(0, 128, 0, 0.164);
+}
+
+.card-footer-expenses{
+  background-color: rgba(255, 0, 0, 0.171);
+}
+
+.btn-link-heading{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  text-decoration: underline;
+  padding: 10px;
+}
+
+
+/* For the Form component */
+.label-title{
+  font-size: 1.1rem;
+  font-weight: bold;
+  vertical-align: middle
+}
+
+.label-description{
+  font-size: .8rem;
+  font-style: oblique;
+}
+
+.category-title-income{
+  background-color: rgba(62, 172, 62, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
+.category-title-expenses{
+  background-color: rgba(149, 57, 57, 0.26);
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 1.3rem;
+}
+
+.input-group{
+  margin-top: 12px;
+}
+
+.subtotal{
+  margin-top: 13px;
+}
+
+
+/* For the Summary component */
+.card-header-summary{
+  color: rgba(0, 0, 0, 0.801);
+  font-weight: 175;
+  font-size: 2rem;
+  background-color: rgba(0, 195, 255, 0.445);
+}
+
+.card-body-summary{
+  background-color: rgba(0, 195, 255, 0.13);;
+}
+
+
+/* For the NewField component */
+.btn{
+  margin: 5px;
+}
+
+
+/* For the Footer component */
+.footer-nav{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  min-height: 6vh;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  color: rgba(255,255,255,.5);
+}
+
+.spacing-navbar-nav{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.footer-nav-link:hover a{
+  color: #419bfb;;
+}
+
+
+/* For the Loading component */
+.loading {
+  width: 5rem;
+  height: 5rem;
+}
